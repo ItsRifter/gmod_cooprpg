@@ -213,7 +213,7 @@ end
 
 hook.Add("ScoreboardShow", "HL2C_ScoreboardShow", function()
 	ToggleBoard(true)
-	return false
+	return true
 end)
 
 hook.Add("ScoreboardHide", "HL2C_ScoreboardHide", function()

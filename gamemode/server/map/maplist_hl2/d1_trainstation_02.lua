@@ -1,1 +1,0 @@
-//TODO: Make separate map setup work
