@@ -2,7 +2,7 @@ local MAP_NAME = "d1_trainstation_02"
 local MAP_FUNC = {}
 
 function MAP_FUNC:SetUp()
-    print("Yay")
+    
 end
 
 function CreateLogicEnts()
