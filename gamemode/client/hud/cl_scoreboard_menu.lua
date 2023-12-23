@@ -150,8 +150,8 @@ end
 local PANEL = {}
 
 function PANEL:Init()
-	local varH = ScrH() * 0.6
-	local varW = varH * 1.8
+	local varH = ScrH() * 0.6 * HL2C_Client:Get_UIScale()
+	local varW = varH * 1.8 * HL2C_Client:Get_UIScale()
 	self:SetPos( (ScrW()- varW)*0.5, (ScrH()- varH)*0.25)
 	self:SetSize( varW, varH )
 	

@@ -1,51 +1,56 @@
 local panel_meta = FindMetaTable( "PANEL" )
 
-surface.CreateFont( "Font_Normal", 
-	{
-	font    = "Impact",
-	size    = ScrH() * 0.035,
-	weight  = 100,
-	antialias = true,
-	})
-	
-surface.CreateFont( "Font_Small", 
-	{
-	font    = "Impact",
-	size    = ScrH() * 0.03,
-	weight  = 100,
-	antialias = true,
-	})
-	
-surface.CreateFont( "Font_Tiny", 
-	{
-	font    = "Impact",
-	size    = ScrH() * 0.025,
-	weight  = 100,
-	antialias = true,
-	})
-	
-surface.CreateFont( "Font2_Small", 
-	{
-	font    = "DejaVu Sans",
-	size    = ScrH() * 0.028,
-	weight  = 100,
-	antialias = true,
-	})
-surface.CreateFont( "Font2_Tiny", 
-	{
-	font    = "DejaVu Sans",
-	size    = ScrH() * 0.024,
-	weight  = 100,
-	antialias = true,
-	})
-surface.CreateFont( "Font2_Micro", 
-	{
-	font    = "DejaVu Sans",
-	size    = ScrH() * 0.020,
-	weight  = 100,
-	antialias = true,
-	})
-	
+function HL2C_Client:CreateFonts()
+	print("creating font sets")
+	local fontscale = ScrH() * HL2C_Client:Get_UIScale()
+	surface.CreateFont( "Font_Normal", 
+		{
+		font    = "Impact",
+		size    = fontscale * 0.035,
+		weight  = 100,
+		antialias = true,
+		})
+		
+	surface.CreateFont( "Font_Small", 
+		{
+		font    = "Impact",
+		size    = fontscale * 0.03,
+		weight  = 100,
+		antialias = true,
+		})
+		
+	surface.CreateFont( "Font_Tiny", 
+		{
+		font    = "Impact",
+		size    = fontscale * 0.025,
+		weight  = 100,
+		antialias = true,
+		})
+		
+	surface.CreateFont( "Font2_Small", 
+		{
+		font    = "DejaVu Sans",
+		size    = fontscale * 0.028,
+		weight  = 100,
+		antialias = true,
+		})
+	surface.CreateFont( "Font2_Tiny", 
+		{
+		font    = "DejaVu Sans",
+		size    = fontscale * 0.024,
+		weight  = 100,
+		antialias = true,
+		})
+	surface.CreateFont( "Font2_Micro", 
+		{
+		font    = "DejaVu Sans",
+		size    = fontscale * 0.020,
+		weight  = 100,
+		antialias = true,
+		})
+end	
+HL2C_Client:CreateFonts()
+
 Theme = {
 	col = Color( 240, 140, 50, 255 ),
 	backcol = Color( 255, 140, 20, 80 ),
@@ -528,7 +533,11 @@ function PANEL:Init()
 end
 
 function PANEL:SetText(text,font, alignX, alignY, spacing)
-	self.Text = text
+	if istable( text) then
+		self.Text = text
+	else
+		self.Text = {text}
+	end
 	self.font = self.font or font
 	self.spacing = spacing
 	surface.SetFont( self.font )
