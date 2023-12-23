@@ -7,11 +7,9 @@ GM.Website = "N/A"
 
 GM.ServerName = GetHostName()
 
-HL2C_Global = HL2C_Global or {}
-
-function IncludeClientFiles(path, isClient)
+function IncludeClientFiles(path)
 	for k, v in pairs(file.Find(GM.FolderName .. "/gamemode/" ..path.. "*.lua","LUA")) do
-		if not isClient then 
+		if SERVER then
 			AddCSLuaFile(path .. v)
 		else
 			include(path .. v)
@@ -32,12 +30,12 @@ function IncludeSharedFiles(path)
 	end
 end
 
+IncludeSharedFiles("shared/")
 
+HL2C_Global = HL2C_Global or {}
 
 if SERVER then
     HL2C_Server = HL2C_Server or {}
-
-    
 end
 
 if CLIENT then

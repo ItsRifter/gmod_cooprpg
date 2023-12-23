@@ -1,12 +1,7 @@
 include("shared.lua")
 
--- //SHARED FOLDERS
--- IncludeSharedFiles("shared/")
+IncludeServerFiles("server/player/")
+IncludeServerFiles("server/map/")
 
--- //SERVER FOLDERS
--- IncludeServerFiles("server/player/")
--- IncludeServerFiles("server/map/")
-
--- //CLIENT FOLDERS
--- IncludeClientFiles("client/", false)
--- IncludeClientFiles("client/hud/", false)
+IncludeClientFiles("client/")
+IncludeClientFiles("client/hud/")
