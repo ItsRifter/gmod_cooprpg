@@ -11,7 +11,7 @@ function HL2C_Client:Config_Update()	--Ensures config is fully populated with va
 end
 
 function HL2C_Client:Config_Load()
-	print("=HL2C Client Config Loading=")
+	if HL2C_Debug then print("=HL2C Client Config Loading=") end
 	local jsonContent = file.Read("hl2c_data/user_config.txt", "DATA")
 	if jsonContent then HL2C_Client.Config = util.JSONToTable(jsonContent) end
 
@@ -25,7 +25,7 @@ function HL2C_Client:Config_Save()
 		file.CreateDir("hl2c_data", "DATA")
 	end
 	file.Write("hl2c_data/user_config.txt", util.TableToJSON(HL2C_Client.Config, true))
-	print("=HL2C Client Config Saved=")
+	if HL2C_Debug then print("=HL2C Client Config Saved=") end
 end
 
 if timer.Exists( "HL2C_Config_Tick" ) then timer.Remove( "HL2C_Config_Tick" ) end	

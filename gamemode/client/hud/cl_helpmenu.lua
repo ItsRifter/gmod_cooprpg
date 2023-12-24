@@ -5,18 +5,18 @@ local PANEL = {}
 
 function PANEL:Init()
 	local varH = ScrH() * 0.7 * HL2C_Client:Get_UIScale()
-	local varW = varH * 1.4 * HL2C_Client:Get_UIScale()
+	local varW = varH * 1.4 
 	self:SetPos( (ScrW()- varW)*0.5, (ScrH()- varH)*0.5)
 	self:SetSize( varW, varH )
 	
 	local wide = self:GetWide()
 	local tall = self:GetTall()
 	
-	local Text = New_ThemeText(self,wide * 0.425, tall * 0.01,translate.Get("HelpMenu_Title"),"Font_Normal",0.5,0)
+	local Text = New_ThemeText(self,wide * 0.425, tall * 0.01,translate.Get("HM_Title"),"Font_Normal",0.5,0)
 
-	local Text = New_ThemeText(self,wide * 0.425, tall* 0.08,translate.Get("HelpMenu_Map")..game.GetMap(),"Font_Small",0.5,0)
+	local Text = New_ThemeText(self,wide * 0.425, tall* 0.08,translate.Get("HM_Map")..game.GetMap(),"Font_Small",0.5,0)
 	
-	local Text = New_ThemeTextMulti(self,wide * 0.425, tall * 0.15,{translate.Get("HelpMenu_Info")},"Font_Normal",0.5,0,2)
+	local Text = New_ThemeTextMulti(self,wide * 0.425, tall * 0.15,translate.Get("HM_Info"),"Font_Normal",0.5,0,2)
 	
 	self.OpPanel = vgui.Create( "Panel" , self)
 	self.OpPanel:SetSize(self:GetWide() * 0.8, self:GetTall() * 0.7)
@@ -42,7 +42,7 @@ function PANEL:Init()
 		function()
 			--Text:SetVisible( true )
 			self:ShowOptions(false)
-			Text:SetText(translate.Get("HelpMenu_Info"),nil,0.5,0, 2)
+			Text:SetText(translate.Get("HM_Info"),nil,0.5,0, 2)
 		end
 	)
 	
@@ -51,7 +51,7 @@ function PANEL:Init()
 		function()
 			--Text:SetVisible( true )
 			self:ShowOptions(false)
-			Text:SetText(translate.Get("HelpMenu_Commands"),nil,0.5,0, 2)
+			Text:SetText(translate.Get("HM_Commands"),nil,0.5,0, 2)
 		end
 	)
 	
@@ -60,7 +60,7 @@ function PANEL:Init()
 		function()
 			--Text:SetVisible( true )
 			self:ShowOptions(false)
-			Text:SetText(translate.Get("HelpMenu_Pets"),nil,0.5,0, 2)
+			Text:SetText(translate.Get("HM_Pets"),nil,0.5,0, 2)
 		end
 	)
 	
@@ -130,10 +130,10 @@ function PANEL:Init()
 end
 
 function PANEL:Paint()
-
-	draw.RoundedBoxEx( 8, 0, 0, self:GetWide(), self:GetTall() * 0.07, Theme.backcol,true, true,false,false)
-	draw.RoundedBoxEx( 1, 0, self:GetTall() * 0.07, self:GetWide(), self:GetTall() * 0.07, Theme.backcol2,false, false,false,false)
-	draw.RoundedBoxEx( 8, 0, self:GetTall() * 0.14, self:GetWide(), self:GetTall() * 0.86, Theme.backcol,false,false,true,true)
+	local barsize = math.floor(self:GetTall() * 0.07)
+	draw.RoundedBoxEx( 8, 0, 0, self:GetWide(), barsize, Theme.backcol,true, true,false,false)
+	draw.RoundedBoxEx( 1, 0, barsize, self:GetWide(), barsize, Theme.backcol2,false, false,false,false)
+	draw.RoundedBoxEx( 8, 0, barsize * 2, self:GetWide(), self:GetTall() - barsize * 2, Theme.backcol,false,false,true,true)
 
 	return true
 end

@@ -530,14 +530,12 @@ function PANEL:Init()
 	self.width = 0
 	self.height = 0
 	self:SetMouseInputEnabled( false )
+	self.Text = nil
 end
 
 function PANEL:SetText(text,font, alignX, alignY, spacing)
-	if istable( text) then
-		self.Text = text
-	else
-		self.Text = {text}
-	end
+	self.Text = text
+
 	self.font = self.font or font
 	self.spacing = spacing
 	surface.SetFont( self.font )
@@ -550,7 +548,6 @@ function PANEL:SetText(text,font, alignX, alignY, spacing)
 	
 	self.width = 0
 	self.height = 0 
-	
 	for _, tx in ipairs(self.Text) do
 		local width, height = surface.GetTextSize( tx )
 		if width > self.width then self.width = width end

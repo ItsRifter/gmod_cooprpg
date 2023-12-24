@@ -1,6 +1,6 @@
 if SERVER then AddCSLuaFile() end
 
-HL2C_Debug = true  --Uncomment to show files loading
+--HL2C_Debug = true  --Uncomment to show files loading
 
 HL2C_Global = HL2C_Global or {}
 
