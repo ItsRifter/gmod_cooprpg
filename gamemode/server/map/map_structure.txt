@@ -1,0 +1,19 @@
+TODO: Work out general layout for map data
+Add/Remove/Arrange as needed
+
+==include==
+Add any multiuse function includes such as episode specific ones
+
+==data=
+loadout			- weaponlist, inventory
+flags			- suit? suicide allowed? vehicle?
+nextmap			- name of next map, if multi exit map function can change this.
+vortex list		- potential vortex locations
+
+==functions==
+mapstart		- function that runs on map start
+	-remove ents
+	-setup spawn
+	-setup checkpoints	- trigger vectors , spawn position vector, spawn angle, function
+	-setup changelevel	- trigger vectors , function
+	-spawn ents
