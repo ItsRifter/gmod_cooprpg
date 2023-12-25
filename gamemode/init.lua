@@ -1,6 +1,7 @@
 include("shared.lua")
 
 IncludeServerFiles("server/")
+IncludeServerFiles("server/data/")
 IncludeServerFiles("server/player/")
 IncludeServerFiles("server/map/")
 
