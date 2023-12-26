@@ -1,58 +1,68 @@
 local hl2c_player = FindMetaTable("Player")
 
-function hl2c_player:InitData()
-	self.hl2c_data = self.hl2c_data or {}
-	self.hl2c_data.Name = self.hl2c_data.Name or self:Nick()
-	self.loaded = true
+HL2C_Server.DataSystem = HL2C_Server.DataSystem or {}
+
+function HL2C_Server.DataSystem:InitPlayerData(ply)
+	ply.hl2c_data = ply.hl2c_data or {}
+	ply.hl2c_data.Name = ply.hl2c_data.Name or ply:Nick()
+	ply.data_loaded = true
 end
 
-function hl2c_player:SaveData()
-	if self:IsBot() then return end
-	if not self.loaded then return false end
-	local PlayerID = string.Replace(self:SteamID(), ":", "!")
+function HL2C_Server.DataSystem:SavePlayerData(ply)
+	if ply:IsBot() or not ply.loaded then return end
+
+	local playerID = string.Replace(ply:SteamID(), ":", "!")
+
 	--Store all persistent data in players hl2c_data object as JSON
-	file.Write("hl2c_data/" .. PlayerID .. ".txt", util.TableToJSON(self.hl2c_data, true))
+	file.Write("hl2c_data/" .. playerID .. ".txt", util.TableToJSON(ply.hl2c_data, true))
 end
 
-function hl2c_player:LoadData()
-	if self:IsBot() then return false end
+function HL2C_Server.DataSystem:LoadPlayerData(ply)
+	if ply:IsBot() then return false end
 
-	local PlayerID = string.Replace(self:SteamID(), ":", "!")
-	local jsonContent = file.Read("hl2c_data/" .. PlayerID .. ".txt", "DATA")
+	local playerID = string.Replace(ply:SteamID(), ":", "!")
+	local jsonContent = file.Read("hl2c_data/" .. playerID .. ".txt", "DATA")
 	if not jsonContent then return false end
 
 	--Read players hl2c_data from JSON
-	self.hl2c_data = util.JSONToTable(jsonContent)
-	self:InitData()	--initialises any extra data not in save
+	ply.hl2c_data = util.JSONToTable(jsonContent)
+
+	ply:InitData()	--initialises any extra data not in save
 end
 
-function hl2c_player:GetData()
-	if self.loaded then return end
-	if not self:LoadData() then 
-		self:InitData() 
-		self:SaveData()
-	end
+function HL2C_Server.DataSystem:GetData(ply)
+	//if ply.data_loaded then return end
+
+	-- if not ply:LoadData() then 
+	-- 	ply:InitData()
+	-- 	ply:SaveData()
+	-- end
 end
 
 --------------------------------------------------------------
 
-hook.Add("PlayerInitialSpawn", "HL2C_NewPlayerCheck", function(ply)
-	ply:GetData()
+hook.Add("PlayerInitialSpawn", "HL2C_Data_Check", function(ply)
+	//ply:GetPlayerData()
 end)
 
-hook.Add( "ShutDown", "HL2CR_MapChangeSave", function() 
-	for _, ply in ipairs( player.GetAll() ) do
-		if ply:IsBot() then continue end
+hook.Add("PlayerDisconnected", "HL2C_Data_Save_Disconnect", function(ply)
+	//ply:SavePlayerData()
+end)
 
-		ply:SaveData()
-	end
+hook.Add( "ShutDown", "HL2C_Data_Save_MapChange", function() 
+	//for _, ply in ipairs( player.GetAll() ) do
+		//if ply:IsBot() then continue end
+
+		//ply:SavePlayerData()
+	//end
 end)
 
 --------------------------------------------------------------
 
-hook.Add("Initialize", "CreateDataFolder", function()
+hook.Add("Initialize", "HL2C_Data_CheckFolder", function()
+	
 	if not file.IsDir( "hl2c_data", "DATA") then
-		print("MISSING HL2C FOLDER: Making new one\n")
+		HL2C_Server:DebugMsg("Creating new data folder", HL2C_COLOR_STANDARD)
 		file.CreateDir("hl2c_data", "DATA")
 	end
 end)
