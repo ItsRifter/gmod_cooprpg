@@ -1,6 +1,7 @@
 if SERVER then AddCSLuaFile() end
 
---HL2C_Debug = true  --Uncomment to show files loading
+--HL2C_Debug = true  --Uncomment to show files loading and other spam logging messages
+HL2C_DebugTools = true
 
 HL2C_Global = HL2C_Global or {}
 
