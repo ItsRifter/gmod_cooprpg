@@ -100,6 +100,7 @@ function SWEP:PrimaryAttack()
 
     if CLIENT then 
         PlayUseSounds()
+		HL2C_DevTool:SetP1(p1)
     end
 end
 
@@ -110,6 +111,7 @@ function SWEP:SecondaryAttack()
 
     if CLIENT then 
         PlayUseSounds()
+		HL2C_DevTool:SetP2(p2)
     end
 end
 
@@ -178,10 +180,6 @@ function SWEP:DrawWireboxes()
     local tempP2 = tempP1	--no need to double trace same spot
     local boxPos = Vector(0,0,0)
 
-    //TODO: Fix points as they are not correct from player eyetrace
-    //maybe help Neko?
-    //-ItsRifter
-    
     if p1:IsZero() then
         --boxPos = (tempP1 + p2) / 2
         render.DrawWireframeBox(boxPos, angle, tempP1, p2, red, true)
@@ -196,8 +194,6 @@ function SWEP:DrawWireboxes()
         --boxPos = (p1 + p2) / 2
         render.DrawWireframeBox(boxPos, angle, p2, p1, orange, true)
     end
-
-    //render.DrawWireframeBox(p1, angle, p1, )
     
 end
 
