@@ -23,14 +23,14 @@ SWEP.Secondary.Delay        = 0.1
 SWEP.Secondary.Automatic    = false
 SWEP.Secondary.Ammo	        = "none"
 
-local showHUD = false
+--local showHUD = showHUD or false	--dont believe this is needed
 
 local p1 = Vector(0, 0, 0)
 local p2 = Vector(0, 0, 0)
 
-local minDist = 5
-local maxDist = 125
-local curDist = 95
+local minDist = 16
+local maxDist = 256
+local curDist = 128
 
 function SWEP:DoTraceLine()
     local trace
@@ -59,22 +59,22 @@ function SWEP:DoTraceLine()
 end
 
 function SWEP:Deploy()
-    showHUD = true
+    --showHUD = true
     return true
 end
 
 function SWEP:Holster()
-    showHUD = false
+    --showHUD = false
     return true
 end
 
 function SWEP:Think()
     local owner = self:GetOwner()
-
-    local value = 0.5
+	
+    local value = 1 
 
     if owner:KeyDown(IN_WALK) then
-        value = value / 2
+        value = value * 0.5
     end
 
     if owner:KeyDown(IN_DUCK) then
@@ -127,9 +127,47 @@ function SWEP:CreateVectorAxis()
     local angle = Angle(0, 0, 0)
     local scale = 6
 
-	render.DrawLine( tr.HitPos, tr.HitPos + scale * angle:Forward(), red, true )
-	render.DrawLine( tr.HitPos, tr.HitPos + scale * -angle:Right(), green, true )
-	render.DrawLine( tr.HitPos, tr.HitPos + scale * angle:Up(), blue, true )
+	local hitpos = tr.HitPos
+
+	local forward 	= angle:Forward()
+	local up 		= angle:Up()
+	local left		= -angle:Right()
+
+	if self:GetOwner():KeyDown(IN_WALK) then
+		render.DrawLine( hitpos - 16 * forward, hitpos + 16 * forward, red, true )
+		render.DrawLine( hitpos - 16 * forward + 08 * up, hitpos + 16 * forward + 08 * up, red, true )
+		render.DrawLine( hitpos - 16 * forward + 16 * up, hitpos + 16 * forward + 16 * up, red, true )
+		render.DrawLine( hitpos - 16 * forward - 08 * up, hitpos + 16 * forward - 08 * up, red, true )
+		render.DrawLine( hitpos - 16 * forward - 16 * up, hitpos + 16 * forward - 16 * up, red, true )
+		render.DrawLine( hitpos - 16 * forward + 16 * up, hitpos - 16 * forward - 16 * up, red, true )
+		render.DrawLine( hitpos - 08 * forward + 16 * up, hitpos - 08 * forward - 16 * up, red, true )
+		render.DrawLine( hitpos + 16 * forward + 16 * up, hitpos + 16 * forward - 16 * up, red, true )
+		render.DrawLine( hitpos + 08 * forward + 16 * up, hitpos + 08 * forward - 16 * up, red, true )
+		
+		render.DrawLine( hitpos - 16 * left, hitpos + 16 * left, green, true )
+		render.DrawLine( hitpos - 16 * left + 08 * up, hitpos + 16 * left + 08 * up, green, true )
+		render.DrawLine( hitpos - 16 * left + 16 * up, hitpos + 16 * left + 16 * up, green, true )
+		render.DrawLine( hitpos - 16 * left - 08 * up, hitpos + 16 * left - 08 * up, green, true )
+		render.DrawLine( hitpos - 16 * left - 16 * up, hitpos + 16 * left - 16 * up, green, true )
+		render.DrawLine( hitpos - 16 * left + 16 * up, hitpos - 16 * left - 16 * up, green, true )
+		render.DrawLine( hitpos - 08 * left + 16 * up, hitpos - 08 * left - 16 * up, green, true )
+		render.DrawLine( hitpos + 16 * left + 16 * up, hitpos + 16 * left - 16 * up, green, true )
+		render.DrawLine( hitpos + 08 * left + 16 * up, hitpos + 08 * left - 16 * up, green, true )
+		
+		render.DrawLine( hitpos - 16 * up, hitpos + 16 * up, blue, true )
+		render.DrawLine( hitpos - 16 * left + 08 * forward, hitpos + 16 * left + 08 * forward, blue, true )
+		render.DrawLine( hitpos - 16 * left + 16 * forward, hitpos + 16 * left + 16 * forward, blue, true )
+		render.DrawLine( hitpos - 16 * left - 08 * forward, hitpos + 16 * left - 08 * forward, blue, true )
+		render.DrawLine( hitpos - 16 * left - 16 * forward, hitpos + 16 * left - 16 * forward, blue, true )
+		render.DrawLine( hitpos - 16 * left + 16 * forward, hitpos - 16 * left - 16 * forward, blue, true )
+		render.DrawLine( hitpos - 08 * left + 16 * forward, hitpos - 08 * left - 16 * forward, blue, true )
+		render.DrawLine( hitpos + 16 * left + 16 * forward, hitpos + 16 * left - 16 * forward, blue, true )
+		render.DrawLine( hitpos + 08 * left + 16 * forward, hitpos + 08 * left - 16 * forward, blue, true )
+	else
+		render.DrawLine( hitpos, hitpos + scale * forward, red, true )
+		render.DrawLine( hitpos, hitpos + scale * left, green, true )
+		render.DrawLine( hitpos, hitpos + scale * up, blue, true )
+    end
 end
 
 function SWEP:DrawWireboxes()
@@ -137,25 +175,25 @@ function SWEP:DrawWireboxes()
     local angle = Angle(0, 0, 0)
 
     local tempP1 = self:DoTraceLine().HitPos
-    local tempP2 = self:DoTraceLine().HitPos
-    local boxPos
+    local tempP2 = tempP1	--no need to double trace same spot
+    local boxPos = Vector(0,0,0)
 
     //TODO: Fix points as they are not correct from player eyetrace
     //maybe help Neko?
     //-ItsRifter
     
     if p1:IsZero() then
-        boxPos = (tempP1 + p2) / 2
+        --boxPos = (tempP1 + p2) / 2
         render.DrawWireframeBox(boxPos, angle, tempP1, p2, red, true)
     end
 
     if p2:IsZero() then
-        boxPos = (p1 + tempP2) / 2
+        --boxPos = (p1 + tempP2) / 2
         render.DrawWireframeBox(boxPos, angle, p1, tempP2, red, true)
     end
     
     if not p1:IsZero() and not p2:IsZero() then
-        boxPos = (p1 + p2) / 2
+        --boxPos = (p1 + p2) / 2
         render.DrawWireframeBox(boxPos, angle, p2, p1, orange, true)
     end
 
@@ -165,7 +203,8 @@ end
 
 hook.Add("PostDrawOpaqueRenderables", "yey", function()
     local wep = LocalPlayer():GetActiveWeapon()
-    if wep:GetClass() ~= "weapon_hl2c_boxmarker" or not showHUD then return end
+	if !IsValid(wep) then return end
+    if wep:GetClass() ~= "weapon_hl2c_boxmarker" then return end
 
     wep:CreateVectorAxis()
     wep:DrawWireboxes()
