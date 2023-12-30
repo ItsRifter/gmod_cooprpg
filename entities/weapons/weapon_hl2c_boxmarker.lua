@@ -23,8 +23,6 @@ SWEP.Secondary.Delay        = 0.1
 SWEP.Secondary.Automatic    = false
 SWEP.Secondary.Ammo	        = "none"
 
---local showHUD = showHUD or false	--dont believe this is needed
-
 local p1 = Vector(0, 0, 0)
 local p2 = Vector(0, 0, 0)
 
@@ -59,13 +57,17 @@ function SWEP:DoTraceLine()
 end
 
 function SWEP:Deploy()
-    --showHUD = true
     return true
 end
 
 function SWEP:Holster()
-    --showHUD = false
+    self:ResetVectors()
     return true
+end
+
+function SWEP:ResetVectors()
+    p1:Zero()
+    p2:Zero()
 end
 
 function SWEP:Think()
@@ -86,9 +88,25 @@ function SWEP:Think()
     end
 
     if owner:KeyPressed(IN_USE) then
-        p1:Zero()
-        p2:Zero()
+        self:ResetVectors()
     end
+
+    if owner:KeyPressed(IN_ZOOM) then
+        if p1:IsZero() or p2:IsZero() then return end
+        if not IsFirstTimePredicted() then return end
+        didResult = true
+
+        local vec1 = tostring(p1)
+        local vec2 = tostring(p2)
+
+        local result = string.format("1st Vector(%s) | 2nd Vector(%s)\n", p1, p2)
+
+        if CLIENT then
+            owner:PrintMessage(HUD_PRINTCONSOLE, result)
+        elseif SERVER then
+            print(result)
+        end
+    end 
 
     curDist = math.Clamp(curDist, minDist, maxDist)
 end
@@ -197,7 +215,7 @@ function SWEP:DrawWireboxes()
     
 end
 
-hook.Add("PostDrawOpaqueRenderables", "yey", function()
+hook.Add("PostDrawOpaqueRenderables", "HL2C_Debug_BoxMarker_Draw", function()
     local wep = LocalPlayer():GetActiveWeapon()
 	if !IsValid(wep) then return end
     if wep:GetClass() ~= "weapon_hl2c_boxmarker" then return end
