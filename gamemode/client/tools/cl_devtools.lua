@@ -11,19 +11,41 @@ local function HL2C_ToolOpen()
 	Frame:SetSize( 500, 900 ) 
 	Frame:SetTitle( "HL2C Tools" ) 
 	Frame:SetVisible( true ) 
+	Frame:SetAlpha(200)
 	Frame:SetDraggable( true ) 
 	Frame:ShowCloseButton( true ) 
+	
+	local DButton = vgui.Create( "DButton", Frame )
+	DButton:SetText( "Give boxmaker" )
+	DButton:SetPos( 10, 30 )
+	DButton:SetSize( 200, 30 )
+	DButton.DoClick = function()				
+		LocalPlayer():ConCommand( "give weapon_hl2c_boxmarker" )
+	end
+	
+	
+	Frame.grid = false
+	
+	local DCheckbox = vgui.Create( "DCheckBoxLabel", Frame ) -- Create the checkbox
+	DCheckbox:SetPos( 230, 40 )						-- Set the position
+	DCheckbox:SetText("Grid")					-- Set the text next to the box
+	DCheckbox:SetValue( false )						-- Initial value
+	DCheckbox:SizeToContents()						-- Make its size the same as the contents
+	DCheckbox.OnChange = function()
+		Frame.grid = DCheckbox:GetChecked()
+	end
+	
 	
 	Frame.CornerA = Vector( 0, 0, 0 )
 
 	Frame.ELabel = vgui.Create( "DTextEntry", Frame  )
-	Frame.ELabel:SetPos( 100, 30 )
+	Frame.ELabel:SetPos( 100, 70 )
 	Frame.ELabel:SetSize( 200, 30)
 	Frame.ELabel:SetText( string.format("Vector(%d,%d,%d)",Frame.CornerA:Unpack()) )
 
 	local DButton = vgui.Create( "DButton", Frame )
 	DButton:SetText( "Corner Red" )
-	DButton:SetPos( 10, 30 )
+	DButton:SetPos( 10, 70 )
 	DButton:SetSize( 70, 30 )
 	DButton.DoClick = function()				
 		Frame.CornerA = LocalPlayer():GetPos()
@@ -32,7 +54,7 @@ local function HL2C_ToolOpen()
 	
 	local DButton = vgui.Create( "DButton", Frame )
 	DButton:SetText( "Copy" )
-	DButton:SetPos( 440, 30 )
+	DButton:SetPos( 440, 70 )
 	DButton:SetSize( 50, 30 )
 	DButton.DoClick = function()				
 		 SetClipboardText(Frame.ELabel:GetText())
@@ -41,13 +63,13 @@ local function HL2C_ToolOpen()
 	Frame.CornerB = Vector( 0, 0, 0 )
 	
 	Frame.ELabel2 = vgui.Create( "DTextEntry", Frame  )
-	Frame.ELabel2:SetPos( 100, 70 )
+	Frame.ELabel2:SetPos( 100, 110 )
 	Frame.ELabel2:SetSize( 200, 30)
 	Frame.ELabel2:SetText( string.format("Vector(%d,%d,%d)",Frame.CornerB:Unpack()) )	
 
 	local DButton = vgui.Create( "DButton", Frame )
 	DButton:SetText( "Corner Blue" )
-	DButton:SetPos( 10, 70 )
+	DButton:SetPos( 10, 110 )
 	DButton:SetSize( 70, 30 )
 	DButton.DoClick = function()				
 		Frame.CornerB = LocalPlayer():GetPos()
@@ -56,7 +78,7 @@ local function HL2C_ToolOpen()
 	
 	local DButton = vgui.Create( "DButton", Frame )
 	DButton:SetText( "Copy" )
-	DButton:SetPos( 440, 70 )
+	DButton:SetPos( 440, 110 )
 	DButton:SetSize( 50, 30 )
 	DButton.DoClick = function()				
 		 SetClipboardText(Frame.ELabel2:GetText())
@@ -66,18 +88,18 @@ local function HL2C_ToolOpen()
 	Frame.SpawnAngle = Angle( 0, 0, 0 )
 
 	Frame.ELabel3 = vgui.Create( "DTextEntry", Frame  )
-	Frame.ELabel3:SetPos( 100, 110 )
+	Frame.ELabel3:SetPos( 100, 150 )
 	Frame.ELabel3:SetSize( 200, 30)
 	Frame.ELabel3:SetText( string.format("Vector(%d,%d,%d)",Frame.SpawnPos:Unpack()) )	
 
 	Frame.ELabel4 = vgui.Create( "DTextEntry", Frame  )
-	Frame.ELabel4:SetPos( 310, 110 )
+	Frame.ELabel4:SetPos( 310, 150 )
 	Frame.ELabel4:SetSize( 100, 30)
 	Frame.ELabel4:SetText( string.format("Angle(%d,%d,%d)",Frame.SpawnAngle:Unpack()) )	
 
 	local DButton = vgui.Create( "DButton", Frame )
 	DButton:SetText( "Spawn Pos" )
-	DButton:SetPos( 10, 110 )
+	DButton:SetPos( 10, 150 )
 	DButton:SetSize( 70, 30 )
 	DButton.DoClick = function()				
 		Frame.SpawnPos = LocalPlayer():GetPos()
@@ -88,11 +110,12 @@ local function HL2C_ToolOpen()
 
 	local DButton = vgui.Create( "DButton", Frame )
 	DButton:SetText( "Copy" )
-	DButton:SetPos( 440, 110 )
+	DButton:SetPos( 440, 150 )
 	DButton:SetSize( 50, 30 )
 	DButton.DoClick = function()				
 		 SetClipboardText(Frame.ELabel3:GetText().." , "..Frame.ELabel4:GetText())
 	end
+	
 
 	GAMEMODE.HL2C_ToolMenu = Frame
 end
@@ -101,13 +124,13 @@ HL2C_DevTool = HL2C_DevTool or {}
 
 function HL2C_DevTool:SetP1(vec)
 	if !IsValid(GAMEMODE.HL2C_ToolMenu) then return end
-	GAMEMODE.HL2C_ToolMenu.CornerA = vec
+	GAMEMODE.HL2C_ToolMenu.CornerA = Vector(vec)
 	GAMEMODE.HL2C_ToolMenu.ELabel:SetText( string.format("Vector(%d,%d,%d)",GAMEMODE.HL2C_ToolMenu.CornerA:Unpack()) )
 end
 
 function HL2C_DevTool:SetP2(vec)
 	if !IsValid(GAMEMODE.HL2C_ToolMenu) then return end
-	GAMEMODE.HL2C_ToolMenu.CornerB = vec
+	GAMEMODE.HL2C_ToolMenu.CornerB = Vector(vec)
 	GAMEMODE.HL2C_ToolMenu.ELabel2:SetText( string.format("Vector(%d,%d,%d)",GAMEMODE.HL2C_ToolMenu.CornerB:Unpack()) )
 end
 
@@ -122,9 +145,43 @@ local function Draw_Tools()
 			render.DrawWireframeBox( Vector(0,0,0), Angle(0,0,0), GAMEMODE.HL2C_ToolMenu.CornerB - Vector(4,4,4), GAMEMODE.HL2C_ToolMenu.CornerB + Vector(4,4,4), Color( 50, 50, 200 ),false )
 		end
 		if !GAMEMODE.HL2C_ToolMenu.SpawnPos:IsZero() then
-			render.DrawWireframeBox( GAMEMODE.HL2C_ToolMenu.SpawnPos, Angle(0,0,0), Vector(-16,-16,0), Vector(16,16,72), Color( 50, 500, 50 ),true )
-			render.DrawLine( GAMEMODE.HL2C_ToolMenu.SpawnPos +Vector(-8,-8,0) , GAMEMODE.HL2C_ToolMenu.SpawnPos - Vector(-8,-8,0), Color( 50, 500, 50 ), true )
-			render.DrawLine( GAMEMODE.HL2C_ToolMenu.SpawnPos +Vector(-8,08,0) , GAMEMODE.HL2C_ToolMenu.SpawnPos - Vector(-8,08,0), Color( 50, 500, 50 ), true )
+			local pos = GAMEMODE.HL2C_ToolMenu.SpawnPos
+			render.DrawWireframeBox( pos, Angle(0,0,0), Vector(-16,-16,0), Vector(16,16,72), Color( 50, 220, 50 ),true )
+			render.DrawLine( pos +Vector(-8,-8,0) , pos - Vector(-8,-8,0), Color( 50, 220, 50 ), true )
+			render.DrawLine( pos +Vector(-8,08,0) , pos - Vector(-8,08,0), Color( 50, 220, 50 ), true )
+			
+			pos = pos +Vector(0,0,64)
+			
+			--I spend far too long on this
+			
+			local vec1 = Angle(GAMEMODE.HL2C_ToolMenu.SpawnAngle)
+			vec1:RotateAroundAxis( GAMEMODE.HL2C_ToolMenu.SpawnAngle:Up(), 25)
+			vec1:RotateAroundAxis( GAMEMODE.HL2C_ToolMenu.SpawnAngle:Right(), 15)
+			local vec2 = Angle(GAMEMODE.HL2C_ToolMenu.SpawnAngle)
+			vec2:RotateAroundAxis( GAMEMODE.HL2C_ToolMenu.SpawnAngle:Up(), -25)
+			vec2:RotateAroundAxis( GAMEMODE.HL2C_ToolMenu.SpawnAngle:Right(), 15)
+			local vec3 = Angle(GAMEMODE.HL2C_ToolMenu.SpawnAngle)
+			vec3:RotateAroundAxis( GAMEMODE.HL2C_ToolMenu.SpawnAngle:Up(), -25)
+			vec3:RotateAroundAxis( GAMEMODE.HL2C_ToolMenu.SpawnAngle:Right(), -15)
+			local vec4 = Angle(GAMEMODE.HL2C_ToolMenu.SpawnAngle)
+			vec4:RotateAroundAxis( GAMEMODE.HL2C_ToolMenu.SpawnAngle:Up(), 25)
+			vec4:RotateAroundAxis( GAMEMODE.HL2C_ToolMenu.SpawnAngle:Right(), -15)
+			
+			local pos1 = pos + vec1:Forward() * 32
+			local pos2 = pos + vec2:Forward() * 32
+			local pos3 = pos + vec3:Forward() * 32
+			local pos4 = pos + vec4:Forward() * 32
+			--render.DrawLine( pos , pos + GAMEMODE.HL2C_ToolMenu.SpawnAngle:Forward() * 16, Color( 50, 220, 50 ), true )
+			render.DrawLine( pos ,pos1, Color( 50, 220, 50 ), true )
+			render.DrawLine( pos ,pos2, Color( 50, 220, 50 ), true )
+			render.DrawLine( pos ,pos3, Color( 50, 220, 50 ), true )
+			render.DrawLine( pos ,pos4, Color( 50, 220, 50 ), true )
+			
+			render.DrawLine( pos1 ,pos2, Color( 50, 220, 50 ), true )
+			render.DrawLine( pos2 ,pos3, Color( 50, 220, 50 ), true )
+			render.DrawLine( pos3 ,pos4, Color( 50, 220, 50 ), true )
+			render.DrawLine( pos4 ,pos1, Color( 50, 220, 50 ), true )
+
 		end
 	end
 end

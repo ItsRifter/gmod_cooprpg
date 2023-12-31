@@ -534,7 +534,13 @@ function PANEL:Init()
 end
 
 function PANEL:SetText(text,font, alignX, alignY, spacing)
-	self.Text = text
+	
+	if istable(text) then
+		self.Text = text
+	else
+		self.Text = {text}
+	end
+	
 
 	self.font = self.font or font
 	self.spacing = spacing

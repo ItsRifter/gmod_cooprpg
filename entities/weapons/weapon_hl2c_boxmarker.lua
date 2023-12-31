@@ -117,7 +117,7 @@ function SWEP:PrimaryAttack()
     p1 = self:DoTraceLine().HitPos
 
     if CLIENT then 
-        PlayUseSounds()
+        PlayUseSounds("weapons/airboat/airboat_gun_lastshot1.wav")
 		HL2C_DevTool:SetP1(p1)
     end
 end
@@ -128,13 +128,18 @@ function SWEP:SecondaryAttack()
     p2 = self:DoTraceLine().HitPos
 
     if CLIENT then 
-        PlayUseSounds()
+        PlayUseSounds("weapons/airboat/airboat_gun_lastshot2.wav")
 		HL2C_DevTool:SetP2(p2)
     end
 end
 
-function PlayUseSounds()
-    surface.PlaySound("buttons/button15.wav")
+function PlayUseSounds(snd)
+	if snd then 
+		surface.PlaySound(snd)
+	else
+		surface.PlaySound("buttons/button15.wav")
+	end
+    --surface.PlaySound("buttons/button15.wav")
 end
 
 local red = Color(255, 0, 0, 255)
@@ -153,7 +158,11 @@ function SWEP:CreateVectorAxis()
 	local up 		= angle:Up()
 	local left		= -angle:Right()
 
-	if self:GetOwner():KeyDown(IN_WALK) then
+
+	local grid = false
+	if IsValid(GAMEMODE.HL2C_ToolMenu) then grid = GAMEMODE.HL2C_ToolMenu.grid end
+
+	if self:GetOwner():KeyDown(IN_WALK) or grid then
 		render.DrawLine( hitpos - 16 * forward, hitpos + 16 * forward, red, true )
 		render.DrawLine( hitpos - 16 * forward + 08 * up, hitpos + 16 * forward + 08 * up, red, true )
 		render.DrawLine( hitpos - 16 * forward + 16 * up, hitpos + 16 * forward + 16 * up, red, true )

@@ -25,6 +25,6 @@ end
 ---------------------------------------------------------------------------------------------------------
 
 for i, filename in pairs(file.Find(GM.FolderName.."/gamemode/shared/language/*.lua", "LUA")) do
-	if SEVER then AddCSLuaFile("language/" .. filename) end
 	include("language/" .. filename)
+	if SERVER then AddCSLuaFile("language/" .. filename) end
 end
