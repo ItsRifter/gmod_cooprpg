@@ -40,7 +40,6 @@ function PANEL:Init()
 	local Btn = New_ThemeButton(self, wide * 0.85 - tall * 0.01, tall * 0.16,wide* 0.15,tall* 0.05,translate.Get("Basic_Help"),"Font_Small")
 	Btn:SetFunc(
 		function()
-			--Text:SetVisible( true )
 			self:ShowOptions(false)
 			Text:SetText(translate.Get("HM_Info"),nil,0.5,0, 2)
 		end
@@ -49,7 +48,6 @@ function PANEL:Init()
 	local Btn = New_ThemeButton(self, wide * 0.85 - tall * 0.01, tall * 0.22,wide* 0.15,tall* 0.05,translate.Get("Basic_Cmd"),"Font_Small")
 	Btn:SetFunc(
 		function()
-			--Text:SetVisible( true )
 			self:ShowOptions(false)
 			Text:SetText(translate.Get("HM_Commands"),nil,0.5,0, 2)
 		end
@@ -58,7 +56,6 @@ function PANEL:Init()
 	local Btn = New_ThemeButton(self, wide * 0.85 - tall * 0.01, tall * 0.28,wide* 0.15,tall* 0.05,translate.Get("Basic_Pets"),"Font_Small")
 	Btn:SetFunc(
 		function()
-			--Text:SetVisible( true )
 			self:ShowOptions(false)
 			Text:SetText(translate.Get("HM_Pets"),nil,0.5,0, 2)
 		end
@@ -67,7 +64,6 @@ function PANEL:Init()
 	local Btn = New_ThemeButton(self, wide * 0.85 - tall * 0.01, tall * 0.93,wide* 0.15,tall* 0.05,translate.Get("Basic_Options"),"Font_Small")
 	Btn:SetFunc(
 		function()
-			--Text:SetVisible( false )
 			self:ShowOptions(true)
 		end
 	)

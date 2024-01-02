@@ -29,6 +29,7 @@ local p2 = Vector(0, 0, 0)
 local minDist = 16
 local maxDist = 256
 local curDist = 128
+local hitDist = 128
 
 function SWEP:DoTraceLine()
     local trace
@@ -52,6 +53,8 @@ function SWEP:DoTraceLine()
 		endpos = trace + aimAngle * curDist,
 		filter = owner
 	} )
+
+	hitDist = tr.HitPos:Distance( owner:EyePos() )
 
     return tr
 end
@@ -154,6 +157,8 @@ function SWEP:CreateVectorAxis()
 
 	local hitpos = tr.HitPos
 
+	--hitDist = Vector:Distance( hitpos )
+
 	local forward 	= angle:Forward()
 	local up 		= angle:Up()
 	local left		= -angle:Right()
@@ -232,3 +237,19 @@ hook.Add("PostDrawOpaqueRenderables", "HL2C_Debug_BoxMarker_Draw", function()
     wep:CreateVectorAxis()
     wep:DrawWireboxes()
 end)
+
+function SWEP:DrawHUD()
+	local x, y -- local, always
+	x, y = ScrW() * 0.5, ScrH() * 0.95 -- Center of screen
+
+	surface.SetFont( "Font_Small" )
+	surface.SetTextColor( 255, 255, 255 )
+	
+	local text = string.format("%.1f  (%.1f)", math.Round(hitDist,1), math.Round(curDist,1))
+	local width, height = surface.GetTextSize( text )
+	
+	surface.SetTextPos( x - width * 0.5, y ) 
+	surface.DrawText( text )
+	
+end
+

@@ -116,6 +116,34 @@ local function HL2C_ToolOpen()
 		 SetClipboardText(Frame.ELabel3:GetText().." , "..Frame.ELabel4:GetText())
 	end
 	
+	local DButton = vgui.Create( "DButton", Frame )
+	DButton:SetText( "Create CP" )
+	DButton:SetPos( 10, 190 )
+	DButton:SetSize( 200, 30 )
+	DButton.DoClick = function()	
+		local temptable = {}
+		temptable.min = Frame.CornerA
+		temptable.max = Frame.CornerB
+		temptable.spawn = Frame.SpawnPos
+		temptable.angle = Frame.SpawnAngle
+		net.Start( "HL2C_DEV_AddCP" )
+			net.WriteTable( temptable, false )
+		net.SendToServer()
+	end
+	
+	local DButton = vgui.Create( "DButton", Frame )
+	DButton:SetText( "Remove All CPs" )
+	DButton:SetPos( 340, 190 )
+	DButton:SetSize( 150, 30 )
+	DButton.DoClick = function()	
+		local temptable = {}
+		temptable.min = Frame.CornerA
+		temptable.max = Frame.CornerB
+		temptable.spawn = Frame.SpawnPos
+		temptable.angle = Frame.SpawnAngle
+		net.Start( "HL2C_DEV_DestroyCPs" )
+		net.SendToServer()
+	end
 
 	GAMEMODE.HL2C_ToolMenu = Frame
 end
