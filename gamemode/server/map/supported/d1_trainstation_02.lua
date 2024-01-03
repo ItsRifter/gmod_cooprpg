@@ -1,27 +1,5 @@
-local MAP_NAME = "d1_trainstation_02"
-local MAP_FUNC = {}
 
-function MAP_FUNC:SetUp()
-    
-end
-
-function CreateLogicEnts()
-
-end
-
-function CreateGameEnts()
-
-end
-
-local function PreSetUp()
-    local map = {
-        ["Map"] = {
-            MapName = MAP_NAME,
-            Func = MAP_FUNC
-        }
-    }
-    
-    HL2C_MapList:AddMapToList(map)
-end
-
-PreSetUp()
+HL2C_Map.Weapons = {}
+HL2C_Map.Loadout = {}
+HL2C_Map.Flags = {}
+HL2C_Map.NextMap = "d1_trainstation_03"

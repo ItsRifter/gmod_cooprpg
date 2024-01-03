@@ -145,6 +145,48 @@ local function HL2C_ToolOpen()
 		net.SendToServer()
 	end
 
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+
+	local DButton = vgui.Create( "DButton", Frame )
+	DButton:SetText( "Copy CP Code to clipboard" )
+	DButton:SetPos( 10, 600 )
+	DButton:SetSize( 480, 30 )
+	DButton.DoClick = function()
+		local clipboard = "{ min="..string.format("Vector(%.1f,%.1f,%.1f)",Frame.CornerA:Unpack())
+		clipboard = clipboard..",max="..string.format("Vector(%.1f,%.1f,%.1f)",Frame.CornerB:Unpack())
+		clipboard = clipboard..",spawn="..string.format("Vector(%.1f,%.1f,%.1f)",Frame.SpawnPos:Unpack())
+		clipboard = clipboard..",angle="..string.format("Angle(%.1f,%.1f,%.1f)",Frame.SpawnAngle:Unpack())
+		clipboard = clipboard..", func = nil },"
+		SetClipboardText(clipboard)
+	end
+	
+	local DButton = vgui.Create( "DButton", Frame )
+	DButton:SetText( "Copy Exit/Trigger Code to clipboard" )
+	DButton:SetPos( 10, 640 )
+	DButton:SetSize( 480, 30 )
+	DButton.DoClick = function()
+		local clipboard = "{ min="..string.format("Vector(%.1f,%.1f,%.1f)",Frame.CornerA:Unpack())
+		clipboard = clipboard..",max="..string.format("Vector(%.1f,%.1f,%.1f)",Frame.CornerB:Unpack())
+		clipboard = clipboard..", func = nil }"
+		SetClipboardText(clipboard)
+	end
+	
+	local DButton = vgui.Create( "DButton", Frame )
+	DButton:SetText( "Copy Spawn Code to clipboard" )
+	DButton:SetPos( 10, 680 )
+	DButton:SetSize( 480, 30 )
+	DButton.DoClick = function()
+		local clipboard = "{ spawn="..string.format("Vector(%.1f,%.1f,%.1f)",Frame.SpawnPos:Unpack())
+		clipboard = clipboard..",angle="..string.format("Angle(%.1f,%.1f,%.1f)",Frame.SpawnAngle:Unpack())..", func = nil }"
+		SetClipboardText(clipboard)
+	end
+
+
+
+------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
+
 	GAMEMODE.HL2C_ToolMenu = Frame
 end
 

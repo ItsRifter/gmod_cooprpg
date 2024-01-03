@@ -1,6 +1,6 @@
 HL2C_Server.Cps = HL2C_Server.Cps or {}
 
-function HL2C_Server:CreateCP(Min,Max,TPos,TAngle,func)
+function HL2C_Server:CreateCP(Min,Max,TPos,TAngle,func,dist)
 	local cp = ents.Create("trigger_hl2c_cp")
 	cp.Min = Min
 	cp.Max = Max
@@ -30,4 +30,16 @@ function HL2C_Server:RemoveCPs()
 		v:Remove()
 	end
 	HL2C_Server.Cps = {}
+end
+
+
+function HL2C_Server:SetupMap()
+	HL2C_Server:RemoveCPs()
+	if HL2C_Map.Checkpoints then
+		for k, cpdata in pairs( HL2C_Map.Checkpoints ) do
+			HL2C_Server:CreateCP(cpdata.min,cpdata.max,cpdata.spawn,cpdata.angle,cpdata.func or nil, cpdata.dist or nil)
+		end
+	end
+	
+	if HL2C_Map.MapStartup then HL2C_Map.MapStartup() end
 end

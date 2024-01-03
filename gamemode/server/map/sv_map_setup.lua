@@ -1,39 +1,16 @@
-HL2C_MapList = {
-    Maps = {}
-}
+HL2C_Map = HL2C_Map or {}
 
-local function GetMapFile(target)
-    local foundMap = nil
+function HL2C_Map:Init()
+    local filepath = GM.FolderName .. "/gamemode/server/map/supported/"..game.GetMap()..".lua"
+    --local mapfile = file.Exists( filepath, "LUA")
 
-    for _, m in ipairs(HL2C_MapList.Maps) do
-        if(m.MapName == target) then
-            foundMap = m
-            break
-        end
-    end
-
-    return foundMap
-end
-
-function HL2C_MapList:Init()
-    local curMap = GetMapFile(game.GetMap())
-    if curMap == nil then return end
-
-    curMap.Func.SetUp()
-end
-
-function HL2C_MapList:AddMapFiles()
-    local folderPath = GM.FolderName .. "/gamemode/server/map/supported/"
-
-    local maps = file.Find( folderPath .. "*.lua", "LUA")
-
-    for _, m in ipairs(maps) do
-        include(folderPath .. m)
-    end
-end
-
-function HL2C_MapList:AddMapToList(mapFile)    
-    table.Add(HL2C_MapList.Maps, mapFile)
+	if file.Exists( filepath, "LUA") then
+		include(filepath)
+		print(game.GetMap().." lua loaded")
+		HL2C_Server:SetupMap()
+	else
+		print(game.GetMap().." lua not found")
+	end
 end
 
 local default_globalVars = {
@@ -52,8 +29,8 @@ local default_globalVars = {
 
 local mapset_globalvars = {}
 
-function HL2C_MapList:SetGlobalVar(globalVar, value)
-    if value < 0 or value > 3 then return end
+function HL2C_Map:SetGlobalVar(globalVar, value)
+    if value < 0 or value > 2 then return end  --0 offstate - 1 onstate - 2 deadstate
 
     game.SetGlobalState(globalVar, value)
 
@@ -62,7 +39,7 @@ function HL2C_MapList:SetGlobalVar(globalVar, value)
     end
 end
 
-function HL2C_MapList:ResetExcludedGlobalVars()
+function HL2C_Map:ResetExcludedGlobalVars()
     local globalTbl = default_globalVars
 
     for i, g in ipairs(mapset_globalvars) do
@@ -74,10 +51,8 @@ function HL2C_MapList:ResetExcludedGlobalVars()
     end
 end
 
-HL2C_MapList:AddMapFiles()
-
-//hook.Add("InitPostEntity", "HL2C_Map_Init", HL2C_MapList:Init())
-hook.Add("PostCleanupMap", "HL2C_Map_Init_Cleanup", HL2C_MapList:Init())
+HL2C_Map:Init()
+hook.Add("PostCleanupMap", "HL2C_Map_Init_Cleanup", HL2C_Map:Init())
 
 hook.Add("IsSpawnpointSuitable", "HL2C_MakeSpawnsNotKill", function(ply, spawnpoint, makeSuitable)
     makeSuitable = false
