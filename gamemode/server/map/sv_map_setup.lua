@@ -6,12 +6,12 @@ function HL2C_Map:Init()
 
 	if file.Exists( filepath, "LUA") then
 		include(filepath)
-		print(game.GetMap().." lua loaded")
-		HL2C_Server:SetupMap()
+		--print(game.GetMap().." lua loaded")
 	else
 		print(game.GetMap().." lua not found")
 	end
 end
+HL2C_Map:Init()
 
 local default_globalVars = {
     "actlion_allied",
@@ -51,8 +51,8 @@ function HL2C_Map:ResetExcludedGlobalVars()
     end
 end
 
-HL2C_Map:Init()
-hook.Add("PostCleanupMap", "HL2C_Map_Init_Cleanup", HL2C_Map:Init())
+hook.Add("InitPostEntity", "HL2C_Map_Init_Startup", function() HL2C_Server:SetupMap() end)
+hook.Add("PostCleanupMap", "HL2C_Map_Init_Cleanup", function() HL2C_Server:SetupMap() end)
 
 hook.Add("IsSpawnpointSuitable", "HL2C_MakeSpawnsNotKill", function(ply, spawnpoint, makeSuitable)
     makeSuitable = false

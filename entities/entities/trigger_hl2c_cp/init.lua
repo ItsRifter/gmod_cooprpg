@@ -27,27 +27,12 @@ end
 
 --When the player touches the entity
 function ENT:StartTouch(ent)
-
+	if self.Triggered then return end
 	--if ent and ent:IsValid() and ent:IsPlayer() and ent:Team() == TEAM_ALIVE and not self.Triggered then
 	if ent and ent:IsValid() and ent:IsPlayer() then
 		self.Triggered = true
 		
-		--if self.Func then
-		--	self.Func()
-		--end
-
-		--BroadcastMessageToAll(HL2CR_PlayerColour, ent:Nick(), HL2CR_StandardColour, translate.Get("Player_Checkpoint"))
-
-		--MoveSpawns(self.TPPoint,self.TPAngles)
-
-		--MovePlayers(self.TPPoint,self.TPAngles, true, ent)
-		
-		--if false then --debug for checkpoint verifying in solo
-		--	GAMEMODE:RemoveVehicle(ent)
-		--	
-		--	ent:SetPos(self.TPPoint)
-		--	ent:SetEyeAngles(self.TPAngles)
-		--end
+		HL2C_Server:MoveSpawn(self.TPPoint,self.TPAngles,nil)
 			
 		ent:SetPos(self.TPPoint)
 		ent:SetEyeAngles(self.TPAngles)

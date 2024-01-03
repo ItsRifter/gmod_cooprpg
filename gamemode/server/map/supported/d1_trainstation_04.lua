@@ -4,7 +4,7 @@ HL2C_Map.Loadout = {}
 HL2C_Map.Flags = {}
 HL2C_Map.NextMap = "d1_trainstation_05"
 
-HL2C_Map.Spawn = { spawn=Vector(-3065.9,-3682.6,384.0),angle=Angle(-1.8,176.3,0.0), func = nil }
+HL2C_Map.Spawn = { spawn=Vector(-3367.7,-3670.5,448.0),angle=Angle(-13.3,88.5,0.0)}
 
 HL2C_Map.Exit = { min=Vector(-8110.7,-4160.0,-154.2),max=Vector(-8019.4,-4097.0,-256.0), func = nil }
 

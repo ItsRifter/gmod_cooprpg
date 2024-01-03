@@ -178,7 +178,7 @@ local function HL2C_ToolOpen()
 	DButton:SetSize( 480, 30 )
 	DButton.DoClick = function()
 		local clipboard = "{ spawn="..string.format("Vector(%.1f,%.1f,%.1f)",Frame.SpawnPos:Unpack())
-		clipboard = clipboard..",angle="..string.format("Angle(%.1f,%.1f,%.1f)",Frame.SpawnAngle:Unpack())..", func = nil }"
+		clipboard = clipboard..",angle="..string.format("Angle(%.1f,%.1f,%.1f)",Frame.SpawnAngle:Unpack()).."}"
 		SetClipboardText(clipboard)
 	end
 
