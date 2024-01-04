@@ -25,10 +25,9 @@ end
 
 if SERVER then
     
-    //Make a debug message
     function HL2C_Server:DebugMsg(strMsg, intColour)
         //In case one of us forgot to leave a message
-        if !IsValid(strMsg) then
+        if strMsg == "" then
             MsgC(HL2C_COLOR_RED, "HL2C-DEBUG-FAIL: Tried to print with no message \n")
             return
         end

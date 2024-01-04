@@ -23,7 +23,6 @@ local function HL2C_ToolOpen()
 		LocalPlayer():ConCommand( "give weapon_hl2c_boxmarker" )
 	end
 	
-	
 	Frame.grid = false
 	
 	local DCheckbox = vgui.Create( "DCheckBoxLabel", Frame ) -- Create the checkbox
@@ -34,7 +33,6 @@ local function HL2C_ToolOpen()
 	DCheckbox.OnChange = function()
 		Frame.grid = DCheckbox:GetChecked()
 	end
-	
 	
 	Frame.CornerA = Vector( 0, 0, 0 )
 
@@ -182,8 +180,6 @@ local function HL2C_ToolOpen()
 		SetClipboardText(clipboard)
 	end
 
-
-
 ------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------
 
@@ -258,8 +254,6 @@ end
 hook.Add( "PreDrawEffects", "Draw_Tools", Draw_Tools )
 
 --render.DrawWireframeBox( Vector(0,0,0), Angle(0,0,0), Frame.CornerA, Frame.CornerB, Color( 255, 255, 255 ),false )
-
-
 
 ---------------------------------------------------------------------------------------------------------------------
 
