@@ -14,9 +14,6 @@ HL2C_Map.Checkpoints = {
 	{ min=Vector(-7807.9,-3884.0,-223.2),max=Vector(-7371.6,-4085.1,-256.0),spawn=Vector(-7758.5,-3949.3,-235.6),angle=Angle(6.1,-12.6,0.0) }
 }
 
-
 HL2C_Map.MapStartup = function()
 	print("Map startup code was here")
-
-
 end

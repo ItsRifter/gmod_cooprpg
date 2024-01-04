@@ -11,11 +11,9 @@ function HL2C_Server:CreateCP(Min,Max,TPos,TAngle,func,dist)
 	cp:SetPos(cp.Pos)
 	cp:Spawn()
 	
-	table.insert( HL2C_Server.Cps, cp )
+	cp.Func = func or nil
 	
-	--if func then
-	--	cp.Func = func
-	--end
+	table.insert( HL2C_Server.Cps, cp )
 	
 	--checkpoint.lambdaModel = ents.Create("prop_dynamic")
 	--checkpoint.lambdaModel:SetModel("models/hl2cr_lambda.mdl")
@@ -27,9 +25,29 @@ end
 
 function HL2C_Server:RemoveCPs()
 	for k, v in pairs( HL2C_Server.Cps ) do
-		v:Remove()
+		if IsValid(v) then v:Remove() end
 	end
+	
 	HL2C_Server.Cps = {}
+end
+
+HL2C_Server.LvlExit = HL2C_Server.LvlExit or nil
+
+function HL2C_Server:SpawnExit(Min,Max,func)
+	if HL2C_Server.LvlExit then 
+		if IsValid(HL2C_Server.LvlExit) then HL2C_Server.LvlExit:Remove() end
+	end
+	
+	local LvlExit = ents.Create("trigger_hl2c_endlvl")
+	LvlExit.Min = Min
+	LvlExit.Max = Max
+	LvlExit.Pos = (Max + Min)/2
+	LvlExit:SetPos(LvlExit.Pos)
+	LvlExit:Spawn()
+	
+	LvlExit.Func = func or nil
+	
+	HL2C_Server.LvlExit = LvlExit
 end
 
 function HL2C_Server:MoveSpawn(TPPoint,TPAngles, parent)
@@ -62,6 +80,8 @@ function HL2C_Server:SetupMap()
 	HL2C_Server:RemoveCPs()
 	
 	if HL2C_Map.Spawn then HL2C_Server:MoveSpawn(HL2C_Map.Spawn.spawn,HL2C_Map.Spawn.angle) end
+	
+	if HL2C_Map.Exit then HL2C_Server:SpawnExit(HL2C_Map.Exit.min,HL2C_Map.Exit.max,HL2C_Map.Exit.func or nil) end
 	
 	if HL2C_Map.Checkpoints then
 		for k, cpdata in pairs( HL2C_Map.Checkpoints ) do

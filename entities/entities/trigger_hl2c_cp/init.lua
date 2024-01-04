@@ -3,18 +3,17 @@
 ENT.Base = "base_brush"
 ENT.Type = "brush"
 
-ENT.TPPoint = ENT.TPPoint or Vector(0, 0, 0)
-ENT.TPAngles = ENT.TPAngles or Angle(0, 0, 0)
-ENT.Mat = "hl2cr/models/checkpoint.vtf"
-ENT.Triggered = ENT.Triggered or false
+--ENT.TPPoint = ENT.TPPoint or Vector(0, 0, 0)
+--ENT.TPAngles = ENT.TPAngles or Angle(0, 0, 0)
+--ENT.Mat = "hl2cr/models/checkpoint.vtf"
+--ENT.Triggered = ENT.Triggered or false
 
 function ENT:Initialize()
-	
+	self.Triggered = self.Triggered or false
 	if self.TPPoint == Vector(0, 0, 0) then
 		print("CHECKPOINT FAIL: VECTOR INVALID")
 		return
 	end
-
 	self:DrawShadow(false)
 	self:SetCollisionBoundsWS(self.Min, self.Max)
 	self:SetSolid(SOLID_BBOX)
@@ -40,8 +39,4 @@ function ENT:StartTouch(ent)
 		--self.lambdaModel:Remove()
 	end
 
-end
-
-function ENT:IsTriggered()
-	return self.Triggered
 end
