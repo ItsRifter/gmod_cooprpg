@@ -78,6 +78,7 @@ function HL2C_Server:MoveSpawn(TPPoint,TPAngles, parent)
 end
 
 function HL2C_Server:SetupMap()
+	HL2C_Server:RemoveChangeLevel()
 	HL2C_Server:RemoveCPs()
 	
 	if HL2C_Map.Spawn then HL2C_Server:MoveSpawn(HL2C_Map.Spawn.spawn, HL2C_Map.Spawn.angle) end
@@ -91,4 +92,10 @@ function HL2C_Server:SetupMap()
 	end
 	
 	if HL2C_Map.MapStartup then HL2C_Map.MapStartup() end
+end
+
+function HL2C_Server:RemoveChangeLevel()
+    for _, c in pairs(ents.FindByClass("trigger_changelevel")) do
+        c:Remove()
+    end
 end

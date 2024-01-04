@@ -31,6 +31,7 @@ function ENT:StartTouch(ent)
 	if self.Triggered then return end
 	--if ent and ent:IsValid() and ent:IsPlayer() and ent:Team() == TEAM_ALIVE and not self.Triggered then
 	if ent and ent:IsValid() and ent:IsPlayer() then
+		if ent:Team() != TEAM_HUMAN_ALIVE then return end
 		self.Triggered = true
 		
 		HL2C_Server:MoveSpawn(self.TPPoint, self.TPAngles, nil)

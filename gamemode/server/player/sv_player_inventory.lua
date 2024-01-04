@@ -12,20 +12,19 @@ HL2C_Server.AdminWeapons = {
 
 function hl2c_player:GiveWeapons()
     for _, w in ipairs(HL2C_Server.AvailableWeapons) do
-        self:Give(w, true)
+        if !self:HasWeapon( w ) then self:Give(w, true) end
     end
 end
 
 function AddWeaponRespawns(strWepClass, bGiveOthers)
-    table.insert(HL2C_Server.AvailableWeapons, strWepClass)
-
-    print(strWepClass)
+    if table.HasValue( HL2C_Server.AvailableWeapons, strWepClass ) then return end
+	table.insert(HL2C_Server.AvailableWeapons, strWepClass)
 
     HL2C_Server:DebugMsg(strWepClass, 0)
 
     if bGiveOthers then
         for _, p in ipairs(player.GetAll()) do
-            //p:Give(strWepClass)
+            if !p:HasWeapon( strWepClass ) then p:Give(strWepClass) end
         end
     end
 end

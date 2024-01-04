@@ -1,17 +1,15 @@
 
 local function GetPlayerTeamColours(player)
-	if player:Team() == TEAM_ALIVE then
-		--Alive
+	if player:Team() == TEAM_HUMAN_ALIVE then
 		return Color(90, 255, 105,160) 
-	elseif player:Team() == TEAM_COMPLETED_MAP then
-		--Completed Map
+	elseif player:Team() == TEAM_HUMAN_FIN then
 		return Color(250, 220, 0,160) 
-	elseif player:Team() == TEAM_DEAD then
-		--Dead
+	elseif player:Team() == TEAM_HUMAN_DEAD then
 		return Color(210, 30, 30,160) 
-	elseif player:Team() == TEAM_LOYAL then
-		--Loyal
+	elseif player:Team() == TEAM_COMBINE_ALIVE then
 		return Color(0, 255, 245,160) 
+	elseif player:Team() == TEAM_COMBINE_DEAD then
+		return Color(0, 166, 144,160) 
 	elseif player:Team() == TEAM_AFK then
 		--AFK
 		return Color(120, 120, 120,160) 

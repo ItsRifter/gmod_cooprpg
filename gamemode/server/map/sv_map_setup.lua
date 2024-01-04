@@ -1,4 +1,4 @@
-HL2C_Map = HL2C_Map or {}
+HL2C_Map = {}
 
 function HL2C_Map:Init()
     local filepath = GM.FolderName .. "/gamemode/server/map/supported/"..game.GetMap()..".lua"
