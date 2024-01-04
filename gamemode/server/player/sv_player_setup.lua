@@ -18,8 +18,8 @@ end)
 
 
 --Called right after GM:DoPlayerDeath, GM:PlayerDeath and GM:PlayerSilentDeath.
-function hl2c_player:PostDeath( ply )
-	if ply:Team() == TEAM_HUMAN_ALIVE then ply:SetTeam(TEAM_HUMAN_DEAD) end
+function hl2c_player:PostDeath(  )
+	if self:Team() == TEAM_HUMAN_ALIVE then self:SetTeam(TEAM_HUMAN_DEAD) end
 end
 
 hook.Add("PostPlayerDeath", "HL2C_Player_PostDeath", function(ply, transition)
