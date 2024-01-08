@@ -13,14 +13,12 @@ function HL2C_Server:CreateCP(Min,Max,TPos,TAngle,func,dist)
 	
 	cp.Func = func or nil
 	
+	cp.lambda = HL2C_Server:CreateLambdaIcon(cp.TPPoint+ Vector(0, 0, 75),"hl2c/x64")
+	--cp.lambda = HL2C_Server:CreateLambdaIcon(cp.TPPoint+ Vector(0, 0, 75),"models/props_combine/tprings_globe")
+	cp.lambda:SetColor4Part(255, 100, 0, 120)
+	cp.lambda:SetRenderFX( 3 )
+
 	table.insert( HL2C_Server.Cps, cp )
-	
-	--checkpoint.lambdaModel = ents.Create("prop_dynamic")
-	--checkpoint.lambdaModel:SetModel("models/hl2cr_lambda.mdl")
-	--checkpoint.lambdaModel:SetPos( checkpoint.TPPoint + Vector(0, 0, 75))
-	--checkpoint.lambdaModel:Spawn()
-	--checkpoint.lambdaModel:ResetSequence("idle")
-	--checkpoint.lambdaModel:SetMaterial(checkpoint.Mat)
 end
 
 function HL2C_Server:RemoveCPs()
@@ -44,6 +42,10 @@ function HL2C_Server:SpawnExit(Min,Max,func)
 	LvlExit.Pos = (Max + Min)/2
 	LvlExit:SetPos(LvlExit.Pos)
 	LvlExit:Spawn()
+	
+	LvlExit.lambda = HL2C_Server:CreateLambdaIcon(LvlExit.Pos,"hl2c/x64")
+	LvlExit.lambda:SetColor4Part(50, 200, 50, 120)
+	LvlExit.lambda:SetRenderFX( 3 )
 	
 	LvlExit.Func = func or nil
 	
@@ -98,4 +100,18 @@ function HL2C_Server:RemoveChangeLevel()
     for _, c in pairs(ents.FindByClass("trigger_changelevel")) do
         c:Remove()
     end
+end
+
+function HL2C_Server:CreateLambdaIcon(pos,mat)
+	--local lambda = ents.Create("prop_dynamic")
+	local lambda = ents.Create("hl2c_lambda")
+	--lambda:SetModel("models/hl2cr_lambda.mdl")
+	--lambda:SetModel("models/hl2c/lamba_logo.mdl")
+	lambda:SetPos( pos)
+	lambda:SetAngles(Angle(0,0,0))
+	lambda:Spawn()
+	--lambda:ResetSequence("idle")
+
+	--lambda:SetMaterial(mat)
+	return lambda
 end

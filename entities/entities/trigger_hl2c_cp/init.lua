@@ -35,7 +35,9 @@ function ENT:StartTouch(ent)
 		self.Triggered = true
 		
 		HL2C_Server:MoveSpawn(self.TPPoint, self.TPAngles, nil)
-			
+		
+		if self.lambda then self.lambda:Remove() end
+		
 		ent:SetPos(self.TPPoint)
 		ent:SetEyeAngles(self.TPAngles)
 		ent:EmitSound("hl1/ambience/port_suckin1.wav", 100, 100)
