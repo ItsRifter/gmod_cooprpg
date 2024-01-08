@@ -13,9 +13,9 @@ local function GetPlayerTeamColours(player)
 	elseif player:Team() == TEAM_AFK then
 		--AFK
 		return Color(120, 120, 120,160) 
-	else
-		return Color(255, 255, 255,160)
 	end
+
+	return Color(255, 255, 255, 160)
 end
 
 local PANEL = {}
