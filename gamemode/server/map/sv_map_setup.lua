@@ -8,7 +8,7 @@ function HL2C_Map:Init()
 		include(filepath)
 		--print(game.GetMap().." lua loaded")
 	else
-		print(game.GetMap().." lua not found")
+		HL2C_Server:DebugMsg(game.GetMap().." lua not found", 2)
 	end
 end
 HL2C_Map:Init()
