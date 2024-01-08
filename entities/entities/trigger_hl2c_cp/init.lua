@@ -34,13 +34,15 @@ function ENT:StartTouch(ent)
 		if ent:Team() != TEAM_HUMAN_ALIVE then return end
 		self.Triggered = true
 		
-		HL2C_Server:MoveSpawn(self.TPPoint, self.TPAngles, nil)
+		--HL2C_Server:MoveSpawn(self.TPPoint, self.TPAngles, nil)
 		
-		if self.lambda then self.lambda:Remove() end
+		--if self.lambda then self.lambda:Remove() end
 		
-		ent:SetPos(self.TPPoint)
-		ent:SetEyeAngles(self.TPAngles)
-		ent:EmitSound("hl1/ambience/port_suckin1.wav", 100, 100)
+		HL2C_Server:CPTriggered(self,ent)
+		
+		--ent:SetPos(self.TPPoint)
+		--ent:SetEyeAngles(self.TPAngles)
+		--ent:EmitSound("hl1/ambience/port_suckin1.wav", 100, 100)
 		--self.lambdaModel:Remove()
 	end
 

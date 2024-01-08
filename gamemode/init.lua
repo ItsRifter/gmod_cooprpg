@@ -4,6 +4,7 @@ IncludeServerFiles("server/")
 IncludeServerFiles("server/data/")
 IncludeServerFiles("server/player/")
 IncludeServerFiles("server/map/")
+IncludeServerFiles("server/game/")
 IncludeServerFiles("server/network/")
 
 --Order of loading matters
