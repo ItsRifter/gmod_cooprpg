@@ -12,6 +12,8 @@ function HL2C_Server:CreateCP(Min,Max,TPos,TAngle,func,dist)
 	cp:Spawn()
 	
 	cp.Func = func or nil
+	cp.Dist = nil
+	if dist then cp.Dist = dist * dist end
 	
 	cp.lambda = HL2C_Server:CreateLambdaIcon(cp.TPPoint+ Vector(0, 0, 75),"hl2c/x64")
 	--cp.lambda = HL2C_Server:CreateLambdaIcon(cp.TPPoint+ Vector(0, 0, 75),"models/props_combine/tprings_globe")
