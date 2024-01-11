@@ -1,3 +1,5 @@
+local hl2c_player = FindMetaTable("Player")
+
 TEAM_CONNECTED = 0
 team.SetUp(TEAM_CONNECTED		,"Connected", Color(255, 215, 140))
 
@@ -43,4 +45,8 @@ function IsMiscTeam(ply)
     if not IsHuman(ply) or not IsCombine(ply) then return true end
 
     return false
+end
+
+function hl2c_player:IsTeam(iTeam)
+    return self:Team() == iTeam or false
 end

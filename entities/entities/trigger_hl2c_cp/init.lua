@@ -29,15 +29,15 @@ end
 --When the player touches the entity
 function ENT:StartTouch(ent)
 	if self.Triggered then return end
-	--if ent and ent:IsValid() and ent:IsPlayer() and ent:Team() == TEAM_ALIVE and not self.Triggered then
+
 	if ent and ent:IsValid() and ent:IsPlayer() then
-		if ent:Team() != TEAM_HUMAN_ALIVE then return end
+		if not ent:IsTeam(TEAM_HUMAN_ALIVE) then return end
 		
 		--HL2C_Server:MoveSpawn(self.TPPoint, self.TPAngles, nil)
 		
 		--if self.lambda then self.lambda:Remove() end
 		
-		HL2C_Server:CPTriggered(self,ent)
+		HL2C_Server:CheckpointTriggered(self,ent)
 		self.Triggered = true
 		
 		--ent:SetPos(self.TPPoint)
@@ -45,5 +45,4 @@ function ENT:StartTouch(ent)
 		--ent:EmitSound("hl1/ambience/port_suckin1.wav", 100, 100)
 		--self.lambdaModel:Remove()
 	end
-
 end

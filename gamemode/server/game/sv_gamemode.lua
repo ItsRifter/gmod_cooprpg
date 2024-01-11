@@ -1,5 +1,5 @@
 
-function HL2C_Server:CPTriggered(cp,ply)
+function HL2C_Server:CheckpointTriggered(cp, ply)
 	HL2C_Server:MoveSpawn(cp.TPPoint, cp.TPAngles, nil)
 		
 	if cp.lambda and cp.lambda:IsValid() then cp.lambda:Remove() end
@@ -9,10 +9,9 @@ function HL2C_Server:CPTriggered(cp,ply)
 	for i, pl in ipairs( player.GetAll() ) do
 		if pl == ply then continue end
 		if IsHuman(pl) then
-			local curTeam = ply:Team()
-			if pl:Team() == TEAM_HUMAN_FIN then continue end
+			if pl:IsTeam(TEAM_HUMAN_FIN) then continue end
 			
-			if pl:Team() == TEAM_HUMAN_DEAD then
+			if pl:IsTeam(TEAM_HUMAN_DEAD) then
 				pl:Spawn()
 				pl:SetPos(cp.TPPoint)
 				pl:SetEyeAngles(cp.TPAngles)
@@ -55,7 +54,7 @@ function HL2C_Server:CheckFinished()
 	for i, ply in ipairs( player.GetAll() ) do
 		if IsHuman(ply) then
 			total = total + 1
-			if ply:Team() == TEAM_HUMAN_FIN then
+			if ply:IsTeam(TEAM_HUMAN_FIN) then
 				finished = finished+ 1
 			end
 		end
