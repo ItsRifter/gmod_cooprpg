@@ -1,5 +1,3 @@
-local hl2c_player = FindMetaTable("Player")
-
 HL2C_Server.DataSystem = HL2C_Server.DataSystem or {}
 
 function HL2C_Server.DataSystem:InitPlayerData(ply)
