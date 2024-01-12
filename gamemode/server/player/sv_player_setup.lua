@@ -5,6 +5,7 @@ function hl2c_player:DoSpawn()
     self:SetModel(plyModel)
 
     if self:IsTeam(TEAM_HUMAN_DEAD) or self:IsTeam(TEAM_UNASSIGNED) then self:SetTeam(TEAM_HUMAN_ALIVE) end
+	self:SetupSuit()
 	
     self:SetNoCollideWithTeammates(true)
     self:GiveWeapons()

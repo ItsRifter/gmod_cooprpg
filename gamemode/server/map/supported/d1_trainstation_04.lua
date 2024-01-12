@@ -15,5 +15,6 @@ HL2C_Map.Checkpoints = {
 
 HL2C_Map.MapStartup = function()
 	print("Map startup code was here")
-	ents.GetByIndex( 475 ):Remove()	--remove door close trigger at end
+	--TODO: Create a better more reliable ent killer, currently can mess up on cleanup due to index changes
+	--ents.GetByIndex( 475 ):Remove()	--remove door close trigger at end
 end

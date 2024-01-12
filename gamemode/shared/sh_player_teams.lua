@@ -27,23 +27,25 @@ function IsHuman(ply)
 
     if (curTeam == TEAM_HUMAN_ALIVE or curTeam == TEAM_HUMAN_DEAD
         or curTeam == TEAM_HUMAN_FIN) then return true end
-
     return false
 end
 
 --Team check for players on Combine
 function IsCombine(ply)
     local curTeam = ply:Team()
-
     if (curTeam == TEAM_COMBINE_ALIVE or curTeam == TEAM_COMBINE_DEAD) then return true end
+    return false
+end
 
+function IsAlive(ply)
+    local curTeam = ply:Team()
+    if (curTeam == TEAM_HUMAN_ALIVE or curTeam == TEAM_COMBINE_ALIVE) then return true end
     return false
 end
 
 --Team check if players are in a miscellanous team (AFK or Connecting etc.)
 function IsMiscTeam(ply)
     if not IsHuman(ply) or not IsCombine(ply) then return true end
-
     return false
 end
 
