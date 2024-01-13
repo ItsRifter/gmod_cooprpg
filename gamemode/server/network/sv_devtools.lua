@@ -29,6 +29,11 @@ end)
 --performs a deep ent scan, for finding anything like triggers.
 concommand.Add("hl2c_scan", function(ply)
 	if !ply:IsSuperAdmin() then return end
-	local scan = ents.FindAlongRay( ply:EyePos(), ply:EyePos() + ply:EyeAngles():Forward() * 128)
-	PrintTable(scan)
+	local scan = ents.FindAlongRay( ply:EyePos(), ply:EyePos() + ply:EyeAngles():Forward() * 256)
+	--PrintTable(scan)
+	
+	print("Index Class                          Name                           MapID")
+	for i, ent in ipairs( scan ) do
+		print(string.format( "[%03i] %-30s %-30s %i", i, ent:GetClass(), ent:GetName(),ent:MapCreationID()))
+	end
 end)

@@ -18,7 +18,7 @@ end
 --When the player touches the entity
 function ENT:StartTouch(ent)
 	if ent and ent:IsValid() and ent:IsPlayer() then
-		if ent:IsTeam(TEAM_HUMAN_ALIVE) then return end
+		if not ent:IsTeam(TEAM_HUMAN_ALIVE) then return end
 
 		HL2C_Server:EndTriggered(self,ent)
 		self.Triggered = true

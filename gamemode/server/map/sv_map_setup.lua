@@ -51,6 +51,19 @@ function HL2C_Map:ResetExcludedGlobalVars()
     end
 end
 
+function HL2C_Map:RemoveMapEnts(list)
+    for _, v in ipairs(list) do
+        local ent = ents.GetMapCreatedEntity(v)
+		if IsValid(ent) then ent:Remove() end
+    end
+end
+
+function HL2C_Map:FireEnts(name,value)
+	for _, ent in ipairs(ents.FindByName( name )) do
+		ent:Fire(value)
+	end
+end
+
 hook.Add("InitPostEntity", "HL2C_Map_Init_Startup", function() HL2C_Server:SetupMap() end)
 hook.Add("PostCleanupMap", "HL2C_Map_Init_Cleanup", function() HL2C_Server:SetupMap() end)
 

@@ -14,7 +14,11 @@ HL2C_Map.Checkpoints = {
 }
 
 HL2C_Map.MapStartup = function()
-	print("Map startup code was here")
-	--TODO: Create a better more reliable ent killer, currently can mess up on cleanup due to index changes
-	--ents.GetByIndex( 475 ):Remove()	--remove door close trigger at end
+	HL2C_Map:RemoveMapEnts({1924})	--end door closer
+	
+	--portal trigger removers and openers
+	HL2C_Map:RemoveMapEnts({1666,1665,1621,1622})
+	HL2C_Map:FireEnts("portal_endsection","open")
+	HL2C_Map:FireEnts("portal_attic2_window1","open")
+	HL2C_Map:FireEnts("portal_attic2_window2","open")
 end
