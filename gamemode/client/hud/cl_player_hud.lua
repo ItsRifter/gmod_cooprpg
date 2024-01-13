@@ -1,6 +1,7 @@
 HL2C_Client.suitpower = HL2C_Client.suitpower or 100
 HL2C_Client.flashlight = HL2C_Client.flashlight or false
 
+
 local LIGHT_IDLE, LIGHT_ACTIVE = "®", "©"
 local ALPHA_ACTIVE, ALPHA_IDLE = 1, 0.18
 local LIGHT_WIDTH, LIGHT_HEIGHT = math.Round(ScrH() / 7), math.Round(ScrH() / 13.5)
@@ -43,6 +44,8 @@ function HL2C_Client:DrawFlashlight()
 end
 
 hook.Add("HUDPaint", "auxpow_flashlight_hud", function() HL2C_Client:DrawFlashlight() end)
+
+
 
 net.Receive( "HL2C_Suit_Power", function( len )
 	HL2C_Client.suitpower = net.ReadFloat()
