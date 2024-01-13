@@ -7,9 +7,7 @@ local delay = 0	--used to delay sending power to lower data sent as its not vita
 function HL2C_Server:SuitTick()
 	for i, ply in ipairs( player.GetAll() ) do
 		if ply:IsTeam(TEAM_HUMAN_ALIVE) then
-			if not ply.suited then ply:SetupSuit() end
 			ply:SuitTick()
-			
 			if delay <= 0 then ply:SendPower() end
 		end
 	end
@@ -18,6 +16,7 @@ function HL2C_Server:SuitTick()
 end
 
 function HL2C_Server:SetupSuits()
+	print("Starting SuitTick Timer")
 	if timer.Exists(TICK_NAME) then timer.Remove(TICK_NAME) end
 	timer.Create(TICK_NAME, TICK_RATE, 0, function() HL2C_Server:SuitTick() end)
 end
@@ -25,17 +24,18 @@ HL2C_Server:SetupSuits()
 
 ---------------------------------------------------------------
 
-function hl2c_player:SetupSuit()
+function hl2c_player:SetupSuit(givesuit)
 	self:AllowFlashlight( true)
-	self.suitpower 	= 100	--flashlight power, maybe other things later?
-	self.stamina 	= 100	--sprinting and breathing power
-	self.exhausted	= false	--exausted state
-	self.drowning	= 0		--damage taken from drowning to restore later
-	self.suited		= true
+	
+	self.suit = {}
+	self.suit.power 	= 100	--flashlight power, maybe other things later?
+	self.suit.stamina 	= 100	--sprinting and breathing power
+	self.suit.exhausted	= false	--exausted state
+	self.suit.drowning	= 0		--damage taken from drowning to restore later
+	self.suit.suited	= givesuit
 	
 	self:SendPower()
-	self.oldsuitpower = self.suitpower
-	
+	self.suit.oldpower = self.suit.power
 end
 
 function hl2c_player:SuitTick()
@@ -44,23 +44,31 @@ function hl2c_player:SuitTick()
 		charge = charge - 1
 	end
 	
-	self.suitpower = math.Clamp(self.suitpower + charge,0,100)
+	local suit = self:GetSuit()
 	
-	if self.suitpower < 1 then
+	suit.power = math.Clamp(suit.power + charge,0,100)
+	
+	if suit.power < 1 then
 		self:Flashlight( false )
 		self:AllowFlashlight( false)
 	else
-		if self.suitpower > 5 then self:AllowFlashlight( true) end
+		if suit.power > 5 then self:AllowFlashlight( true) end
 	end
 end
 
+function hl2c_player:GetSuit()
+	if not self.suit then self:SetupSuit(true) end
+	return self.suit
+end
+
 function hl2c_player:SendPower()
-	if self.suitpower == self.oldsuitpower then return end	--saves sending same values repeatedly
+	local suit = self:GetSuit()
+	if suit.power == suit.oldpower then return end	--saves sending same values repeatedly
 	net.Start("HL2C_Suit_Power")
-		net.WriteFloat( self.suitpower )
+		net.WriteFloat( suit.power )
 	net.Send(self)
 	
-	self.oldsuitpower = self.suitpower
+	suit.oldpower = suit.power
 end
 
 --hook.Add( "PlayerSwitchFlashlight", "SuitFlashLight", function( ply, enabled )
