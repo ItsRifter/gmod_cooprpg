@@ -41,7 +41,7 @@ end
 function hl2c_player:SuitTick()
 	local charge = 0.25
 	if self:FlashlightIsOn() then
-		charge = charge - 1
+		charge = charge - 0.75
 	end
 	
 	local suit = self:GetSuit()
