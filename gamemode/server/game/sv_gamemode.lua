@@ -7,7 +7,7 @@ function HL2C_Server:CheckpointTriggered(cp, ply)
 	if cp.Func then cp:Func() end
 
 	for i, pl in ipairs( player.GetAll() ) do
-		if pl == ply then continue end
+		if pl == ply and false then continue end
 		if IsHuman(pl) then
 			if pl:IsTeam(TEAM_HUMAN_FIN) then continue end
 			
@@ -39,10 +39,8 @@ function HL2C_Server:EndTriggered(cp,ply)
 	ply:SetTeam(TEAM_HUMAN_FIN)
 	ply:EmitSound("vo/k_lab/kl_excellent.wav", 100, 100)
 	
-	if !cp.Triggered then
-		cp.Triggered = true
-		if cp.Func then cp:Func() end
-	end
+	if cp.Func then cp:Func(ply) end
+	cp.Triggered = true
 	
 	HL2C_Server:CheckFinished()
 end

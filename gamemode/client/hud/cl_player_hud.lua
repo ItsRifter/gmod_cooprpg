@@ -46,7 +46,6 @@ function HL2C_Client:DrawFlashlight()
 		if LIGHT_ALPHAMAX > ALPHA_IDLE then LIGHT_ALPHAMAX = LIGHT_ALPHAMAX - FrameTime() * 60 end
 		LIGHT_ALPHA = math.Clamp(LIGHT_ALPHAMAX, ALPHA_IDLE,ALPHA_ACTIVE)
 	end
-	print(LIGHT_ALPHA)
 	
 	draw.RoundedBox(6, LIGHT_X, LIGHT_Y, LIGHT_WIDTH, LIGHT_HEIGHT, Color(0, 0, 0, 80))
 	

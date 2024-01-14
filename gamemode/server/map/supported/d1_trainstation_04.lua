@@ -14,6 +14,8 @@ HL2C_Map.Checkpoints = {
 }
 
 HL2C_Map.MapStartup = function()
+	game.SetGlobalState("gordon_precriminal", 2)	--temp needed?
+
 	HL2C_Map:RemoveMapEnts({1924})	--end door closer
 	
 	--portal trigger removers and openers
