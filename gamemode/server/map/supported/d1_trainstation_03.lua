@@ -16,4 +16,13 @@ HL2C_Map.MapStartup = function()
 	HL2C_Map:RemoveMapEnts({2026,1929,1982})
 	
 	game.SetGlobalState("gordon_precriminal", 1)	--temp needed?
+	if HL2C_Server:BringItem() then
+		HL2C_Server:SpawnItem("models/props_c17/doll01.mdl",Vector(-5196.0,-4535.6,9.3))
+	end
+end
+
+HL2C_Map.ExitModel = function(ent)
+	if not ent:GetClass() == "models/props_c17/doll01.mdl" then return false end
+	game.SetGlobalState("hl2c_bringitem", GLOBAL_ON)
+	return true
 end

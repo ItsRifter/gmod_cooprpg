@@ -3,11 +3,6 @@
 ENT.Base = "base_brush"
 ENT.Type = "brush"
 
---ENT.TPPoint = ENT.TPPoint or Vector(0, 0, 0)
---ENT.TPAngles = ENT.TPAngles or Angle(0, 0, 0)
---ENT.Mat = "hl2cr/models/checkpoint.vtf"
---ENT.Triggered = ENT.Triggered or false
-
 function ENT:Initialize()
 	self.Triggered = self.Triggered or false
 	
@@ -33,16 +28,8 @@ function ENT:StartTouch(ent)
 	if ent and ent:IsValid() and ent:IsPlayer() then
 		if not ent:IsTeam(TEAM_HUMAN_ALIVE) then return end
 		
-		--HL2C_Server:MoveSpawn(self.TPPoint, self.TPAngles, nil)
-		
-		--if self.lambda then self.lambda:Remove() end
-		
 		HL2C_Server:CheckpointTriggered(self,ent)
 		self.Triggered = true
-		
-		--ent:SetPos(self.TPPoint)
-		--ent:SetEyeAngles(self.TPAngles)
-		--ent:EmitSound("hl1/ambience/port_suckin1.wav", 100, 100)
-		--self.lambdaModel:Remove()
+
 	end
 end

@@ -7,6 +7,15 @@ HL2C_Global = HL2C_Global or {}
 
 if SERVER then
     HL2C_Server = HL2C_Server or {}
+	
+	function IncludeContent(path)
+		if HL2C_Debug then print("===Including content path=== "..path) end
+		for k, v in pairs(file.Find(path.. "*.*","GAME")) do
+			if HL2C_Debug then print("= "..v) end
+			resource.AddFile(path .. v);
+		end
+	end
+	
 end
 
 if CLIENT then

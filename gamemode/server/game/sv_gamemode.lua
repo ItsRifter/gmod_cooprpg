@@ -20,7 +20,6 @@ function HL2C_Server:CheckpointTriggered(cp, ply)
 				local warp = true
 				if cp.Dist then
 					local range = cp.TPPoint:DistToSqr( pl:GetPos() )
-					--print(pl:Name().." "..cp.Dist.." "..range)
 					if range < cp.Dist then warp = false end
 				end
 				if warp then
@@ -45,6 +44,29 @@ function HL2C_Server:EndTriggered(cp,ply)
 	HL2C_Server:CheckFinished()
 end
 
+function HL2C_Server:EndProp(ent)
+	if HL2C_Map.ExitModel then 
+		if HL2C_Map.ExitModel(ent) then
+			ent:EmitSound("hl2cr/standardbeep.wav", 100, 100)
+			ent:Remove()
+		end
+	end
+end
+
+function HL2C_Server:BringItem()
+	if game.GetGlobalState("hl2c_bringitem") == GLOBAL_ON then
+		game.SetGlobalState("hl2c_bringitem", GLOBAL_DEAD)
+		return true
+	end
+	return false
+end
+
+function HL2C_Server:SpawnItem(mdl,pos)
+    local prop = ents.Create("prop_physics")
+    prop:SetModel(mdl)
+    prop:SetPos(pos)
+    prop:Spawn()
+end
 
 function HL2C_Server:CheckFinished()
 	local total = 0
@@ -111,7 +133,6 @@ function HL2C_Server:CountDown(active,force)
 		end
 	end
 end
-
 
 local LOBBY_MAP = "hl2cr_lobby_v2"
 function HL2C_Server:ChangeLevel()

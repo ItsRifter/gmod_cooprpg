@@ -23,4 +23,15 @@ HL2C_Map.MapStartup = function()
 	HL2C_Map:FireEnts("portal_endsection","open")
 	HL2C_Map:FireEnts("portal_attic2_window1","open")
 	HL2C_Map:FireEnts("portal_attic2_window2","open")
+	
+	game.SetGlobalState("gordon_precriminal", 1)	--temp needed?
+	if HL2C_Server:BringItem() then
+		HL2C_Server:SpawnItem("models/props_c17/doll01.mdl",Vector(-3375,-3591,462))
+	end
+end
+
+HL2C_Map.ExitModel = function(ent)
+	if not ent:GetClass() == "models/props_c17/doll01.mdl" then return false end
+	game.SetGlobalState("hl2c_bringitem", GLOBAL_ON)
+	return true
 end
