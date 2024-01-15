@@ -1,5 +1,14 @@
 local panel_meta = FindMetaTable( "PANEL" )
 
+	surface.CreateFont( "HUD_Normal", 
+		{
+		font    = "Impact",
+		size    = ScrH() * 0.035,
+		weight  = 100,
+		antialias = true,
+		})
+
+
 function HL2C_Client:CreateFonts()
 	print("creating font sets")
 	local fontscale = ScrH() * HL2C_Client:Get_UIScale()
@@ -63,6 +72,9 @@ Theme = {
 	fontred = Color( 140, 20, 20, 255 ),
 	fontgreen = Color( 50, 200, 50, 255 ),
 	fontyel = Color( 200, 200, 50, 255 ),
+	fontred = Color( 140, 20, 20, 255 ),
+	fontwhite = Color( 220, 220, 220, 255 ),
+	fontblack = Color( 20, 20, 20, 255 ),
 	button = Color( 255, 140, 0, 255 ),
 	buttonhi = Color( 255, 170, 50, 255 ),
 	buttonout = Color( 10, 10, 10, 255 ),

@@ -7,7 +7,7 @@ function HL2C_Server:CheckpointTriggered(cp, ply)
 	if cp.Func then cp:Func() end
 
 	for i, pl in ipairs( player.GetAll() ) do
-		if pl == ply and false then continue end
+		if pl == ply then continue end
 		if IsHuman(pl) then
 			if pl:IsTeam(TEAM_HUMAN_FIN) then continue end
 			
@@ -58,4 +58,67 @@ function HL2C_Server:CheckFinished()
 		end
 	end
 	print(finished.."/"..total.." players finished the level")
+	if total == 0 then
+		HL2C_Server:CountDown(false,true)
+		return
+	end
+	local ratio = 1/total*finished
+		
+	if ratio > 0.9 then
+		HL2C_Server:CountDown(true,true)
+	elseif ratio >0.4 then
+		HL2C_Server:CountDown(true,false)
+	end
+	
+end
+
+local T_END_NAME = "TIMER_LVLCHANGE"
+local T_END_TIME = 40
+local T_END_FAST = 6
+
+function HL2C_Server:CountDown(active,force)
+	if timer.Exists(T_END_NAME) then 
+		if force then
+			if active then
+				if timer.TimeLeft( T_END_NAME ) > T_END_FAST then
+					timer.Remove(T_END_NAME)
+					timer.Create(T_END_NAME, T_END_FAST, 1, function() HL2C_Server:ChangeLevel() end)
+					
+					net.Start( "HL2C_Countdown" )
+						net.WriteFloat( CurTime() + T_END_FAST)
+					net.Broadcast()
+				end
+			else
+				timer.Remove(T_END_NAME)
+				net.Start( "HL2C_Countdown" )
+					net.WriteFloat( 0)
+				net.Broadcast()
+			end
+		end
+	else
+		if not active then return end
+		if force then
+			timer.Create(T_END_NAME, T_END_FAST, 1, function() HL2C_Server:ChangeLevel() end)
+			
+			net.Start( "HL2C_Countdown" )
+				net.WriteFloat( CurTime() + T_END_FAST)
+			net.Broadcast()
+		else
+			timer.Create(T_END_NAME, T_END_TIME, 1, function() HL2C_Server:ChangeLevel() end)
+			net.Start( "HL2C_Countdown" )
+				net.WriteFloat( CurTime() + T_END_TIME)
+			net.Broadcast()
+		end
+	end
+end
+
+
+local LOBBY_MAP = "hl2cr_lobby_v2"
+function HL2C_Server:ChangeLevel()
+	if HL2C_Map.NextMap then
+		timer.Simple(1 , function()  RunConsoleCommand( "changelevel", HL2C_Map.NextMap )  end)
+	else
+		timer.Simple(1 , function()  RunConsoleCommand( "changelevel", LOBBY_MAP )  end)
+	end
+	
 end
