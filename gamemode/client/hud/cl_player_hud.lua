@@ -61,3 +61,12 @@ hook.Add("HUDPaint", "auxpow_flashlight_hud", function() HL2C_Client:DrawFlashli
 net.Receive( "HL2C_Suit_Power", function( len )
 	HL2C_Client.suitpower = net.ReadFloat()
 end )
+
+
+hook.Add( "HUDShouldDraw", "HL2C_HideHUD", function( name )
+	if ( name == "CHudCrosshair" and HL2C_Client.Config.NewCross ) then
+		return false
+	end
+	
+    return true 
+end)
