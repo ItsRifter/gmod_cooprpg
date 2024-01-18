@@ -26,4 +26,8 @@ lang.Options_Cross = "New Crosshair"
 lang.Options_CrossDy = "Dynamic Crosshair"
 lang.Options_HideXp = "Hide XP bar"
 
+------Display Boards------
+lang.Display_Test = "Display Text"
+lang.Display_TestMulti = {"Display Text","multi lined"}
+
 translate.AddLanguage(name,lang)

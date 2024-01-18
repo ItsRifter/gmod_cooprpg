@@ -81,6 +81,37 @@ function HL2C_Server:MoveSpawn(TPPoint,TPAngles, parent)
 	newspawn:Spawn()
 end
 
+function HL2C_Server:CreateTrigger(Min,Max,func)
+	local trig = ents.Create("trigger_hl2c_custom")
+	trig.Min = Min
+	trig.Max = Max
+	trig.Pos = (Max + Min)/2
+
+	trig:SetPos(trig.Pos)
+	trig:Spawn()
+	
+	trig.Func = func or nil
+end
+
+function HL2C_Server:CreateInfoboard(Pos, Angle ,Width, Height,text)
+	local display = ents.Create("hl2c_infoboard")
+
+	local offset = Vector(Width*0.5,1,Height*0.5)
+	display.OBBMax = Pos + offset;
+	display.OBBMin = Pos - offset;
+	
+
+	display:SetNetworkedVector("OBB_Min", display.OBBMin)
+	display:SetNetworkedVector("OBB_Max", display.OBBMax)
+	display:SetNetworkedVector("Text", text)
+
+	display:SetAngles(Angle)
+	display:SetPos(Pos)
+	display:Spawn()
+	
+end
+
+
 function HL2C_Server:SetupMap()
 	HL2C_Server:RemoveChangeLevel()
 	HL2C_Server:RemoveCPs()
