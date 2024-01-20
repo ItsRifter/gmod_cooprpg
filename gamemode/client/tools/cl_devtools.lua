@@ -186,10 +186,7 @@ local function HL2C_ToolOpen()
 	DButton:SetPos( 10, 760 )
 	DButton:SetSize( 480, 30 )
 	DButton.DoClick = function()
-		--HL2C_Server:CreateInfoboard(Vector(-335,1083,224) , Angle(14,-80,0) ,64,32,"Display_Test")
-		--LocalPlayer():EyeAngles()
-	
-	
+
 		local clipboard = "HL2C_Server:CreateInfoboard("..string.format("Vector(%.1f,%.1f,%.1f)",LocalPlayer():EyePos():Unpack())
 		clipboard = clipboard..","..string.format("Angle(%.1f,%.1f,%.1f)",LocalPlayer():EyeAngles():Unpack())..",64,32,\"Text\")"
 		SetClipboardText(clipboard)

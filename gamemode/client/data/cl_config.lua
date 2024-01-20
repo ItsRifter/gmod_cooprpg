@@ -8,6 +8,8 @@ function HL2C_Client:Config_Update()	--Ensures config is fully populated with va
 	HL2C_Client.Config.HideXP = HL2C_Client.Config.HideXP or false
 	HL2C_Client.Config.CrossType = HL2C_Client.Config.CrossType or 1
 	HL2C_Client.Config.UI_Scale = HL2C_Client.Config.UI_Scale or 1
+	
+	HL2C_Client.Config.HideDmg = HL2C_Client.Config.HideDmg or false
 end
 
 function HL2C_Client:Config_Load()

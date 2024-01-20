@@ -5,7 +5,7 @@ AddCSLuaFile( "shared.lua" )
 include('shared.lua')
 
 function ENT:Initialize()
-
+	 self:DrawShadow( false)
 end
 
 function ENT:KeyValue( key, value )

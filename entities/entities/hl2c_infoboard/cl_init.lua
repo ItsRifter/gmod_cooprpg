@@ -45,7 +45,17 @@ function ENT:Draw()
 		self:DrawRect(0, 0, self.W, self.H, Color(0, 0, 0, 100));
 
 		if self.Text then
-			self:DrawText(self.Text , "3DInfoboard", self.W * 0.5 , self.H * 0.5, Color(220 , 220 , 220, 200), 1, 1);
+			if not istable(self.Text ) then
+				self:DrawText(self.Text , "3DInfoboard", self.W * 0.5 , self.H * 0.5, Color(220 , 220 , 220, 200), 1, 1);
+			else
+				local offset = self.H / #self.Text
+				for k, v in ipairs( self.Text ) do
+					--print( k, v )
+					self:DrawText(v , "3DInfoboard", self.W * 0.5 , offset * (-0.5+k), Color(220 , 220 , 220, 200), 1, 1);
+				end
+			end
+			
+			--self:DrawText(string.format("%1.2f",self.Scale), "3DInfoboard", self.W * 0.025 , self.H * 0.025, Color(220 , 220 , 220, 200), 0, 0);
 		end
 		--self:DrawText(CurrentMap.author , "3DScoreboardSmall", self.W -100 , 244, Color(40 , 40 , 40, 255), 1, 0);
 		
@@ -69,15 +79,15 @@ function ENT:Think()
 		self.YDist = self.OBBMax:Distance(Vector(self.OBBMax.x, self.OBBMax.y, self.OBBMin.z));
 		self.XDist = self.OBBMax:Distance(Vector(self.OBBMin.x, self.OBBMin.y, self.OBBMax.z));
 			
-		self.Scale = 2;
+		self.Scale = 256 / self.XDist;
 		
-		if self.XDist < 400 then self.Scale = 3 end
-		if self.XDist > 550 then self.Scale = 1.6 end
-		if self.XDist > 750 then self.Scale = 1.2 end
-		if self.XDist > 1000 then self.Scale = 0.8 end
-		if self.XDist > 1200 then self.Scale = 0.6 end
+		--if self.XDist < 400 then self.Scale = 3 end
+		--if self.XDist > 550 then self.Scale = 1.6 end
+		--if self.XDist > 750 then self.Scale = 1.2 end
+		--if self.XDist > 1000 then self.Scale = 0.8 end
+		--if self.XDist > 1200 then self.Scale = 0.6 end
 		
-		if self.YDist < 200 and self.Scale < 2 then self.Scale = 2 end
+		--if self.YDist < 200 and self.Scale < 2 then self.Scale = 2 end
 		
 		self.X = self.XDist * -(self.Scale * .5);
 		self.Y = self.YDist * -(self.Scale * .5);

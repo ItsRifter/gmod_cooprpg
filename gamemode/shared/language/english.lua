@@ -25,9 +25,10 @@ lang.HM_Pets = {"You havent earned em yet"}
 lang.Options_Cross = "New Crosshair"
 lang.Options_CrossDy = "Dynamic Crosshair"
 lang.Options_HideXp = "Hide XP bar"
+lang.Options_HideDmg = "Hide Damage"
 
 ------Display Boards------
 lang.Display_Test = "Display Text"
-lang.Display_TestMulti = {"Display Text","multi lined"}
+lang.Display_TestMulti = {"Display Text","multi lined","more lines","last one"}
 
 translate.AddLanguage(name,lang)

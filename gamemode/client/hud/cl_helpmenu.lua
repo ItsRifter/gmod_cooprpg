@@ -96,6 +96,15 @@ function PANEL:Init()
 		end
 	)
 	
+	local Check = New_ThemeCheck(OpPanel,OpPanel:GetWide() * 0.27, OpPanel:GetTall() * 0.7,OpPanel:GetWide() * 0.3, OpPanel:GetTall() * 0.08,translate.Get("Options_HideDmg"),"Font_Small")
+	Check:SetToggle(HL2C_Client.Config.HideDmg)
+	Check:SetFunc(
+		function()
+			HL2C_Client.Config.HideDmg = Check:Toggle()
+			HL2C_Client.Config_Changed = true
+		end
+	)
+	
 	local MultiBox = vgui.Create( "ThemeMultiBox" , OpPanel)
 	MultiBox:SetSize( OpPanel:GetWide() * 0.3, OpPanel:GetTall() * 0.08)
 	MultiBox:SetPos( OpPanel:GetWide() * 0.27, OpPanel:GetTall() * 0.6)
