@@ -113,6 +113,7 @@ end
 
 
 function HL2C_Server:SetupMap()
+	HL2C_Server:SetupWeapons()
 	HL2C_Server:RemoveChangeLevel()
 	HL2C_Server:RemoveCPs()
 	

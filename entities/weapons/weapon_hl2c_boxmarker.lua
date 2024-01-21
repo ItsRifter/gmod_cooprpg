@@ -8,7 +8,7 @@ SWEP.ViewModel			    = "models/weapons/c_pistol.mdl"
 SWEP.WorldModel			    = "models/weapons/w_pistol.mdl"
 
 SWEP.Slot                   = 1
-SWEP.SlotPos                = 0
+SWEP.SlotPos                = 77
 SWEP.DrawCrosshair          = false
 SWEP.DrawAmmo               = false
 
