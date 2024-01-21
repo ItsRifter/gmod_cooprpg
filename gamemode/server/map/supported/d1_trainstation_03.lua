@@ -11,6 +11,9 @@ HL2C_Map.Checkpoints = {
 	{ min=Vector(-3821.5,-4654.7,504.0),max=Vector(-3976.9,-4568.0,384.2),spawn=Vector(-3904.7,-4406.2,390.9),angle=Angle(0.8,113.9,0.0), dist = 256 },
 }
 
+HL2C_Map.VortexChance = 15
+HL2C_Map.VortexList = {Vector(-5108.6,-4853.4,20.0),Vector(-3959.7,-4747.0,303.2)}
+
 --Trying a mimimal CP aproach by removing block activating triggers.
 HL2C_Map.MapStartup = function()
 	HL2C_Map:RemoveMapEnts({2026,1929,1982})

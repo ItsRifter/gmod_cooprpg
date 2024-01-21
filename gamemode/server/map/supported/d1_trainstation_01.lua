@@ -7,6 +7,10 @@ HL2C_Map.Spawn = { spawn=Vector(-14576.0,-14208.0,-1300.0),angle=Angle(0.0,90.0,
 
 HL2C_Map.Exit = { min=Vector(-3137.7,-617.4,192.0),max=Vector(-3200.0,-514.1,25.2), func = nil }
 
+HL2C_Map.VortexChance = 15
+HL2C_Map.VortexList = {Vector(-5289.2,-1010.7,100.8)}
+
+
 local function FixFOV()
 	for _, v in ipairs(player.GetAll()) do
 		v:SetFOV(0, 1)

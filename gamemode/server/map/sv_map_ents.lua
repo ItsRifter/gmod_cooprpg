@@ -126,6 +126,15 @@ function HL2C_Server:SetupMap()
 		end
 	end
 	
+	if HL2C_Map.VortexList then
+		local chance = HL2C_Map.VortexChance or 30
+	
+		if math.Rand( 0, 100 ) < chance then
+			local pos = HL2C_Map.VortexList[ math.random( #HL2C_Map.VortexList ) ]
+			HL2C_Server:CreateVortex(pos)
+		end
+	end
+	
 	if HL2C_Map.MapStartup then HL2C_Map.MapStartup() end
 end
 
@@ -136,15 +145,18 @@ function HL2C_Server:RemoveChangeLevel()
 end
 
 function HL2C_Server:CreateLambdaIcon(pos,mat)
-	--local lambda = ents.Create("prop_dynamic")
 	local lambda = ents.Create("hl2c_lambda")
-	--lambda:SetModel("models/hl2cr_lambda.mdl")
-	--lambda:SetModel("models/hl2c/lamba_logo.mdl")
 	lambda:SetPos( pos)
-	lambda:SetAngles(Angle(0,0,0))
+	--lambda:SetAngles(Angle(0,0,0))
 	lambda:Spawn()
-	--lambda:ResetSequence("idle")
 
-	--lambda:SetMaterial(mat)
 	return lambda
+end
+
+function HL2C_Server:CreateVortex(pos)
+	local vortex = ents.Create("hl2c_vortex")
+	vortex:SetPos( pos)
+	vortex:Spawn()
+	
+	return
 end

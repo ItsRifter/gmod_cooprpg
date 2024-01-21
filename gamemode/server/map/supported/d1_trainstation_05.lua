@@ -13,6 +13,9 @@ HL2C_Map.Checkpoints = {
 	{ min=Vector(-10248.4,-4688.0,426.8),max=Vector(-10443.5,-4742.3,320.0),spawn=Vector(-10374.3,-4714.9,320.0),angle=Angle(15.9,-165.7,0.0), func = nil },
 }
 
+HL2C_Map.VortexChance = 20
+HL2C_Map.VortexList = {Vector(-6802.4,-1641.6,216.4),Vector(-6368.6,-1583.9,203.5),Vector(-7088.0,-1262.9,202.1),Vector(-10962.1,-5353.4,339.8)}
+
 HL2C_Map.MapStartup = function()
 	HL2C_Map:RemoveMapEnts({2404})	--end door closer
 

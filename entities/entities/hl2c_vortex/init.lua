@@ -8,13 +8,14 @@ function ENT:Initialize()
 	--self:SetRenderMode( RENDERMODE_TRANSALPHA )
 	self:SetMaterial("Models/effects/comball_tape")
 	--self:SetMaterial("Models/effects/comball_sphere")
+	self:SetModelScale(0.5)
 	self:DrawShadow( false)
 	self:SetTrigger( true)
 	self:UseTriggerBounds( true,  0 )
 end
 
 function ENT:StartTouch(entity )
-	if entity:IsValid() and entity:IsPlayer() and IsHuman(entity) then
-		entity:EmitSound("ambient/levels/prison/radio_random11.wav")
+	if entity:IsValid() and entity:IsPlayer() and entity:IsTeam(TEAM_HUMAN_ALIVE) then
+		HL2C_Server:VortexTouched(entity)
 	end
 end

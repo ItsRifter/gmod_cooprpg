@@ -20,8 +20,11 @@ function ENT:Init()
 	self.core:SetMaterial( "Models/effects/comball_sphere")
 	--self.core:SetMaterial( "Models/effects/comball_tape")
 	
+	
+	
     self.core:SetPos(self:GetPos())
     self.core:Spawn()
+	self.core:SetModelScale(0.75)
 
 	self.core:StartLoopingSound( "weapons/physcannon/superphys_hold_loop.wav" )
 end

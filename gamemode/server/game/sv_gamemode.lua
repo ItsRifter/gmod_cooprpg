@@ -1,3 +1,5 @@
+------------------------------------------------------------------
+------------------------------------------------------------------
 
 function HL2C_Server:CheckpointTriggered(cp, ply)
 	HL2C_Server:MoveSpawn(cp.TPPoint, cp.TPAngles, nil)
@@ -44,6 +46,9 @@ function HL2C_Server:EndTriggered(cp,ply)
 	HL2C_Server:CheckFinished()
 end
 
+------------------------------------------------------------------
+------------------------------------------------------------------
+
 function HL2C_Server:EndProp(ent)
 	if HL2C_Map.ExitModel then 
 		if HL2C_Map.ExitModel(ent) then
@@ -67,6 +72,9 @@ function HL2C_Server:SpawnItem(mdl,pos)
     prop:SetPos(pos)
     prop:Spawn()
 end
+
+------------------------------------------------------------------
+------------------------------------------------------------------
 
 function HL2C_Server:CheckFinished()
 	local total = 0
@@ -96,7 +104,7 @@ end
 
 local T_END_NAME = "TIMER_LVLCHANGE"
 local T_END_TIME = 40
-local T_END_FAST = 6
+local T_END_FAST = 7
 
 function HL2C_Server:CountDown(active,force)
 	if timer.Exists(T_END_NAME) then 
@@ -142,4 +150,15 @@ function HL2C_Server:ChangeLevel()
 		timer.Simple(1 , function()  RunConsoleCommand( "changelevel", LOBBY_MAP )  end)
 	end
 	
+end
+
+------------------------------------------------------------------
+------------------------------------------------------------------
+
+local VortexList = VortexList or {}
+function HL2C_Server:VortexTouched(ply)
+	if not table.HasValue( VortexList, ply) then
+		table.insert( VortexList, ply)
+		ply:EmitSound("ambient/levels/prison/radio_random11.wav")
+	end
 end

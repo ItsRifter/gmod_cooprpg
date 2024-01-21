@@ -14,6 +14,9 @@ HL2C_Map.Checkpoints = {
 	{ min=Vector(-7807.9,-3884.0,-223.2), max=Vector(-7371.6,-4085.1,-256.0), spawn=Vector(-7758.5,-3949.3,-235.6), angle=Angle(6.1,-12.6,0.0),dist = 196 }
 }
 
+HL2C_Map.VortexChance = 20
+HL2C_Map.VortexList = {Vector(-3735.7,-3879.7,530.9)}
+
 HL2C_Map.MapStartup = function()
 	game.SetGlobalState("gordon_precriminal", 2)	--temp needed?
 

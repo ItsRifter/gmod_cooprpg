@@ -107,11 +107,11 @@ local function HL2C_ToolOpen()
 	end
 
 	local DButton = vgui.Create( "DButton", Frame )
-	DButton:SetText( "Copy" )
-	DButton:SetPos( 440, 150 )
-	DButton:SetSize( 50, 30 )
-	DButton.DoClick = function()				
-		 SetClipboardText(Frame.ELabel3:GetText().." , "..Frame.ELabel4:GetText())
+	DButton:SetText( "Copy Vec" )
+	DButton:SetPos( 420, 150 )
+	DButton:SetSize( 70, 30 )
+	DButton.DoClick = function()		
+		 SetClipboardText(string.format("Vector(%.1f,%.1f,%.1f)",Frame.SpawnPos:Unpack()))
 	end
 	
 	local DButton = vgui.Create( "DButton", Frame )
