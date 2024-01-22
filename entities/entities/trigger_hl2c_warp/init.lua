@@ -1,5 +1,3 @@
---TODO: Make checkpoint stuff
-
 ENT.Base = "base_brush"
 ENT.Type = "brush"
 
@@ -7,7 +5,7 @@ function ENT:Initialize()
 	self.Triggered = self.Triggered or false
 	
 	if self.TPPoint:IsZero() then
-		HL2C_Server:DebugMsg(string.format("Checkpoint %s has an invalid teleport point", self:GetName()), 1)
+		HL2C_Server:DebugMsg(string.format("Warp %s has an invalid teleport point", self:GetName()), 1)
 		return
 	end
 
@@ -26,8 +24,8 @@ function ENT:StartTouch(ent)
 	if ent and ent:IsValid() and ent:IsPlayer() then
 		if not ent:IsTeam(TEAM_HUMAN_ALIVE) then return end
 		
-		HL2C_Server:CheckpointTriggered(self,ent)
-		self.Triggered = true
+		ent:SetPos(self.TPPoint)
+		ent:SetEyeAngles(self.TPAngles)
 
 	end
 end

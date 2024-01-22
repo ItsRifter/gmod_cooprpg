@@ -1,6 +1,6 @@
 local hl2c_player = FindMetaTable("Player")
 
-HL2C_Server.AvailableWeapons = {}
+HL2C_Server.AvailableWeapons = HL2C_Server.AvailableWeapons or {}
 
 HL2C_Server.ForbiddenWeapons = {
     [1] = "weapon_stunstick"
@@ -21,6 +21,7 @@ end
 
 
 function hl2c_player:GiveWeapons()
+	PrintTable(HL2C_Server.AvailableWeapons)
     for _, w in ipairs(HL2C_Server.AvailableWeapons) do
         if !self:HasWeapon( w ) then self:Give(w, false) end
     end
@@ -52,3 +53,14 @@ hook.Add("PlayerCanPickupWeapon", "hl2c_inv_weaponcheck", function(ply, wep)
 
     return true
 end)
+
+function hl2c_player:GiveLoadout()
+	if not HL2C_Map.Loadout then return end
+	
+    for k, v in pairs(HL2C_Map.Loadout) do
+        if k == "armour" then self:SetArmor(v) continue end
+		if game.GetAmmoID( k ) >= 0 then
+			self:SetAmmo( v, k )
+		end
+    end
+end

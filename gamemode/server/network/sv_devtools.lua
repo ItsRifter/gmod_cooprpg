@@ -22,7 +22,11 @@ concommand.Add("hl2c_entinfo", function(ply)
 		print(Ent)
 		print("Name  "..Ent:GetName())
 		print("Model "..Ent:GetModel())
+		print("Pos "..string.format("Vector(%d,%d,%d)",Ent:GetPos():Unpack()))
+		print("Angle "..string.format("Angle(%d,%d,%d)",Ent:GetAngles():Unpack()))
 		if IsValid(Ent:GetParent()) then print("Parent "..Ent:GetParent():GetName()) end
+		
+		print("HL2C_Server:CreateProp(\""..Ent:GetModel().."\","..string.format("Vector(%.1f,%.1f,%.1f)",Ent:GetPos():Unpack())..","..string.format("Angle(%.1f,%.1f,%.1f)",Ent:GetAngles():Unpack())..")")
 	end
 end)
 

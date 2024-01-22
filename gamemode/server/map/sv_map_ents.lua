@@ -31,8 +31,7 @@ function HL2C_Server:RemoveCPs()
 	HL2C_Server.Cps = {}
 end
 
-HL2C_Server.LvlExit = HL2C_Server.LvlExit or nil
-
+HL2C_Server.LvlExit = HL2C_Server.LvlExit or nil	--If exit needs to move for extended maps, saves reference to old on to remove it
 function HL2C_Server:SpawnExit(Min,Max,func)
 	if HL2C_Server.LvlExit then 
 		if IsValid(HL2C_Server.LvlExit) then HL2C_Server.LvlExit:Remove() end
@@ -93,6 +92,20 @@ function HL2C_Server:CreateTrigger(Min,Max,func)
 	trig.Func = func or nil
 end
 
+function HL2C_Server:CreateWarp(Min,Max,TPos,TAngle)
+	local warp = ents.Create("trigger_hl2c_warp")
+	warp.Min = Min
+	warp.Max = Max
+	warp.Pos = (Max + Min)/2
+	warp.TPPoint = TPos
+	warp.TPAngles = TAngle or warp.TPAngles
+	--checkpoint.PointIndex = 99
+	warp:SetPos(warp.Pos)
+	warp:Spawn()
+	
+	return warp
+end
+
 function HL2C_Server:CreateInfoboard(Pos, Angle ,Width, Height,text)
 	local display = ents.Create("hl2c_infoboard")
 
@@ -115,6 +128,7 @@ end
 function HL2C_Server:SetupMap()
 	HL2C_Server:SetupWeapons()
 	HL2C_Server:RemoveChangeLevel()
+	--HL2C_Map:RemoveNamedEnts("global_newgame_template")	--WIP, not sure if would mess with some levels, spawns in items but also some props?
 	HL2C_Server:RemoveCPs()
 	
 	if HL2C_Map.Spawn then HL2C_Server:MoveSpawn(HL2C_Map.Spawn.spawn, HL2C_Map.Spawn.angle) end
@@ -124,6 +138,12 @@ function HL2C_Server:SetupMap()
 	if HL2C_Map.Checkpoints then
 		for k, cpdata in pairs( HL2C_Map.Checkpoints ) do
 			HL2C_Server:CreateCP(cpdata.min,cpdata.max, cpdata.spawn, cpdata.angle, cpdata.func or nil, cpdata.dist or nil)
+		end
+	end
+	
+	if HL2C_Map.Warps then
+		for k, warpdata in pairs( HL2C_Map.Warps ) do
+			HL2C_Server:CreateWarp(warpdata.min,warpdata.max, warpdata.spawn, warpdata.angle)
 		end
 	end
 	
@@ -143,6 +163,16 @@ function HL2C_Server:RemoveChangeLevel()
     for _, c in pairs(ents.FindByClass("trigger_changelevel")) do
         c:Remove()
     end
+end
+
+function HL2C_Server:CreateProp(mdl,pos,ang)
+    local prop = ents.Create("prop_dynamic")
+    prop:SetModel(mdl)
+    prop:SetPos(pos)
+	prop:SetAngles(ang)
+	prop:PhysicsInit( 6 )
+    prop:Spawn()
+	return prop
 end
 
 function HL2C_Server:CreateLambdaIcon(pos,mat)

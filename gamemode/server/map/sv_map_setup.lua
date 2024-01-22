@@ -58,6 +58,13 @@ function HL2C_Map:RemoveMapEnts(list)
     end
 end
 
+function HL2C_Map:RemoveNamedEnts(name)
+	local list = ents.FindByName(name )
+    for _, v in ipairs(list) do
+        v:Remove()
+    end
+end
+
 function HL2C_Map:FireEnts(name,value)
 	for _, ent in ipairs(ents.FindByName( name )) do
 		ent:Fire(value)

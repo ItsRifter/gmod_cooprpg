@@ -11,6 +11,7 @@ function hl2c_player:DoSpawn()
 	
     self:SetNoCollideWithTeammates(true)
     self:GiveWeapons()
+	self:GiveLoadout()
 end
 
 hook.Add("PlayerSpawn", "HL2C_Player_Spawn", function(ply, transition)

@@ -102,8 +102,8 @@ local function HL2C_ToolOpen()
 	DButton.DoClick = function()				
 		Frame.SpawnPos = LocalPlayer():GetPos()
 		Frame.SpawnAngle = LocalPlayer():EyeAngles()
-		Frame.ELabel3:SetText( string.format("Vector(%d,%d,%d)",Frame.SpawnPos:Unpack()) )	
-		Frame.ELabel4:SetText( string.format("Angle(%d,%d,%d)",Frame.SpawnAngle:Unpack()) )	
+		Frame.ELabel3:SetText( string.format("Vector(%.1f,%.1f,%.1f)",Frame.SpawnPos:Unpack()) )	
+		Frame.ELabel4:SetText( string.format("Angle(%.1f,%.1f,%.1f)",Frame.SpawnAngle:Unpack()) )	
 	end
 
 	local DButton = vgui.Create( "DButton", Frame )
