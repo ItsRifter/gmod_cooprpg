@@ -165,13 +165,20 @@ function HL2C_Server:RemoveChangeLevel()
     end
 end
 
-function HL2C_Server:CreateProp(mdl,pos,ang)
+function HL2C_Server:CreateProp(mdl,pos,ang,hidden)
     local prop = ents.Create("prop_dynamic")
     prop:SetModel(mdl)
     prop:SetPos(pos)
 	prop:SetAngles(ang)
 	prop:PhysicsInit( 6 )
-    prop:Spawn()
+	prop:Spawn()
+	
+	if hidden then
+		prop:SetRenderMode( RENDERMODE_ENVIROMENTAL )	--makes invisible
+		prop:SetCollisionGroup(COLLISION_GROUP_PLAYER)
+
+	end
+	
 	return prop
 end
 

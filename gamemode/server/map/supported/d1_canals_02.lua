@@ -21,9 +21,10 @@ HL2C_Map.VortexList = {Vector(384.4,252.7,-872.7),Vector(-1032.2,-1147.4,-778.1)
 HL2C_Map.MapStartup = function()
 	HL2C_Map:RemoveMapEnts({1440,1441,1444,1621,1622,1623,1496})	
 	
-	HL2C_Server:CreateProp("models/props_wasteland/cargo_container01.mdl",Vector(170,-120,-708),Angle(0,0,0))
-	HL2C_Server:CreateProp("models/props_debris/beam01c.mdl",Vector(236.1,-299.8,-760.0),Angle(-88.3,-174.4,86.2))
-	HL2C_Server:CreateProp("models/props_debris/beam01d.mdl",Vector(120.0,-284.0,-758.6),Angle(-9.3,179.7,-11.8))
+	HL2C_Server:CreateProp("models/props_vehicles/van001a_physics.mdl",Vector(144.7,-57.3,-720.4),Angle(-2.0,-91.3,-98.5))
+	HL2C_Server:CreateProp("models/props_vehicles/car002b.mdl",Vector(138.8,-188.6,-696.4),Angle(79.3,-18.4,-2.5))
+	HL2C_Server:CreateProp("models/hunter/blocks/cube4x6x05.mdl",Vector(161.1,-146.4,-805.6),Angle(-13.4,-107.5,-93.3),true)
+
 
 	HL2C_Map:RemoveMapEnts({1554,1550})
 	HL2C_Map:FireEnts("underground_portal_slippery01","open")
