@@ -21,6 +21,8 @@ HL2C_Map.VortexChance = 30	--defaults if not set
 HL2C_Map.VortexList = {Vector(-11154.1,-8284.1,-969.2),Vector(-2844.5,-6176.5,-748.2),Vector(7641.1,1368.5,-464.9),Vector(7736.2,1907.9,-156.8)}
 
 HL2C_Map.MapStartup = function()
+	HL2C_Server:SetVehicle(VEHC_AIRBOAT)
+
 	HL2C_Map:RemoveMapEnts({1503,1532,1533,1510,1509,1506,1508,1507,1505,2669,2239})	
 
 	HL2C_Map:RemoveMapEnts({2468,2072})	

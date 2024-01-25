@@ -19,6 +19,8 @@ HL2C_Map.VortexChance = 25	--defaults if not set
 HL2C_Map.VortexList = {Vector(-1451.9,5433.8,-113.3),Vector(-6715.5,4214.3,-212.6)}
 
 HL2C_Map.MapStartup = function()
+	HL2C_Server:SetVehicle(VEHC_AIRBOAT)
+
 	HL2C_Server:CreateProp("models/props_vehicles/car005b.mdl",Vector(-375.3,5582.2,-215.0),Angle(1.0,-3.1,-91.1))
 	HL2C_Server:CreateProp("models/props_pipes/pipecluster32d_001a.mdl",Vector(-487.0,5528.9,-192.7),Angle(0.0,-0.0,0.0))
 
