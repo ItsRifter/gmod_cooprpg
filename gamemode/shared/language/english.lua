@@ -27,6 +27,9 @@ lang.Options_CrossDy = "Dynamic Crosshair"
 lang.Options_HideXp = "Hide XP bar"
 lang.Options_HideDmg = "Hide Damage"
 
+lang.Game_Checkpoint = " has reached the next checkpoint"
+lang.Game_Vortex = " has found the vortex first!"
+
 ------Display Boards------
 lang.Display_Test = "Display Text"
 lang.Display_TestMulti = {"Display Text","multi lined","more lines","last one"}

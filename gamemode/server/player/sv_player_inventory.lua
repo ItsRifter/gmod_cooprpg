@@ -21,7 +21,7 @@ end
 
 
 function hl2c_player:GiveWeapons()
-	PrintTable(HL2C_Server.AvailableWeapons)
+	--PrintTable(HL2C_Server.AvailableWeapons)
     for _, w in ipairs(HL2C_Server.AvailableWeapons) do
         if !self:HasWeapon( w ) then self:Give(w, false) end
     end

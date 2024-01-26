@@ -3,7 +3,8 @@ AddCSLuaFile()
 
 HL2R_TEXT_RED 		= Color(200, 20, 20)
 HL2R_TEXT_GREEN 	= Color(25, 200, 25)
-HL2R_TEXT_NORMAL 	= Color(255, 120, 0)
+HL2R_TEXT_ORANGE 	= Color(250, 150, 50)
+HL2R_TEXT_NORMAL 	= Color(255, 200, 180)
 
 --HL2CR_StandardColour = Color(255, 120, 0)
 --HL2CR_PlayerColour = Color(255, 200, 50)

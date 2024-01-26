@@ -11,6 +11,8 @@ util.AddNetworkString("HL2C_PlaySnd")
 
 util.AddNetworkString("HL2C_ChatMessage")
 
+util.AddNetworkString("HL2C_Vehicle")
+
 --util.AddNetworkString("HL2C_Suit_FlashLight")	
 util.AddNetworkString("HL2C_Suit_Power")				
 

@@ -7,6 +7,14 @@ local panel_meta = FindMetaTable( "PANEL" )
 		weight  = 100,
 		antialias = true,
 		})
+		
+	surface.CreateFont( "HUD_Small", 
+		{
+		font    = "Impact",
+		size    = ScrH() * 0.025,
+		weight  = 100,
+		antialias = true,
+		})
 
 
 function HL2C_Client:CreateFonts()

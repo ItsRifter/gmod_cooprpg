@@ -4,6 +4,8 @@
 function HL2C_Server:CheckpointTriggered(cp, ply)
 	HL2C_Server:MoveSpawn(cp.TPPoint, cp.TPAngles, nil)
 		
+	HL2C_Server:SendMessageAll(HL2R_TEXT_ORANGE,ply:Nick(),HL2R_TEXT_NORMAL,"##Game_Checkpoint")
+		
 	if cp.lambda and cp.lambda:IsValid() then cp.lambda:Remove() end
 
 	if cp.Func then cp:Func() end
@@ -106,6 +108,18 @@ local T_END_NAME = "TIMER_LVLCHANGE"
 local T_END_TIME = 40
 local T_END_FAST = 7
 
+HL2C_Server.EndTime = HL2C_Server.EndTime or 0
+
+function HL2C_Server:SendCountdown(ply)
+	net.Start( "HL2C_Countdown" )
+		net.WriteFloat( HL2C_Server.EndTime )
+	if not ply then net.Broadcast() else net.Send(ply) end
+end
+
+hook.Add("PlayerInitialSpawn", "HL2C_Sync_countdown", function(ply)
+	HL2C_Server:SendCountdown(ply)
+end)
+
 function HL2C_Server:CountDown(active,force)
 	if timer.Exists(T_END_NAME) then 
 		if force then
@@ -114,15 +128,20 @@ function HL2C_Server:CountDown(active,force)
 					timer.Remove(T_END_NAME)
 					timer.Create(T_END_NAME, T_END_FAST, 1, function() HL2C_Server:ChangeLevel() end)
 					
-					net.Start( "HL2C_Countdown" )
-						net.WriteFloat( CurTime() + T_END_FAST)
-					net.Broadcast()
+					HL2C_Server.EndTime = CurTime() + T_END_FAST
+					HL2C_Server:SendCountdown()
+					
+					---net.Start( "HL2C_Countdown" )
+					---	net.WriteFloat( CurTime() + T_END_FAST)
+					---net.Broadcast()
 				end
 			else
 				timer.Remove(T_END_NAME)
-				net.Start( "HL2C_Countdown" )
-					net.WriteFloat( 0)
-				net.Broadcast()
+				HL2C_Server.EndTime = 0
+				HL2C_Server:SendCountdown()
+				--net.Start( "HL2C_Countdown" )
+				--	net.WriteFloat( 0)
+				--net.Broadcast()
 			end
 		end
 	else
@@ -130,14 +149,20 @@ function HL2C_Server:CountDown(active,force)
 		if force then
 			timer.Create(T_END_NAME, T_END_FAST, 1, function() HL2C_Server:ChangeLevel() end)
 			
-			net.Start( "HL2C_Countdown" )
-				net.WriteFloat( CurTime() + T_END_FAST)
-			net.Broadcast()
+			HL2C_Server.EndTime = CurTime() + T_END_FAST
+			HL2C_Server:SendCountdown()
+			
+			--net.Start( "HL2C_Countdown" )
+			--	net.WriteFloat( CurTime() + T_END_FAST)
+			--net.Broadcast()
 		else
 			timer.Create(T_END_NAME, T_END_TIME, 1, function() HL2C_Server:ChangeLevel() end)
-			net.Start( "HL2C_Countdown" )
-				net.WriteFloat( CurTime() + T_END_TIME)
-			net.Broadcast()
+			
+			HL2C_Server.EndTime = CurTime() + T_END_TIME
+			HL2C_Server:SendCountdown()
+			--net.Start( "HL2C_Countdown" )
+			--	net.WriteFloat( CurTime() + T_END_TIME)
+			--net.Broadcast()
 		end
 	end
 end
@@ -158,6 +183,7 @@ end
 local VortexList = VortexList or {}
 function HL2C_Server:VortexTouched(ply)
 	if not table.HasValue( VortexList, ply) then
+		if table.IsEmpty( VortexList ) then HL2C_Server:SendMessageAll(HL2R_TEXT_ORANGE,ply:Nick(),HL2R_TEXT_NORMAL,"##Game_Vortex") end
 		table.insert( VortexList, ply)
 		ply:EmitSound("ambient/levels/prison/radio_random11.wav")
 	end
