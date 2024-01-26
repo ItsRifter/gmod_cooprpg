@@ -52,3 +52,23 @@ end
 function hl2c_player:IsTeam(iTeam)
     return self:Team() == iTeam or false
 end
+
+function HL2C_Global:GetHumans()
+	local list = {}
+	for i, ply in ipairs( player.GetAll() ) do
+		if IsHuman(ply) then
+			table.insert( list, ply )
+		end
+	end
+	return list
+end
+
+function HL2C_Global:GetCombine()
+	local list = {}
+	for i, ply in ipairs( player.GetAll() ) do
+		if IsCombine(ply) then
+			table.insert( list, ply )
+		end
+	end
+	return list
+end

@@ -33,14 +33,16 @@ lang.Display_TestMulti = {"Display Text","multi lined","more lines","last one"}
 
 
 ------Vehicles------
-lang.Vehicle_Airboat = {"Air boat"}
-lang.Vehicle_Jeep = {"Jeep"}
-lang.Vehicle_Jalopy = {"Jalopy"}
+lang.Vehicle_Airboat = "Air boat"
+lang.Vehicle_Jeep = "Jeep"
+lang.Vehicle_Jalopy = "Jalopy"
 
-lang.Vehicle_ToSpawn 	= {"Press F3 to spawn/remove your own "}
-lang.Vehicle_Enabled 	= {" have been unlocked"}
-lang.Vehicle_Disabled 	= {"Vehicles are now disabled"}
+lang.Vehicle_ToSpawn 	= "Press F3 to spawn/remove your own "
+lang.Vehicle_Enabled 	= " has been unlocked"
+lang.Vehicle_Disabled 	= "Vehicles are now disabled"
 
+lang.Vehicle_Deny 		= "Vehicles are currently disabled"
+lang.Vehicle_TooFast 	= "Cant respawn Vehicle too fast"
 
 
 

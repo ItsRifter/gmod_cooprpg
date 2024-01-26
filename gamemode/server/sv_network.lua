@@ -8,6 +8,9 @@ util.AddNetworkString("HL2C_Countdown")
 util.AddNetworkString("HL2C_Indicator")
 util.AddNetworkString("HL2C_PlaySnd")
 
+
+util.AddNetworkString("HL2C_ChatMessage")
+
 --util.AddNetworkString("HL2C_Suit_FlashLight")	
 util.AddNetworkString("HL2C_Suit_Power")				
 

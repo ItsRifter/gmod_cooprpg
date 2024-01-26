@@ -55,14 +55,16 @@ end
 function HL2C_Server:SetVehicle(id)
 	if HL2C_Server.Vehicle_Current == id then return end
 	if id == VEHC_NONE then 
-		if CurTime() < 1 then
+		if CurTime() > 1 then
 			--MSG Vehicles Disabled
+			HL2C_Server:SendMessageAll("##Vehicle_Disabled")
 		end
-	
+		HL2C_Server.Vehicle_Current = id 
 		return
 	end
 	local vehc_info = HL2C_Global:GetVehicleInfo(id)
 	if not vehc_info then return end
+	HL2C_Server:SendMessageAll("##"..vehc_info.Name,"##Vehicle_Enabled")
 	--MSG Vehicles Enabled
 	HL2C_Server.Vehicle_Current = id 
 end
@@ -81,14 +83,18 @@ function HL2C_Server:F3_Vehicle(ply)
 
 	if HL2C_Server.Vehicle_Current == VEHC_NONE then
 	--	ply:BroadcastMessage(HL2CR_RedColour, translate.Get("Error_Player_Vehicle_Disabled"))
+		ply:SendWarning(HL2R_TEXT_RED,"##Vehicle_Deny")
 		return
 	end
+	
+	if ply:InVehicle() then return end
 	
 	local vehc_info = HL2C_Global:GetVehicleInfo(HL2C_Server.Vehicle_Current)
 	
 	if not vehc_info then return end
 	if ply.nextVehicle and ply.nextVehicle > CurTime() then
 		--ply:BroadcastMessage(HL2CR_RedColour, translate.Get("Error_Player_Vehicle_TooFast"), tostring(math.Round(ply.nextSpawn - CurTime())))
+		ply:SendWarning(HL2R_TEXT_RED,"##Vehicle_TooFast")
 		return	--prevent players fast spawning new vehicles
 	end
 	
