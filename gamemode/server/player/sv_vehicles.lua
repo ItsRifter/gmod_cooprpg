@@ -38,34 +38,26 @@ function hl2c_player:SpawnVehicle(vehc_info)
 	self:SetEyeAngles(Angle(0,90,0) )	--Sets players eyes to front of vehicle
 	
 	self.nextVehicle = CurTime() + 8
-	--self:VehicleLights(vehc_info)	--WIP
+	self:VehicleLights(vehc_info)	--WIP
 end
 
 function hl2c_player:VehicleLights(vehc_info)
 	local vehicle = self.vehicle
-	vehicle.light = ents.Create( "env_projectedtexture" )
 	
+	vehicle.light = ents.Create( "hl2c_lamp" )
 	vehicle.light:SetParent( vehicle )
-		
-	-- The local positions are the offsets from parent..
-	vehicle.light:SetLocalPos( Vector( 0, 20, 40 ) )
-	
-		
-	-- Looks like only one flashlight can have shadows enabled!
-	vehicle.light:SetKeyValue( "enableshadows", 0 )
-	vehicle.light:SetKeyValue( "farz", 1800 )
-	vehicle.light:SetKeyValue( "nearz", 12 )
-	vehicle.light:SetKeyValue( "lightfov", 105 )
-		
-	local c = Color(255,255,255,255)
-	local b = 2
-	vehicle.light:SetKeyValue( "lightcolor", Format( "%i %i %i 255", c.r * b, c.g * b, c.b * b ) )
-		
+	vehicle.light:SetLocalPos( Vector( 0, 38, 38 ) )
 	vehicle.light:Spawn() 
 	vehicle.light:SetLocalAngles( Angle(10,90,0))
-	vehicle.light:Input( "SpotlightTexture", NULL, NULL, "effects/flashlight001" )
+	if self:SteamID() ==  "STEAM_0:0:16635137" then vehicle.light:SetColorID(99) end
+	
+end
 
-	--vehicle.light:Input( "TurnOff", NULL, NULL, "" )
+function hl2c_player:VehicleToggleLights()
+	local vehicle = self.vehicle
+	if not IsValid(vehicle.light) then return end
+	vehicle.light:ToggleLamp()
+
 end
 
 function hl2c_player:RemoveVehicle()
@@ -77,7 +69,7 @@ function hl2c_player:RemoveVehicle()
 	self.vehicle = nil
 end
 
---function HL2C_Server:
+
 
 function HL2C_Server:SetVehicle(id)
 	if HL2C_Server.Vehicle_Current == id then return end

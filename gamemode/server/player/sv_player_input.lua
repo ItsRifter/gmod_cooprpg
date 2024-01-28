@@ -15,3 +15,12 @@ end
 function GM:ShowSpare1(ply)
 	HL2C_Server:F3_Vehicle(ply)
 end
+
+hook.Add( "StartCommand", "Command_Flashlight", function( ply, cmd )
+	if cmd:GetImpulse() == 100 then
+		if ply:InVehicle() and ply:GetVehicle() == ply.vehicle then
+			ply:VehicleToggleLights()
+			cmd:SetImpulse( 0 )		--used so the built in airboat lamp cant be enabled.
+		end
+	end
+end )

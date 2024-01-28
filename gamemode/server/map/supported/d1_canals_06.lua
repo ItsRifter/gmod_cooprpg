@@ -21,9 +21,9 @@ HL2C_Map.VortexList = {Vector(-1451.9,5433.8,-113.3),Vector(-6715.5,4214.3,-212.
 HL2C_Map.MapStartup = function()
 	HL2C_Server:SetVehicle(VEHC_AIRBOAT)
 
-	HL2C_Server:CreateProp("models/props_vehicles/car005b.mdl",Vector(-375.3,5582.2,-215.0),Angle(1.0,-3.1,-91.1))
-	HL2C_Server:CreateProp("models/props_pipes/pipecluster32d_001a.mdl",Vector(-487.0,5528.9,-192.7),Angle(0.0,-0.0,0.0))
-
+	HL2C_Server:CreateProp("models/props_canal/canal_bars003.mdl",Vector(415.1,5582.2,-127.7),Angle(-0.0,-0.0,44.0))
+	HL2C_Server:CreateProp("models/props_canal/canal_bars003.mdl",Vector(-223.1,5582.0,-127.7),Angle(0.0,0.1,44.0))
+	HL2C_Server:CreateProp("models/props_canal/canal_bars003.mdl",Vector(-415.5,5581.7,-127.7),Angle(0.0,0.3,43.9))
 
 	--HL2C_Map:RemoveMapEnts({1672})	
 	

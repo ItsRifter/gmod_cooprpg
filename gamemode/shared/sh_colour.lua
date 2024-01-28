@@ -32,7 +32,7 @@ function GetColour(number, blend)
 	local New = colours[0]	--Default White
 	if colours[number] then New = colours[number] end
 
-	New.a = blend
+	New.a = blend or 255
 	
 	if number >= 80 and number <= 89 then 	--Pulse Colours
 		local add360 = math.abs(Lerp(CurTime()%1.5,-0.5,0.5))+0.5
