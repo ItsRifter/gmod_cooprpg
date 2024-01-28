@@ -1,5 +1,5 @@
 HL2C_Map.Weapons = {"weapon_crowbar","weapon_pistol","weapon_smg1"}
-HL2C_Map.Loadout = {armour = 30,Pistol = 18,SMG1 = 45}
+HL2C_Map.Loadout = {armour = 45,Pistol = 18,SMG1 = 45}
 HL2C_Map.Flags = {}
 HL2C_Map.NextMap = "d1_canals_08"
 

@@ -59,6 +59,7 @@ function hl2c_player:GiveLoadout()
 	
     for k, v in pairs(HL2C_Map.Loadout) do
         if k == "armour" then self:SetArmor(v) continue end
+		if k == "A357" then self:SetAmmo( v, "357") continue end	--fixes stupid ammo name being a number
 		if game.GetAmmoID( k ) >= 0 then
 			self:SetAmmo( v, k )
 		end

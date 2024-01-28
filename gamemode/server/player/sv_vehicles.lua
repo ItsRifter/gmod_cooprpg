@@ -49,8 +49,8 @@ function hl2c_player:VehicleLights(vehc_info)
 	vehicle.light:SetLocalPos( Vector( 0, 38, 38 ) )
 	vehicle.light:Spawn() 
 	vehicle.light:SetLocalAngles( Angle(10,90,0))
-	if self:SteamID() ==  "STEAM_0:0:16635137" then vehicle.light:SetColorID(99) end
-	
+	--if self:SteamID() ==  "STEAM_0:0:16635137" then vehicle.light:SetColorID(math.random( 80, 89 )) end
+	if self:SteamID() ==  "STEAM_0:0:16635137" then vehicle.light:SetColorID(98) end
 end
 
 function hl2c_player:VehicleToggleLights()

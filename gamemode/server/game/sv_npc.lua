@@ -42,3 +42,40 @@ hook.Add( "EntityTakeDamage", "HL2CR_NPC_TakeDamage", function( target, dmgInfo 
 		end
     end
 end)
+
+function HL2C_Server:CreateEnemy(class,pos,angle,weapon, search)
+	local enemy = ents.Create(class)
+	enemy:SetPos(pos)
+	enemy:SetAngles(angle)
+	if weapon then enemy:Give( weapon ) end
+	enemy:Spawn()
+	
+	if !search then return end
+	
+	local target = nil
+	local distance = 1000
+	local enemypos = enemy:GetPos()
+	
+	local positions = {}	--creating list of alive player positions
+	for i, v in ipairs( player.GetAll() ) do	
+		if v:IsTeam(TEAM_HUMAN_ALIVE) then
+			table.insert( positions, v )
+		end
+	end
+	
+	for i, v in ipairs( positions ) do	
+		local toplayer = enemypos:Distance(v:GetPos())
+		if toplayer > 50 and toplayer < distance then
+			target = v
+			distance = toplayer
+		end
+	end
+	
+	if IsValid(target) then
+		enemy:SetEnemy( target , true)
+		enemy:UpdateEnemyMemory( target, target:GetPos())
+		enemy:SetActivity(11)
+		enemy:SetArrivalDistance(128)
+	end
+	
+end

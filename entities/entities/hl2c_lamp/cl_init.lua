@@ -4,10 +4,6 @@ include("shared.lua")
 function ENT:Initialize()
 	self.light = false
 	self.color = 0
-	
-	--self:SetModel("models/props_wasteland/light_spotlight01_lamp.mdl")
-	self:SetModel("models/props_wasteland/light_spotlight02_lamp.mdl")
-	self:SetSkin( 1)
 end
 
 function ENT:SpawnLamp()
@@ -55,10 +51,8 @@ function ENT:Update(lit,col)
 	if lit then
 		if not IsValid(self.lamp) then self:SpawnLamp() end
 		self.lamp:SetColor( GetColour(self.color) )
-		self:SetSkin( 0)
 	else
 		if IsValid(self.lamp) then self.lamp:Remove() end
-		self:SetSkin( 1)
 	end
 end
 

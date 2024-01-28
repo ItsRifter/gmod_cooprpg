@@ -7,6 +7,8 @@ function ENT:Initialize()
 	self.light = false
 	self.color_id = 0
 	self:DrawShadow( false )
+	self:SetModel("models/props_wasteland/light_spotlight02_lamp.mdl")
+	self:SetSkin( 1)
 end
 
 function ENT:SetColorID(col)
@@ -19,9 +21,11 @@ function ENT:ToggleLamp()
 	if not self.light then
 		self.light = true
 		self:EmitSound( "ambient/energy/newspark03.wav" )
+		self:SetSkin( 0)
 	else
 		self.light = false
 		self:EmitSound("ambient/energy/spark2.wav")
+		self:SetSkin( 1)
 	end
 	self:Update()
 end

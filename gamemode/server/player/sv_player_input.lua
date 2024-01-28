@@ -1,5 +1,5 @@
 --Only one can exist so moving them here
-function GM:ShowHelp(ply)
+function GM:ShowHelp(ply)		--F1 Default
 	--if HL2CR_Voting.State then 
 	--	HL2CR_Voting:PlayerVote(ply, true)
 	--else
@@ -8,11 +8,11 @@ function GM:ShowHelp(ply)
 	--end
 end
 
-function GM:ShowTeam(ply)
+function GM:ShowTeam(ply)		--F2 Default
 	--HL2CR_Voting:PlayerVote(ply, false)
 end
 
-function GM:ShowSpare1(ply)
+function GM:ShowSpare1(ply)		--F3 Default
 	HL2C_Server:F3_Vehicle(ply)
 end
 
