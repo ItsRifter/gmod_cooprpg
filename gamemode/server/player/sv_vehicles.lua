@@ -156,7 +156,7 @@ function GM:CanPlayerEnterVehicle( ply, vehicle, seat )
 	
 	if not id then return true end
 
-	if HL2C_Server.Vehicle_Current == VEHC_NONE then return false end
+	if HL2C_Server.Vehicle_Current == VEHC_NONE then ply:SendWarning(HL2R_TEXT_RED,"##Vehicle_Deny") return false end
 	
 	if IsValid(vehicle:GetOwner()) and vehicle:GetOwner() != ply then 
 		ply:SendWarning(HL2R_TEXT_RED,"##Vehicle_NotOwner")

@@ -13,6 +13,7 @@ IncludeClientFiles("client/data/")
 IncludeClientFiles("client/theme/")
 IncludeClientFiles("client/tools/")
 IncludeClientFiles("client/hud/")
+IncludeClientFiles("client/qmenu/")
 
 --adding content files
 IncludeContent("materials/hl2c/")

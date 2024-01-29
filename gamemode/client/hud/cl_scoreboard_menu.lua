@@ -201,16 +201,17 @@ vgui.Register( "HL2C_Scoreboard", PANEL, "Panel" )
 
 function ToggleBoard(toggle)
 	if toggle then
-		if GAMEMODE.scoreboard then
-			GAMEMODE.scoreboard:Remove()
+		if HL2C_Client.scoreboard then
+			HL2C_Client.scoreboard:Remove()
 		end
 		
-		if ( GAMEMODE.HelpMenu ) then GAMEMODE.HelpMenu:Remove() gui.EnableScreenClicker( false ) end
+		HL2C_Client:RemoveQMenu()
+		HL2C_Client:RemoveHelpMenu()
 		
-		GAMEMODE.scoreboard  = vgui.Create("HL2C_Scoreboard")
+		HL2C_Client.scoreboard  = vgui.Create("HL2C_Scoreboard")
 
-	elseif GAMEMODE.scoreboard then
-		GAMEMODE.scoreboard:Remove()
+	elseif HL2C_Client.scoreboard then
+		HL2C_Client.scoreboard:Remove()
 	end
 end
 
@@ -224,9 +225,9 @@ hook.Add("ScoreboardHide", "HL2C_ScoreboardHide", function()
 end)
 
 hook.Add( "PlayerButtonDown", "HL2C_Scoreboard_Mouse", function(ply, btn)
-	if not IsValid(GAMEMODE.scoreboard) then return end
+	if not IsValid(HL2C_Client.scoreboard) then return end
 
 	if btn == 108 then
-		GAMEMODE.scoreboard:MakePopup()
+		HL2C_Client.scoreboard:MakePopup()
 	end
 end)

@@ -32,8 +32,7 @@ function PANEL:Init()
 	local Btn = New_ThemeButton(self, wide * 0.85 - tall * 0.01, tall * 0.01,wide* 0.15,tall* 0.05,translate.Get("Basic_Close"),"Font_Normal")
 	Btn:SetFunc(
 		function()
-			gui.EnableScreenClicker( false ) 
-			HL2C_Client.HelpMenu:Remove()
+			HL2C_Client:RemoveHelpMenu()
 		end
 	)
 --------------------------------------------------------------------------------------------------------------
@@ -146,8 +145,16 @@ end
 vgui.Register( "HelpMenu", PANEL, "Panel" )
 
 function HL2C_Client:OpenHelpMenu(options)
-	if ( HL2C_Client.HelpMenu ) then HL2C_Client.HelpMenu:Remove()end
+	HL2C_Client:RemoveHelpMenu()
+	HL2C_Client:RemoveQMenu()
 	HL2C_Client.HelpMenu = vgui.Create( "HelpMenu" )
 	if options then HL2C_Client.HelpMenu:ShowOptions(true) end
 	gui.EnableScreenClicker( true )
+end
+
+function HL2C_Client:RemoveHelpMenu()
+	if IsValid(HL2C_Client.HelpMenu) then
+		HL2C_Client.HelpMenu:Remove()
+		gui.EnableScreenClicker( false )
+	end
 end

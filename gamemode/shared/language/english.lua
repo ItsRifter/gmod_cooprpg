@@ -8,6 +8,11 @@ lang.Basic_Cmd = "Commands"
 lang.Basic_Pets = "Pets"
 lang.Basic_Options = "Options"
 
+lang.Basic_Inventory = "Inventory"
+lang.Basic_Skills = "Skills"
+lang.Basic_Shop = "Shop"
+lang.Basic_Achievements = "Achievements"
+
 ------Scoreboard------
 lang.SB_VERSION = "Version - "
 lang.SB_PLY_LVL = "Lvl: "
@@ -47,6 +52,9 @@ lang.Vehicle_Disabled 	= "Vehicles are now disabled"
 lang.Vehicle_Deny 		= "Vehicles are currently disabled"
 lang.Vehicle_TooFast 	= "Cant respawn Vehicle too fast"
 lang.Vehicle_NotOwner	= "You dont own this Vehicle"
+
+
+------Qmenu------
 
 
 translate.AddLanguage(name,lang)
