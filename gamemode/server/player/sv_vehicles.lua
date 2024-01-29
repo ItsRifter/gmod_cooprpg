@@ -39,6 +39,24 @@ function hl2c_player:SpawnVehicle(vehc_info)
 	
 	self.nextVehicle = CurTime() + 8
 	self:VehicleLights(vehc_info)	--WIP
+	self:VehicleSeat(vehc_info)
+end
+
+function hl2c_player:VehicleSeat(vehc_info)
+	if not vehc_info.SeatMdl then return end
+
+	local vehicle = self.vehicle
+	local seat = ents.Create("prop_vehicle_prisoner_pod")
+	--seat:SetModel("models/nova/jeep_seat.mdl")
+	seat:SetModel(vehc_info.SeatMdl)
+
+	--seat:SetPos(vehicle:LocalToWorld(Vector(32, -32, 18)))
+	seat:SetPos(vehicle:LocalToWorld(vehc_info.SeatPos))
+	seat:SetAngles(vehicle:LocalToWorldAngles(vehc_info.SeatAngle))
+	seat:Spawn()
+	seat:SetMoveType(MOVETYPE_NONE)
+	seat:SetParent(vehicle, -1)
+	seat.sideseat = true
 end
 
 function hl2c_player:VehicleLights(vehc_info)
@@ -69,6 +87,14 @@ function hl2c_player:RemoveVehicle()
 	self.vehicle = nil
 end
 
+function HL2C_Server:RemoveVehicles()
+	for i, v in ipairs( player.GetAll() ) do	
+		if v:IsTeam(TEAM_HUMAN_ALIVE) then
+			v:RemoveVehicle()
+		end
+	end
+end
+
 
 
 function HL2C_Server:SetVehicle(id)
@@ -79,6 +105,7 @@ function HL2C_Server:SetVehicle(id)
 			HL2C_Server:SendMessageAll(HL2R_TEXT_NORMAL,"##Vehicle_Disabled")
 		end
 		HL2C_Server.Vehicle_Current = id 
+		HL2C_Server:RemoveVehicles()
 		return
 	end
 	local vehc_info = HL2C_Global:GetVehicleInfo(id)
@@ -125,12 +152,32 @@ end
 function GM:CanPlayerEnterVehicle( ply, vehicle, seat )
 	local id = HL2C_Global:GetVehicleId(vehicle:GetModel())
 	
+	if vehicle.sideseat then ply:SetAllowWeaponsInVehicle( true ) else ply:SetAllowWeaponsInVehicle( false ) end
+	
 	if not id then return true end
 
 	if HL2C_Server.Vehicle_Current == VEHC_NONE then return false end
 	
+	if IsValid(vehicle:GetOwner()) and vehicle:GetOwner() != ply then 
+		ply:SendWarning(HL2R_TEXT_RED,"##Vehicle_NotOwner")
+		return false 
+	end
+	
 	return true
 end
+
+function GM:CanExitVehicle(veh, ply)
+	if ply.LastVehicle and ply.LastVehicle > CurTime() then return false end
+
+	if veh.sideseat then  
+		ply:SetAllowWeaponsInVehicle( false )
+		return true 
+	end	
+	
+	if veh:GetClass() == "prop_vehicle_prisoner_pod" then return false end	
+	return true
+end
+
 
 function HL2C_Server:SendVehicle(ply)
 	net.Start( "HL2C_Vehicle" )

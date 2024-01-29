@@ -40,6 +40,8 @@ end
 
 function HL2C_Server:EndTriggered(cp,ply)
 	ply:SetTeam(TEAM_HUMAN_FIN)
+	ply:RemoveVehicle()
+	ply:ToggleSpectator(true)
 	ply:EmitSound("vo/k_lab/kl_excellent.wav", 100, 100)
 	
 	if cp.Func then cp:Func(ply) end

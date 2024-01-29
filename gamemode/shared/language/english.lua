@@ -46,7 +46,7 @@ lang.Vehicle_Disabled 	= "Vehicles are now disabled"
 
 lang.Vehicle_Deny 		= "Vehicles are currently disabled"
 lang.Vehicle_TooFast 	= "Cant respawn Vehicle too fast"
-
+lang.Vehicle_NotOwner	= "You dont own this Vehicle"
 
 
 translate.AddLanguage(name,lang)

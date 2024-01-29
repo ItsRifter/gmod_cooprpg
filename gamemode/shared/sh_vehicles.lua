@@ -16,7 +16,10 @@ Vehicles[VEHC_AIRBOAT]={
 	KeyValues = {
 		vehiclescript = "scripts/vehicles/airboat.txt",
 		EnableGun = 0
-	}
+	},
+	SeatMdl = "models/nova/airboat_seat.mdl",
+	SeatPos = Vector(0, -48, 68),
+	SeatAngle = Angle(0, 0, 0)
 }
 
 Vehicles[VEHC_AIRBOAT_GUN]={
@@ -27,7 +30,10 @@ Vehicles[VEHC_AIRBOAT_GUN]={
 	KeyValues = {
 		vehiclescript = "scripts/vehicles/airboat.txt",
 		EnableGun = 1
-	}
+	},
+	SeatMdl = "models/nova/airboat_seat.mdl",
+	SeatPos = Vector(0, -48, 68),
+	SeatAngle = Angle(0, 0, 0)
 }
 
 Vehicles[VEHC_JEEP]={
@@ -38,7 +44,10 @@ Vehicles[VEHC_JEEP]={
 	KeyValues = {
 		vehiclescript = "scripts/vehicles/jeep_test.txt",
 		EnableGun = 1
-	}
+	},
+	SeatMdl = "models/nova/jeep_seat.mdl",
+	SeatPos = Vector(32, -32, 18),
+	SeatAngle = Angle(0, 0, 0)
 }
 
 Vehicles[VEHC_JALOPY]={

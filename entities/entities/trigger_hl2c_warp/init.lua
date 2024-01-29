@@ -23,7 +23,7 @@ function ENT:StartTouch(ent)
 
 	if ent and ent:IsValid() and ent:IsPlayer() then
 		if not ent:IsTeam(TEAM_HUMAN_ALIVE) then return end
-		
+		ent:RemoveVehicle()
 		ent:SetPos(self.TPPoint)
 		ent:SetEyeAngles(self.TPAngles)
 
