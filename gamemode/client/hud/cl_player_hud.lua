@@ -15,17 +15,25 @@ surface.CreateFont( "flashlight_font", {
 	antialias = true
 })
 
+local fl_ok = Color(255, 238, 31, 255)
+local fl_red = Color(255, 31, 31, 255)
+
+
 function HL2C_Client:DrawBlips(x,y,w,h, amount,value, maximum)
 	local offset_x = math.Round(w / amount)
 	local width = math.Round(offset_x * 0.80)
 	offset_x = offset_x + math.Round((offset_x * 0.20) / (amount-1) )
 	local blips = math.Round(amount/maximum*value)
-	local red = math.Clamp(200/(amount*0.25)*blips , 100,250)
-	local green = math.Clamp(200/amount*blips, 20,150)
+	--local red = math.Clamp(200/(amount*0.25)*blips , 100,250)
+	--local green = math.Clamp(200/amount*blips, 20,150)
+	
+	local decay = math.Clamp(4/amount*blips - 1,0,1)
+	
+	local col = Color(Lerp(decay,fl_red.r,fl_ok.r),Lerp(decay,fl_red.g,fl_ok.g),Lerp(decay,fl_red.b,fl_ok.b),LIGHT_ALPHA)
 	
 	for i=0, amount -1 do
 		if i < blips then
-			draw.RoundedBox(4, x + i*offset_x,y,width,h, Color(255, 238, 31, LIGHT_ALPHA))
+			draw.RoundedBox(4, x + i*offset_x,y,width,h, Color(col.r, col.g, col.b, LIGHT_ALPHA))
 		else
 			draw.RoundedBox(4, x + i*offset_x,y,width,h, Color(40, 20, 10, LIGHT_ALPHA - 60))
 		end

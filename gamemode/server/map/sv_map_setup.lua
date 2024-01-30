@@ -58,6 +58,13 @@ function HL2C_Map:RemoveMapEnts(list)
     end
 end
 
+function HL2C_Map:SetMapEntsHealth(list,health)
+    for _, v in ipairs(list) do
+        local ent = ents.GetMapCreatedEntity(v)
+		if IsValid(ent) then ent:SetHealth( health ) end
+    end
+end
+
 function HL2C_Map:RemoveNamedEnts(name)
 	local list = ents.FindByName(name )
     for _, v in ipairs(list) do

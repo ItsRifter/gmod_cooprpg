@@ -10,9 +10,9 @@ function HL2C_Server:CheckpointTriggered(cp, ply)
 
 	if cp.Func then cp:Func() end
 
-	for i, pl in ipairs( player.GetAll() ) do
+	for i, pl in ipairs( HL2C_Global:GetHumans() ) do
 		if pl == ply then continue end
-		if IsHuman(pl) then
+		--if IsHuman(pl) then
 			if pl:GetNWBool("HL2C_Player_MapFin")then continue end
 			
 			if not pl:Alive() then
@@ -34,7 +34,7 @@ function HL2C_Server:CheckpointTriggered(cp, ply)
 				end
 			end
 			
-		end
+		--end
 	end
 
 end

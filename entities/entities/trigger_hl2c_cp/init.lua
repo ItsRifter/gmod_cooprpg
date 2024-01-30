@@ -23,8 +23,9 @@ end
 function ENT:StartTouch(ent)
 	if self.Triggered then return end
 
-	if ent and ent:IsValid() and ent:IsPlayer() then
-		if not ent:Alive() then return end
+	--if ent and ent:IsValid() and ent:IsPlayer() then
+	if IsValid(ent) and ent:IsPlayer() then
+		if not ent:Alive() or not IsHuman(ent) then return end
 		
 		HL2C_Server:CheckpointTriggered(self,ent)
 		self.Triggered = true
