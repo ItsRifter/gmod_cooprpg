@@ -25,7 +25,7 @@ function HL2C_Client:DrawBlips(x,y,w,h, amount,value, maximum)
 	
 	for i=0, amount -1 do
 		if i < blips then
-			draw.RoundedBox(4, x + i*offset_x,y,width,h, Color(red, green, 50, LIGHT_ALPHA))
+			draw.RoundedBox(4, x + i*offset_x,y,width,h, Color(255, 238, 31, LIGHT_ALPHA))
 		else
 			draw.RoundedBox(4, x + i*offset_x,y,width,h, Color(40, 20, 10, LIGHT_ALPHA - 60))
 		end
@@ -50,7 +50,7 @@ function HL2C_Client:DrawFlashlight()
 	
 	HL2C_Client:DrawBlips(LIGHT_X + LIGHT_WIDTH * 0.05,LIGHT_Y + LIGHT_HEIGHT * 0.6,LIGHT_WIDTH * 0.9,LIGHT_HEIGHT * 0.3, 16,HL2C_Client.suitpower, 100)
 	
-	draw.SimpleText(icon, "flashlight_font", LIGHT_X + LIGHT_WIDTH * 0.5, LIGHT_Y - LIGHT_HEIGHT * 0.5, Color(250, 150, 50, LIGHT_ALPHA), TEXT_ALIGN_CENTER)
+	draw.SimpleText(icon, "flashlight_font", LIGHT_X + LIGHT_WIDTH * 0.5, LIGHT_Y - LIGHT_HEIGHT * 0.5, Color(255, 238, 31, LIGHT_ALPHA), TEXT_ALIGN_CENTER)
 end
 
 hook.Add("HUDPaint", "auxpow_flashlight_hud", function() HL2C_Client:DrawFlashlight() end)
