@@ -1,6 +1,3 @@
-AddCSLuaFile()
-
-
 HL2R_TEXT_RED 		= Color(200, 20, 20)
 HL2R_TEXT_GREEN 	= Color(25, 200, 25)
 HL2R_TEXT_ORANGE 	= Color(250, 150, 50)

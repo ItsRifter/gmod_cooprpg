@@ -6,14 +6,14 @@ function PANEL:Init()
 	local varH = ScrH() * 0.75 * HL2C_Client:Get_UIScale()
 	local varW = varH * 1.5
 	self:SetPos( (ScrW()- varW)*0.5, (ScrH()- varH)*0.25)
-	self:SetSize( varW, varH )
+	self:SetSize( math.floor(varW), math.floor(varH) )
 	
 	--self:MakePopup()
 	local wide = self:GetWide()
 	local tall = self:GetTall()
 	
 	self.tabs = {}
-	--self:AddTab(Create_QMenu_Inventory(self))
+	self:AddTab(HL2C_Client:CreateInventory(self))
 	--self:AddTab(Create_QMenu_Skills(self))
 	--self:AddTab(Create_QMenu_Shop(self))
 	--self:AddTab(Create_QMenu_Achievements(self))
@@ -21,28 +21,28 @@ function PANEL:Init()
 	local Btn = New_ThemeButton(self, tall * 0.01, tall * 0.01,wide* 0.13,tall* 0.06,translate.Get("Basic_Inventory"),"Font_Small")
 	Btn:SetFunc(
 		function()
-			--self:SetTab(1)
+			self:SetTab(1)
 		end
 	)
 	
 	local Btn = New_ThemeButton(self, tall * 0.01 + wide* 0.14, tall * 0.01,wide* 0.13,tall* 0.06,translate.Get("Basic_Skills"),"Font_Small")
 	Btn:SetFunc(
 		function()
-			--self:SetTab(2)
+			self:SetTab(2)
 		end
 	)
 	
 	local Btn = New_ThemeButton(self, tall * 0.01+ wide* 0.28, tall * 0.01,wide* 0.13,tall* 0.06,translate.Get("Basic_Shop"),"Font_Small")
 	Btn:SetFunc(
 		function()
-			--self:SetTab(3)
+			self:SetTab(3)
 		end
 	)
 	
 	local Btn = New_ThemeButton(self, wide* 0.82 - tall * 0.01, tall * 0.01,wide* 0.18,tall* 0.06,translate.Get("Basic_Achievements"),"Font_Small")
 	Btn:SetFunc(
 		function()
-			--self:SetTab(4)
+			self:SetTab(4)
 		end
 	)
 	
@@ -69,11 +69,12 @@ function PANEL:SetTab(value)
 	end
 end
 
+
+
 ---------------------------------------------------------------------------
 
 function PANEL:Paint()
-
-	draw.RoundedBoxEx( 8, 0, 0, self:GetWide(), self:GetTall() * 0.08-1, Theme.backcol,true, true,true,true)
+	draw.RoundedBoxEx( 8, 0, 0, self:GetWide(), math.floor(self:GetTall() * 0.08), Theme.backcol,true, true,true,true)
 
 	return true
 end
@@ -113,10 +114,8 @@ end
 
 function GM:OnSpawnMenuOpen()
 	HL2C_Client:ControlQMenu(true)
-	print("open")
 end
 
 function GM:OnSpawnMenuClose()
 	HL2C_Client:ControlQMenu(false)
-	print("close")
 end

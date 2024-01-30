@@ -59,3 +59,4 @@ function IncludeSharedFiles(path)
 end
 
 IncludeSharedFiles("shared/")
+IncludeSharedFiles("shared/data/")

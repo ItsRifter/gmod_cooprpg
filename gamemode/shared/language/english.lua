@@ -55,6 +55,7 @@ lang.Vehicle_NotOwner	= "You dont own this Vehicle"
 
 
 ------Qmenu------
+lang.INV_ChangeModel = "Change Model"
 
 
 translate.AddLanguage(name,lang)
