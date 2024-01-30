@@ -6,7 +6,7 @@ local delay = 0	--used to delay sending power to lower data sent as its not vita
 
 function HL2C_Server:SuitTick()
 	for i, ply in ipairs( player.GetAll() ) do
-		if ply:IsTeam(TEAM_HUMAN_ALIVE) then
+		if ply:IsTeam(TEAM_HUMAN) then
 			ply:SuitTick()
 			if delay <= 0 then ply:SendPower() end
 		end
@@ -20,12 +20,13 @@ function HL2C_Server:SetupSuits()
 	if timer.Exists(TICK_NAME) then timer.Remove(TICK_NAME) end
 	timer.Create(TICK_NAME, TICK_RATE, 0, function() HL2C_Server:SuitTick() end)
 end
+
 HL2C_Server:SetupSuits()
 
 ---------------------------------------------------------------
 
 function hl2c_player:SetupSuit(givesuit)
-	self:AllowFlashlight( true)
+	self:AllowFlashlight(true)
 	
 	self.suit = {}
 	self.suit.power 	= 100	--flashlight power, maybe other things later?

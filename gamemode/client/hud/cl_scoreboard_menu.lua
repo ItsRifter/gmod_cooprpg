@@ -1,24 +1,20 @@
 
 local function GetPlayerTeamColours(pl)
-	if pl:IsTeam(TEAM_HUMAN_ALIVE) then
-		return Color(90, 255, 105,160)
+	if pl:IsTeam(TEAM_HUMAN) then
+		if pl:GetNWBool("HL2C_Player_MapFin") then return Color(250, 220, 0, 160) end
 
-	elseif pl:IsTeam(TEAM_HUMAN_FIN) then
-		return Color(250, 220, 0,160)
+		if not pl:Alive() then return Color(210, 30, 30, 160) end
 
-	elseif pl:IsTeam(TEAM_HUMAN_DEAD) then
-		return Color(210, 30, 30,160)
-
-	elseif pl:IsTeam(TEAM_COMBINE_ALIVE) then
-		return Color(0, 255, 245,160)
-
-	elseif pl:IsTeam(TEAM_COMBINE_DEAD) then
-		return Color(0, 166, 144,160)
-
-	elseif pl:IsTeam(TEAM_AFK) then
-		--AFK
-		return Color(120, 120, 120,160) 
+		return Color(90, 255, 105, 160)
 	end
+
+	if pl:IsTeam(TEAM_COMBINE) then
+		if not pl:Alive() then return Color(0, 166, 144, 160) end
+
+		return Color(0, 255, 245, 160)
+	end
+
+	if pl:IsTeam(TEAM_AFK) then return Color(120, 120, 120,160) end
 
 	return Color(255, 255, 255, 160)
 end

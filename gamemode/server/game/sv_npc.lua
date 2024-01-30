@@ -58,7 +58,7 @@ function HL2C_Server:CreateEnemy(class,pos,angle,weapon, search)
 	
 	local positions = {}	--creating list of alive player positions
 	for i, v in ipairs( player.GetAll() ) do	
-		if v:IsTeam(TEAM_HUMAN_ALIVE) then
+		if v:IsTeam(TEAM_HUMAN) then
 			table.insert( positions, v )
 		end
 	end

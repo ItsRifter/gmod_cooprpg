@@ -13,9 +13,9 @@ function HL2C_Server:CheckpointTriggered(cp, ply)
 	for i, pl in ipairs( player.GetAll() ) do
 		if pl == ply then continue end
 		if IsHuman(pl) then
-			if pl:IsTeam(TEAM_HUMAN_FIN) then continue end
+			if pl:GetNWBool("HL2C_Player_MapFin")then continue end
 			
-			if pl:IsTeam(TEAM_HUMAN_DEAD) then
+			if not pl:Alive() then
 				pl:Spawn()
 				pl:SetPos(cp.TPPoint)
 				pl:SetEyeAngles(cp.TPAngles)
@@ -26,6 +26,7 @@ function HL2C_Server:CheckpointTriggered(cp, ply)
 					local range = cp.TPPoint:DistToSqr( pl:GetPos() )
 					if range < cp.Dist then warp = false end
 				end
+
 				if warp then
 					pl:SetPos(cp.TPPoint)
 					pl:SetEyeAngles(cp.TPAngles)
@@ -38,11 +39,11 @@ function HL2C_Server:CheckpointTriggered(cp, ply)
 
 end
 
-function HL2C_Server:EndTriggered(cp,ply)
-	ply:SetTeam(TEAM_HUMAN_FIN)
+function HL2C_Server:EndTriggered(cp, ply)
+	ply:SetNWBool("HL2C_Player_MapFin", true)
 	ply:RemoveVehicle()
 	ply:ToggleSpectator(true)
-	ply:SpectateEntity( HL2C_Server.LvlExit.lambda)
+	ply:SpectateEntity(HL2C_Server.LvlExit.lambda)
 	ply:EmitSound("vo/k_lab/kl_excellent.wav", 100, 100)
 	
 	if cp.Func then cp:Func(ply) end
@@ -87,7 +88,7 @@ function HL2C_Server:CheckFinished()
 	for i, ply in ipairs( player.GetAll() ) do
 		if IsHuman(ply) then
 			total = total + 1
-			if ply:IsTeam(TEAM_HUMAN_FIN) then
+			if ply:GetNWBool("HL2C_Player_MapFin") then
 				finished = finished+ 1
 			end
 		end

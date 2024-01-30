@@ -89,7 +89,7 @@ end
 
 function HL2C_Server:RemoveVehicles()
 	for i, v in ipairs( player.GetAll() ) do	
-		if v:IsTeam(TEAM_HUMAN_ALIVE) then
+		if v:IsTeam(TEAM_HUMAN) then
 			v:RemoveVehicle()
 		end
 	end
@@ -126,7 +126,7 @@ function HL2C_Server:F3_Vehicle(ply)
 		return
 	end
 
-	if not ply:IsTeam(TEAM_HUMAN_ALIVE) then return end	--only alive human team can spawn vehicles
+	if not ply:IsTeam(TEAM_HUMAN) then return end	--only alive human team can spawn vehicles
 
 	if HL2C_Server.Vehicle_Current == VEHC_NONE then
 	--	ply:BroadcastMessage(HL2CR_RedColour, translate.Get("Error_Player_Vehicle_Disabled"))

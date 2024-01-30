@@ -19,9 +19,9 @@ end
 function ENT:StartTouch(ent)
 	if ent and ent:IsValid() then
 		if  ent:IsPlayer() then
-			if not ent:IsTeam(TEAM_HUMAN_ALIVE) then return end
+			if not ent:Alive() then return end
 
-			HL2C_Server:EndTriggered(self,ent)
+			HL2C_Server:EndTriggered(self, ent)
 			self.Triggered = true
 		elseif ent:GetClass() == "prop_physics" then
 			HL2C_Server:EndProp(ent)

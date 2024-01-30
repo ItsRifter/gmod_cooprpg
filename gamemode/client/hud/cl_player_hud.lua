@@ -33,11 +33,11 @@ function HL2C_Client:DrawBlips(x,y,w,h, amount,value, maximum)
 end
 
 function HL2C_Client:DrawFlashlight()
-	if not IsAlive(LocalPlayer()) then return end
+	if not LocalPlayer():Alive() then return end
 
 	local icon = LIGHT_IDLE
 	
-	if (LocalPlayer():FlashlightIsOn()) then 
+	if LocalPlayer():FlashlightIsOn() then 
 		icon = LIGHT_ACTIVE 
 		LIGHT_ALPHAMAX = 340
 		LIGHT_ALPHA = ALPHA_ACTIVE
