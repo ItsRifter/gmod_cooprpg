@@ -1,47 +1,99 @@
+local hl2c_npc = FindMetaTable( "Entity" )
 
-hook.Add( "ScaleNPCDamage", "Npc_taghitgroup", function( npc, hitgroup, dmginfo )
-	npc.LastHitGroup = hitgroup
-end )
+local FRIENDLY_NPCS = {
+	["npc_kleiner"] = true,
+	["npc_dog"] = true,
+	["npc_eli"] = true,
+	["npc_monk"] = true,
+	["npc_alyx"] = true,
+	["npc_barney"] = true,
+	["npc_fisherman"] = true,
+	["npc_mossman"] = true,
+	["npc_gman"] = true,
+	["npc_breen"] = true
+}
 
-hook.Add( "EntityTakeDamage", "HL2CR_NPC_TakeDamage", function( target, dmgInfo )
-	local attacker = dmgInfo:GetAttacker()
+local FRIENDLY_HARMABLE_NPCS = {
+    ["npc_citizen"] = true,
+}
 
-	if attacker:IsVehicle() and attacker:GetDriver() then
-		attacker = attacker:GetDriver()
+
+function hl2c_npc:IsProtected()
+
+	if FRIENDLY_NPCS[self:GetClass()] then
+		return true
 	end
 	
-    --if ( target:IsFriendly() or target:IsPet() ) and attacker:IsPlayer() then return true end
+	--if self:GetClass() == "npc_vortigaunt" and !MAPS_VORT_HOSTILE[game.GetMap()] then
+	if self:GetClass() == "npc_vortigaunt" then
+		return true 
+	end
+	
+	if self:GetClass() == "npc_antlion" and game.GetGlobalState("antlion_allied") == GLOBAL_ON then return true end
+	
+	--if FORCE_FRIENDLY_MAPS[game.GetMap()] then
+	--	for _, force in ipairs(FORCE_FRIENDLY_MAPS[game.GetMap()]) do
+	--		if force == self:GetClass() then
+	--			return true
+	--		end
+	--	end
+	--end
+
+
+    return false
+end
+
+function hl2c_npc:IsHumanTeam()
+	if FRIENDLY_HARMABLE_NPCS[self:GetClass()] then
+		return true
+	end
+end
+
+
+function hl2c_npc:PlayerAttack(dmgInfo,ply)
+--hook.Add( "EntityTakeDamage", "HL2CR_NPC_TakeDamage", function( target, dmgInfo )
+	--local attacker = dmgInfo:GetAttacker()
+
+	--if attacker:IsVehicle() and attacker:GetDriver() then
+	--	attacker = attacker:GetDriver()
+	--end
+	
+    if ( self:IsProtected() )  then return true end
+	if (ply:IsTeam(TEAM_HUMAN) and self:IsHumanTeam()) then return true end
 
 	--if not Valid_NPC_Targets[target:GetClass()] then return end
 	--if not CanPlayerTarget(target:GetClass()) then return end
 
 	--This moves indicator if damage position isnt real
-	if dmgInfo:GetDamagePosition():LengthSqr() < 1 then dmgInfo:SetDamagePosition(target:GetPos() + Vector(0,0,64))end
 	
-    if attacker:IsPlayer() and attacker:IsConnected() then		
+    if ply:IsConnected() then		
+		if dmgInfo:GetDamagePosition():LengthSqr() < 1 then dmgInfo:SetDamagePosition(self:GetPos() + Vector(0,0,64))end
 		--if not Valid_NPC_Targets[target:GetClass()] then return end
 		local damagedone = dmgInfo:GetDamage()
 		local dmgtype = dmgInfo:GetDamageType()
 
-		if damagedone > target:Health() then damagedone = target:Health()end
+		if damagedone > self:Health() then damagedone = self:Health()end
 		
 		local colour = 1
-		if target:GetClass() == "npc_antlion" and game.GetGlobalState("antlion_allied") == GLOBAL_ON then colour = 2 end	--hits turn green if hitting friendly ants
+		if self:GetClass() == "npc_antlion" and game.GetGlobalState("antlion_allied") == GLOBAL_ON then colour = 2 end	--hits turn green if hitting friendly ants
 		--antlion_allied
 		damagedone = math.Round(damagedone,1)
 		if damagedone > 0 then	--prevents erronious negatives
 			if colour == 1 then
 				--local sucess = attacker:AddDamageExp(tonumber(damagedone),target,dmgtype) 
 				local sucess = true
-				if target.LastHitGroup and target.LastHitGroup == HITGROUP_HEAD then colour = 9 end
+				if self.LastHitGroup and self.LastHitGroup == HITGROUP_HEAD then colour = 9 end
 				if !sucess then colour = 8 end	--If damage is block hit turns dark grey
 			end
 			
-			attacker:SendNote(damagedone,dmgInfo:GetDamagePosition(),colour,0)
+			ply:SendNote(damagedone,dmgInfo:GetDamagePosition(),colour,0)
 			
 		end
     end
-end)
+	
+	return false
+end
+--end)
 
 function HL2C_Server:CreateEnemy(class,pos,angle,weapon, search)
 	local enemy = ents.Create(class)

@@ -31,22 +31,33 @@ hook.Add("PostPlayerDeath", "HL2C_Player_PostDeath", function(ply, transition)
     ply:PostDeath()
 end)
 
-function HandlePVP(ply, att)
 
-    if ply:Team() == att:Team() then return true end
+function hl2c_player:PlayerAttack(dmgInfo,ply)
+	if self:Team() == ply:Team() then return true end
+	
+    if ply:IsConnected() then		
+		if dmgInfo:GetDamagePosition():LengthSqr() < 1 then dmgInfo:SetDamagePosition(target:GetPos() + Vector(0,0,64))end
+		--if not Valid_NPC_Targets[target:GetClass()] then return end
+		local damagedone = dmgInfo:GetDamage()
+		local dmgtype = dmgInfo:GetDamageType()
 
-    return false
-end
-
-hook.Add("EntityTakeDamage", "HL2C_CheckPVP", function(ent, dmgInfo)
-    if ent:IsPlayer() then
-
-        local att = dmgInfo:GetAttacker()
-
-        if att:IsPlayer() and att ~= ent then
-            return HandlePVP(ent, att)
-        end
+		if damagedone > self:Health() then damagedone = self:Health()end
+		
+		local colour = 1
+		--antlion_allied
+		damagedone = math.Round(damagedone,1)
+		if damagedone > 0 then	--prevents erronious negatives
+			if colour == 1 then
+				--local sucess = attacker:AddDamageExp(tonumber(damagedone),target,dmgtype) 
+				local sucess = true
+				if self.LastHitGroup and self.LastHitGroup == HITGROUP_HEAD then colour = 9 end
+				if !sucess then colour = 8 end	--If damage is block hit turns dark grey
+			end
+			
+			ply:SendNote(damagedone,dmgInfo:GetDamagePosition(),colour,0)
+			
+		end
     end
-
-    return false
-end)
+	
+	return false
+end

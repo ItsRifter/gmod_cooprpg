@@ -25,6 +25,18 @@ local colours = {
 	[9] = Color(220, 130, 5)		--Orange
 }
 
+local duocolour = {
+	[0] = {A=1,B=2},
+	[1] = {A=2,B=3},
+	[2] = {A=3,B=1},
+	[3] = {A=4,B=5},
+	[4] = {A=5,B=6},
+	[5] = {A=6,B=4},
+	[6] = {A=0,B=8},
+	[7] = {A=7,B=2},
+	[8] = {A=3,B=9},
+}
+
 function GetColour(number, blend)
 	local New = colours[0]	--Default White
 	if colours[number] then New = colours[number] end
@@ -36,16 +48,14 @@ function GetColour(number, blend)
 		hue, sat, val = ColorToHSV( colours[number - 80] )
 		New = HSVToColor( hue, sat, val * add360 ) 
 		New = Color(New.r,New.g,New.b,blend) 
-	elseif number >= 90 and number <= 99 then 	--Dual Colours		--WIP, todo or remove if expensive
-		local tim = math.Clamp(0.5 + math.sin( (CurTime()*4) % 360 ) * 0.6,0,1)
+	elseif number >= 90 and number < 99 then 	--Dual Colours		--WIP, todo or remove if expensive
+		local tim = math.Clamp(0.5 + math.sin( CurTime()*4 ) * 0.6,0,1)
 		local col_A = colours[0]
 		local col_B = colours[0]
-		if number == 90 then col_A = colours[1] col_B = colours[3] end	--red/blue
-		if number == 91 then col_A = colours[1] col_B = colours[2] end	--red/green
-		if number == 92 then col_A = colours[2] col_B = colours[3] end	--green/blue
-		
-		if number == 97 then col_A = colours[7] col_B = colours[2] end	--purple/green
-		if number == 98 then col_A = colours[3] col_B = colours[9] end	--blue/orange
+		if duocolour[number-90] then
+			col_A = colours[duocolour[number-90].A]
+			col_B = colours[duocolour[number-90].B]
+		end
 		
 		New = Color(Lerp(tim,col_A.r,col_B.r),Lerp(tim,col_A.g,col_B.g),Lerp(tim,col_A.b,col_B.b),blend) 
 	
