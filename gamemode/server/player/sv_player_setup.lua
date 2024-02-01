@@ -5,17 +5,35 @@ function hl2c_player:DoSpawn()
 
     if self:Team() == TEAM_UNASSIGNED then 
         self:SetTeam(TEAM_HUMAN)
+		--if self:SteamID() ==  "STEAM_0:0:16635137" then self:SetTeam(TEAM_COMBINE) end
         self:SetNWBool("HL2C_Player_MapFin", false)
     end
     
-    local plyModel = string.format("models/player/Group01/male_0%s.mdl", tostring(math.random(1, 7)))
-    self:SetModel(plyModel)
+	if IsHuman(self) then
+		local plyModel = string.format("models/player/Group01/male_0%s.mdl", tostring(math.random(1, 7)))
+		self:SetModel(plyModel)
 
-	self:SetupSuit()
+		self:SetupSuit()
+		
+		self:SetNoCollideWithTeammates(true)
+		self:GiveWeapons()
+		self:GiveLoadout()
+		
+		--self:UpdatePlayerRelations()
+	end
 	
-    self:SetNoCollideWithTeammates(true)
-    self:GiveWeapons()
-	self:GiveLoadout()
+	--WIP--NOT READY BY FAR-MAYBE NEVER.
+	if IsCombine(self)then
+		self:RemoveVehicle()	--Incase of team switching
+		local plyModel = "models/Police.mdl"
+		self:SetModel(plyModel)
+
+		self:SetupSuit()
+		
+		self:SetNoCollideWithTeammates(true)
+		
+		--self:UpdatePlayerRelations()
+	end
 
     
 end
@@ -69,3 +87,10 @@ function hl2c_player:PlayerAttack(dmgInfo,ply)
 	
 	return false
 end
+
+function hl2c_player:UpdatePlayerRelations()
+	for k, v in ipairs( ents.FindByClass( "npc_*" ) ) do
+		v:UpdatePlayerRelations(self)
+	end
+end
+

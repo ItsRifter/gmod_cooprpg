@@ -32,13 +32,14 @@ end
 -- player:Alive() exists, this is useless -Ironically wasnt since finished players are alive but also kind of not.
 --
 function IsPlaying(ply)		--Using this for spectator and suicide blocking hooks
+	if IsMiscTeam(ply) then return false end
 	if ply:Alive() and not ply:GetNWBool("HL2C_Player_MapFin") then return true end
 	return false
 end
 
 --Team check if players are in a miscellanous team (AFK or Connecting etc.)
 function IsMiscTeam(ply)
-    if not IsHuman(ply) or not IsCombine(ply) then return true end
+    if not IsHuman(ply) and not IsCombine(ply) then return true end
 
     return false
 end

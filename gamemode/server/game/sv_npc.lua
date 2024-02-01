@@ -13,10 +13,23 @@ local FRIENDLY_NPCS = {
 	["npc_breen"] = true
 }
 
-local FRIENDLY_HARMABLE_NPCS = {
-    ["npc_citizen"] = true,
+local FRIENDLY_HARMABLE_NPCS = { 
+	["npc_citizen"] = true,
+	["npc_alyx"] = true,
+	["npc_monk"] = true,
+	["npc_barney"] = true,
 }
 
+local COMBINE_HARMABLE_NPCS = {
+    ["npc_cscanner"] = true,
+    ["npc_metropolice"] = true,
+    ["npc_manhack"] = true,
+    ["npc_combine_s"] = true,
+    ["npc_turret_ground"] = true,
+	["npc_hunter"] = true,
+    ["npc_turret_floor"] = true,
+    ["combine_mine"] = true,
+}
 
 function hl2c_npc:IsProtected()
 
@@ -29,7 +42,7 @@ function hl2c_npc:IsProtected()
 		return true 
 	end
 	
-	if self:GetClass() == "npc_antlion" and game.GetGlobalState("antlion_allied") == GLOBAL_ON then return true end
+	
 	
 	--if FORCE_FRIENDLY_MAPS[game.GetMap()] then
 	--	for _, force in ipairs(FORCE_FRIENDLY_MAPS[game.GetMap()]) do
@@ -47,6 +60,15 @@ function hl2c_npc:IsHumanTeam()
 	if FRIENDLY_HARMABLE_NPCS[self:GetClass()] then
 		return true
 	end
+	if self:GetClass() == "npc_antlion" and game.GetGlobalState("antlion_allied") == GLOBAL_ON then return true end
+	return false
+end
+
+function hl2c_npc:IsCombineTeam()
+	if COMBINE_HARMABLE_NPCS[self:GetClass()] then
+		return true
+	end
+	return false
 end
 
 
@@ -59,7 +81,9 @@ function hl2c_npc:PlayerAttack(dmgInfo,ply)
 	--end
 	
     if ( self:IsProtected() )  then return true end
-	if (ply:IsTeam(TEAM_HUMAN) and self:IsHumanTeam()) then return true end
+	
+	if (IsHuman(ply) and self:IsHumanTeam()) then return true end
+	if (IsCombine(ply) and self:IsCombineTeam()) then return true end
 
 	--if not Valid_NPC_Targets[target:GetClass()] then return end
 	--if not CanPlayerTarget(target:GetClass()) then return end
@@ -95,6 +119,29 @@ function hl2c_npc:PlayerAttack(dmgInfo,ply)
 end
 --end)
 
+hook.Add("OnEntityCreated", "HL2C_OnNPCCreation", function(ent)
+	--if ent:IsNPC() then
+	--	for i, ply in ipairs( player.GetAll() ) do
+	--		ent:UpdatePlayerRelations(ply)
+	--	end	
+	--end
+end)
+
+function hl2c_npc:UpdatePlayerRelations(ply)	--NEEDS TESTING, PROBABLY MESSES THINGS UP
+
+	if true then return end	--It does, fuck it for now
+	
+	--Feels like combine players will need their own player type so they dont get the same treatment as players do by enemies
+	
+	if self:IsHumanTeam() then
+		if IsHuman(ply) then self:AddEntityRelationship(ply,D_NU,50) 
+		else self:AddEntityRelationship(ply,D_HT,50) end
+	elseif self:IsCombineTeam() then
+		if IsCombine(ply) then self:AddEntityRelationship(ply,D_NU,50) 
+		else self:AddEntityRelationship(ply,D_HT,50) end
+	end
+end
+
 function HL2C_Server:CreateEnemy(class,pos,angle,weapon, search)
 	local enemy = ents.Create(class)
 	enemy:SetPos(pos)
@@ -109,8 +156,8 @@ function HL2C_Server:CreateEnemy(class,pos,angle,weapon, search)
 	local enemypos = enemy:GetPos()
 	
 	local positions = {}	--creating list of alive player positions
-	for i, v in ipairs( player.GetAll() ) do	
-		if v:IsTeam(TEAM_HUMAN) then
+	for i, v in ipairs( HL2C_Global:GetHumans() ) do	
+		if v:IsAlive() then
 			table.insert( positions, v )
 		end
 	end

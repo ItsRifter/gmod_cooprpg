@@ -24,6 +24,7 @@ function hl2c_player:SpectatePrev()
 	
 	local list = {}
 	if IsHuman(self) then list = HL2C_Global:GetHumans() end
+	if IsCombine(self) then list = HL2C_Global:GetCombine() end
 	if IsMiscTeam(self) then list = player.GetAll() end
 	
 	for i, ply in ipairs( list ) do
@@ -45,6 +46,7 @@ function hl2c_player:SpectateNext()
 	
 	local list = {}
 	if IsHuman(self) then list = HL2C_Global:GetHumans() end
+	if IsCombine(self) then list = HL2C_Global:GetCombine() end
 	if IsMiscTeam(self) then list = player.GetAll() end
 	
 	for i, ply in ipairs( list ) do
