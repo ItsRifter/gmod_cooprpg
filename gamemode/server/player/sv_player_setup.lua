@@ -1,6 +1,8 @@
 local hl2c_player = FindMetaTable("Player")
 
 function hl2c_player:DoSpawn()
+
+
     if self:Team() == TEAM_UNASSIGNED then 
         self:SetTeam(TEAM_HUMAN)
         self:SetNWBool("HL2C_Player_MapFin", false)
@@ -30,6 +32,12 @@ end
 hook.Add("PostPlayerDeath", "HL2C_Player_PostDeath", function(ply, transition)
     ply:PostDeath()
 end)
+
+hook.Add( "CanPlayerSuicide", "BlockSuicide", function( ply )
+	if not IsPlaying(ply) then
+		return false
+	end
+end )
 
 
 function hl2c_player:PlayerAttack(dmgInfo,ply)

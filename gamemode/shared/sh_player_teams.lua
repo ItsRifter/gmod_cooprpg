@@ -29,13 +29,12 @@ function IsCombine(ply)
     return false
 end
 
--- player:Alive() exists, this is useless
+-- player:Alive() exists, this is useless -Ironically wasnt since finished players are alive but also kind of not.
 --
--- function IsAlive(ply)
-
---     if then return true end
---     return false
--- end
+function IsPlaying(ply)		--Using this for spectator and suicide blocking hooks
+	if ply:Alive() and not ply:GetNWBool("HL2C_Player_MapFin") then return true end
+	return false
+end
 
 --Team check if players are in a miscellanous team (AFK or Connecting etc.)
 function IsMiscTeam(ply)

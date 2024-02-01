@@ -41,7 +41,7 @@ function HL2C_Client:DrawBlips(x,y,w,h, amount,value, maximum)
 end
 
 function HL2C_Client:DrawFlashlight()
-	if not LocalPlayer():Alive() then return end
+	if not IsPlaying(LocalPlayer()) then return end
 
 	local icon = LIGHT_IDLE
 	
@@ -61,7 +61,19 @@ function HL2C_Client:DrawFlashlight()
 	draw.SimpleText(icon, "flashlight_font", LIGHT_X + LIGHT_WIDTH * 0.5, LIGHT_Y - LIGHT_HEIGHT * 0.5, Color(255, 238, 31, LIGHT_ALPHA), TEXT_ALIGN_CENTER)
 end
 
+function HL2C_Client:DrawSpectatorInfo()
+	if IsPlaying(LocalPlayer()) then return end
+	
+	local target = LocalPlayer():GetObserverTarget()
+	
+	if IsValid(target) and target:IsPlayer() then
+		draw.SimpleTextOutlined( target:Nick(), "Font_Small", ScrW()*0.5, ScrH()*0.98, Theme.fontwhite,TEXT_ALIGN_CENTER,TEXT_ALIGN_BOTTOM, 1,Theme.fontblack )
+	end
+
+end
+
 hook.Add("HUDPaint", "auxpow_flashlight_hud", function() HL2C_Client:DrawFlashlight() end)
+hook.Add("HUDPaint", "spectating_hud", function() HL2C_Client:DrawSpectatorInfo() end)
 
 net.Receive( "HL2C_Suit_Power", function( len )
 	HL2C_Client.suitpower = net.ReadFloat()
