@@ -46,6 +46,8 @@ function HL2C_Server:EndTriggered(cp, ply)
 	ply:SpectateEntity(HL2C_Server.LvlExit.lambda)
 	ply:EmitSound("vo/k_lab/kl_excellent.wav", 100, 100)
 	
+	HL2C_Server:SendMessageAll(HL2R_TEXT_ORANGE,ply:Nick(),  HL2R_TEXT_NORMAL,"##GM_PlyFinished", HL2R_TEXT_ORANGE, string.FormattedTime(CurTime(), "%02i:%02i"))
+	
 	if cp.Func then cp:Func(ply) end
 	cp.Triggered = true
 	
@@ -109,8 +111,8 @@ function HL2C_Server:CheckFinished()
 end
 
 local T_END_NAME = "TIMER_LVLCHANGE"
-local T_END_TIME = 40
-local T_END_FAST = 7
+local T_END_TIME = 60	--We can afford to have more time now the fast end is working
+local T_END_FAST = 8
 
 HL2C_Server.EndTime = HL2C_Server.EndTime or 0
 

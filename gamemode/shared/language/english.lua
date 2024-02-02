@@ -20,6 +20,9 @@ lang.SB_PLY_EXP = "Exp: "
 lang.SB_PLY_PING = "Ping: "
 
 ------Help Menu------
+lang.GM_PlyFinished = " has finished the map in "
+
+------Help Menu------
 lang.HM_Title = "Half-Life 2 Synergized"
 lang.HM_Map	= "Map : "
 

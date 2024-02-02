@@ -107,6 +107,7 @@ function HL2C_Server:SetVehicle(id)
 			HL2C_Server:SendMessageAll(HL2R_TEXT_NORMAL,"##Vehicle_Disabled")
 		end
 		HL2C_Server.Vehicle_Current = id 
+		HL2C_Server:SendVehicle()
 		HL2C_Server:RemoveVehicles()
 		return
 	end
@@ -154,7 +155,10 @@ end
 function GM:CanPlayerEnterVehicle( ply, vehicle, seat )
 	local id = HL2C_Global:GetVehicleId(vehicle:GetModel())
 	
-	if vehicle.sideseat then ply:SetAllowWeaponsInVehicle( true ) else ply:SetAllowWeaponsInVehicle( false ) end
+	if vehicle.sideseat then 
+		if vehicle:GetParent() == ply.vehicle then return false end
+		ply:SetAllowWeaponsInVehicle( true ) 
+	else ply:SetAllowWeaponsInVehicle( false ) end
 	
 	if not id then return true end
 

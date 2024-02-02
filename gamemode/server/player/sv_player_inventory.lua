@@ -30,13 +30,14 @@ end
 --Prevents a endless supply of new weapons to players	--should be fixed now
 --local suppress_NewWeapons = false
 
-function AddWeaponRespawns(strWepClass, ply)
+function HL2C_Server:AddWeaponRespawns(strWepClass, ply, equip)
     if not table.HasValue( HL2C_Server.AvailableWeapons, strWepClass ) then 
 	    table.insert(HL2C_Server.AvailableWeapons, strWepClass)
 
         for _, p in ipairs(player.GetAll()) do
 			if not p:IsTeam(TEAM_HUMAN) or p == ply then continue end
-            if !p:HasWeapon( strWepClass ) then p:Give(strWepClass) end
+            if !p:HasWeapon( strWepClass ) then p:Give(strWepClass) p:SelectWeapon(strWepClass) end
+			
         end
     end
 end
@@ -49,7 +50,7 @@ hook.Add("PlayerCanPickupWeapon", "hl2c_inv_weaponcheck", function(ply, wep)
         else return false end
     end
 
-    AddWeaponRespawns(wep:GetClass(),ply)
+    HL2C_Server:AddWeaponRespawns(wep:GetClass(),ply)
 
     return true
 end)

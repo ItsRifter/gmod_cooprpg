@@ -57,6 +57,37 @@ hook.Add( "CanPlayerSuicide", "BlockSuicide", function( ply )
 	end
 end )
 
+hook.Add("PlayerCanPickupItem", "HL2C_ItemPickup", function(ply, item)
+
+	--if item:GetClass() == "item_suit" and game.GetMap() == "d1_trainstation_05" then
+	--	SetGlobalBool( "HL2CR_GLOBAL_SUIT", true )
+	--
+	--	for _, v in ipairs(player.GetAll()) do
+	--		 if v:Team() == TEAM_AFK then continue end
+	--		v:AdjustSpeed()
+	--		v:AdmireSuitHands()
+	--	end
+	--end
+
+	if !ply:CanPickupAmmoBox(item) then return false end	--class check handled inside function
+
+	--if item:GetClass() == "item_battery" then	--Fun battery finding adds flashlight power
+	--	HL2CR_AUX:AddFlashlightPower(ply, 0.4)
+	--end
+
+	return true
+end)
+
+--hook for blocking on use events
+hook.Add( "PlayerUse", "HL2CR_PlayerUse", function( ply, ent )
+
+	if ent:GetClass() == "item_ammo_crate" then
+		if !ply:CanOpenAmmoCrate(ent) then return false end	--blocks people holding ammo crates open when they are full
+	end
+
+	return true
+end )
+
 
 function hl2c_player:PlayerAttack(dmgInfo,ply)
 	if self:Team() == ply:Team() then return true end
