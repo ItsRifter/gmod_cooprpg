@@ -6,8 +6,8 @@ VEHC_AIRBOAT_GUN	= 2
 VEHC_JEEP 			= 3
 VEHC_JALOPY 		= 4
 
-
 local Vehicles = {}
+
 Vehicles[VEHC_AIRBOAT]={
 	Name = "Vehicle_Airboat",
 	Class = "prop_vehicle_airboat",

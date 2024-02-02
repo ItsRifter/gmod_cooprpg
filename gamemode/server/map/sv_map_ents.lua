@@ -1,6 +1,6 @@
 HL2C_Server.Cps = HL2C_Server.Cps or {}
 
-function HL2C_Server:CreateCP(Min,Max,TPos,TAngle,func,dist)
+function HL2C_Server:CreateCP(Min, Max, TPos, TAngle, func, dist)
 	local cp = ents.Create("trigger_hl2c_cp")
 	cp.Min = Min
 	cp.Max = Max

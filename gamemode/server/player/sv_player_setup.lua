@@ -2,7 +2,6 @@ local hl2c_player = FindMetaTable("Player")
 
 function hl2c_player:DoSpawn()
 
-
     if self:Team() == TEAM_UNASSIGNED then 
         self:SetTeam(TEAM_HUMAN)
 		--if self:SteamID() ==  "STEAM_0:0:16635137" then self:SetTeam(TEAM_COMBINE) end
@@ -34,8 +33,6 @@ function hl2c_player:DoSpawn()
 		
 		--self:UpdatePlayerRelations()
 	end
-
-    
 end
 
 hook.Add("PlayerSpawn", "HL2C_Player_Spawn", function(ply, transition)
@@ -89,7 +86,7 @@ hook.Add( "PlayerUse", "HL2CR_PlayerUse", function( ply, ent )
 end )
 
 
-function hl2c_player:PlayerAttack(dmgInfo,ply)
+function hl2c_player:PlayerAttack(dmgInfo, ply)
 	if self:Team() == ply:Team() then return true end
 	
     if ply:IsConnected() then		
