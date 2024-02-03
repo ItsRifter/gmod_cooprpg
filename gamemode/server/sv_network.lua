@@ -12,7 +12,8 @@ util.AddNetworkString("HL2C_ChatMessage")
 util.AddNetworkString("HL2C_Vehicle")
 util.AddNetworkString("HL2C_Lamp_Net")
 
-util.AddNetworkString("HL2C_HUD_Toggle")
+--Global vars
+util.AddNetworkString("HL2C_GV_NOSUIT")
 
 --util.AddNetworkString("HL2C_Suit_FlashLight")	
 util.AddNetworkString("HL2C_Suit_Power")				

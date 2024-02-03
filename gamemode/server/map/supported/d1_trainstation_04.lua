@@ -18,6 +18,7 @@ HL2C_Map.VortexChance = 20
 HL2C_Map.VortexList = {Vector(-3735.7,-3879.7,530.9)}
 
 HL2C_Map.MapStartup = function()
+	HL2C_Global:SetNoSuit(true)
 	game.SetGlobalState("gordon_precriminal", 2)	--temp needed?
 
 	HL2C_Map:RemoveMapEnts({1924})	--end door closer

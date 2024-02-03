@@ -24,6 +24,7 @@ HL2C_Map.Checkpoints = {
 }
 
 HL2C_Map.MapStartup = function()
+	HL2C_Global:SetNoSuit(true)
 	game.SetGlobalState("gordon_precriminal", 1)	--temp needed?
 
 	HL2C_Map:RemoveMapEnts({1596,1981})	--remove a few door closing triggers

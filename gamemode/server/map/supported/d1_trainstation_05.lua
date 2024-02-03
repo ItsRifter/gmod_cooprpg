@@ -17,6 +17,7 @@ HL2C_Map.VortexChance = 20
 HL2C_Map.VortexList = {Vector(-6802.4,-1641.6,216.4),Vector(-6368.6,-1583.9,203.5),Vector(-7088.0,-1262.9,202.1),Vector(-10962.1,-5353.4,339.8)}
 
 HL2C_Map.MapStartup = function()
+	HL2C_Global:SetNoSuit(true)
 	HL2C_Map:RemoveMapEnts({2404})	--end door closer
 
 	if HL2C_Server:BringItem() then

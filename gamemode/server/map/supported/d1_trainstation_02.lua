@@ -18,5 +18,6 @@ end
 
 
 HL2C_Map.MapStartup = function()
+	HL2C_Global:SetNoSuit(true)
 	game.SetGlobalState("gordon_precriminal", 1)	--temp needed?
 end

@@ -1,4 +1,4 @@
-local hl2c_player = FindMetaTable("Player")
+--local hl2c_player = FindMetaTable("Player")
 
 --TODO--Make it actually spectate stuff
 

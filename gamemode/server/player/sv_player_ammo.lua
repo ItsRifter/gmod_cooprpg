@@ -1,6 +1,6 @@
 --I thought about putting this in weapons lua but probably neater to give ammo its own file
 
-local hl2c_player = FindMetaTable("Player")
+--local hl2c_player = FindMetaTable("Player")
 
 --Data grabbed from previous version
 local AmmoData = {		--ClipSize is used for bonus clip, bonus is for bonus carry

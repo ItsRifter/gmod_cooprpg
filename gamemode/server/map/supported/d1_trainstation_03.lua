@@ -16,6 +16,7 @@ HL2C_Map.VortexList = {Vector(-5108.6,-4853.4,20.0),Vector(-3959.7,-4747.0,303.2
 
 --Trying a mimimal CP aproach by removing block activating triggers.
 HL2C_Map.MapStartup = function()
+	HL2C_Global:SetNoSuit(true)
 	HL2C_Map:RemoveMapEnts({2026,1929,1982})
 	
 	game.SetGlobalState("gordon_precriminal", 1)	--temp needed?

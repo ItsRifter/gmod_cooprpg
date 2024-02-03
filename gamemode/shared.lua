@@ -1,5 +1,7 @@
 if SERVER then AddCSLuaFile() end
 
+hl2c_player = FindMetaTable("Player")
+
 --HL2C_Debug = true  --Uncomment to show files loading and other spam logging messages
 HL2C_DebugTools = true
 

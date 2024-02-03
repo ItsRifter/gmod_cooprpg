@@ -1,6 +1,5 @@
 include("shared.lua")
 
-
 function ENT:Initialize()
 	self.light = false
 	self.color = 0

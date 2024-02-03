@@ -1,4 +1,4 @@
-local hl2c_player = FindMetaTable("Player")
+--local hl2c_player = FindMetaTable("Player")
 
 HL2C_Server.AvailableWeapons = HL2C_Server.AvailableWeapons or {}
 
@@ -21,7 +21,7 @@ end
 
 
 function hl2c_player:GiveWeapons()
-	--PrintTable(HL2C_Server.AvailableWeapons)
+	PrintTable(HL2C_Server.AvailableWeapons)
     for _, w in ipairs(HL2C_Server.AvailableWeapons) do
         if !self:HasWeapon( w ) then self:Give(w, false) end
     end
@@ -30,7 +30,13 @@ end
 --Prevents a endless supply of new weapons to players	--should be fixed now
 --local suppress_NewWeapons = false
 
+HL2C_Server.SupressWeapons = {
+    [1] = "admire_hands",
+}
+
+
 function HL2C_Server:AddWeaponRespawns(strWepClass, ply, equip)
+	if table.HasValue( HL2C_Server.SupressWeapons, strWepClass ) then return end
     if not table.HasValue( HL2C_Server.AvailableWeapons, strWepClass ) then 
 	    table.insert(HL2C_Server.AvailableWeapons, strWepClass)
 

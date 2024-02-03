@@ -72,6 +72,14 @@ function HL2C_Map:RemoveNamedEnts(name)
     end
 end
 
+function HL2C_Map:RemoveNewGameEnts()
+	local list = ents.FindByName("global_newgame_*" )
+    for _, v in ipairs(list) do
+		print(v)
+        v:Remove()
+    end
+end
+
 function HL2C_Map:FireEnts(name,value)
 	for _, ent in ipairs(ents.FindByName( name )) do
 		ent:Fire(value)

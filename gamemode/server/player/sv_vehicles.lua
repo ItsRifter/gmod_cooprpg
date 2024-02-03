@@ -1,4 +1,4 @@
-local hl2c_player = FindMetaTable("Player")
+--local hl2c_player = FindMetaTable("Player")
 
 HL2C_Server.Vehicle_Current = HL2C_Server.Vehicle_Current or VEHC_NONE
 

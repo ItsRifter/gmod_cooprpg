@@ -1,4 +1,4 @@
-local hl2c_player = FindMetaTable("Player")
+--local hl2c_player = FindMetaTable("Player")
 
 function hl2c_player:FindSurface()
 	local tr = util.TraceLine( {

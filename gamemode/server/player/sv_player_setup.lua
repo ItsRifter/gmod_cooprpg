@@ -1,4 +1,4 @@
-local hl2c_player = FindMetaTable("Player")
+--local hl2c_player = FindMetaTable("Player")
 
 function hl2c_player:DoSpawn()
 
@@ -55,16 +55,14 @@ hook.Add( "CanPlayerSuicide", "BlockSuicide", function( ply )
 end )
 
 hook.Add("PlayerCanPickupItem", "HL2C_ItemPickup", function(ply, item)
-
-	--if item:GetClass() == "item_suit" and game.GetMap() == "d1_trainstation_05" then
-	--	SetGlobalBool( "HL2CR_GLOBAL_SUIT", true )
-	--
-	--	for _, v in ipairs(player.GetAll()) do
-	--		 if v:Team() == TEAM_AFK then continue end
-	--		v:AdjustSpeed()
-	--		v:AdmireSuitHands()
-	--	end
-	--end
+	if item:GetClass() == "item_suit" and game.GetMap() == "d1_trainstation_05" then
+		HL2C_Global:SetNoSuit(false)
+		for _, v in ipairs(player.GetAll()) do
+			 if not IsPlaying(v) then continue end
+			v:AdjustSpeed()
+			v:AdmireSuitHands()
+		end
+	end
 
 	if !ply:CanPickupAmmoBox(item) then return false end	--class check handled inside function
 
@@ -114,6 +112,31 @@ function hl2c_player:PlayerAttack(dmgInfo, ply)
     end
 	
 	return false
+end
+
+function hl2c_player:AdjustSpeed()
+	if HL2C_Global:NoSuit() then
+		self:SetMaxSpeed(200)
+		self:SetWalkSpeed(200)
+		self:SetRunSpeed(200)
+	else
+		self:SetMaxSpeed(200)
+		self:SetWalkSpeed(200)
+		self:SetRunSpeed(350)
+	end
+end
+
+function hl2c_player:AdmireSuitHands()
+	self:Give("Admire_Hands")
+	self:SetActiveWeapon(self:GetWeapon("Admire_Hands"))
+	timer.Create(self:Nick() .. "_admiring", 4, 1, function()
+		if IsValid(self) then
+			self:StripWeapons()
+			self:GiveWeapons()
+			self:GiveLoadout()
+		end
+		--self:SpawnWithActiveWeapons()
+	end)
 end
 
 function hl2c_player:UpdatePlayerRelations()

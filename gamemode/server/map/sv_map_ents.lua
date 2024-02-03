@@ -128,8 +128,8 @@ end
 function HL2C_Server:SetupMap()
 	HL2C_Server:SetupWeapons()
 	HL2C_Server:RemoveChangeLevel()
-	
-	--HL2C_Map:RemoveNamedEnts("global_newgame_template")	--WIP, not sure if would mess with some levels, spawns in items but also some props?
+		
+	HL2C_Map:RemoveNewGameEnts() --WIP, not sure if would mess with some levels, spawns in items but also some props?
 	
 	HL2C_Server:RemoveCPs()
 	

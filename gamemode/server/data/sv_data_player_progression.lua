@@ -1,4 +1,4 @@
-local hl2c_player = FindMetaTable("Player")
+--local hl2c_player = FindMetaTable("Player")
 
 hl2c_player.DataFunc = hl2c_player.DataFunc or {}
 

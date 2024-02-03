@@ -1,7 +1,7 @@
 local TICK_NAME = "HL2C_SUITTICK"
 local TICK_RATE = 1 / 20
 
-local hl2c_player = FindMetaTable("Player")
+--local hl2c_player = FindMetaTable("Player")
 local delay = 0	--used to delay sending power to lower data sent as its not vital to be exact
 
 function HL2C_Server:SuitTick()
@@ -25,27 +25,36 @@ HL2C_Server:SetupSuits()
 
 ---------------------------------------------------------------
 
-function hl2c_player:SetupSuit(givesuit)
-	self:AllowFlashlight(true)
+function hl2c_player:SetupSuit()
+	if HL2C_Global:NoSuit() then
+		self:AllowFlashlight(false)
+		else
+		self:AllowFlashlight(true)
+	end
+	
+	self:AdjustSpeed()
 	
 	self.suit = {}
 	self.suit.power 	= 100	--flashlight power, maybe other things later?
 	self.suit.stamina 	= 100	--sprinting and breathing power
 	self.suit.exhausted	= false	--exausted state
 	self.suit.drowning	= 0		--damage taken from drowning to restore later
-	self.suit.suited	= givesuit
+	self.suit.suited	= not HL2C_Global:NoSuit()	--Is this needed now with global no suit var?
 	
 	self:SendPower()
 	self.suit.oldpower = self.suit.power
 end
 
 function hl2c_player:SuitTick()
+	local suit = self:GetSuit()
+
+	
+	if HL2C_Global:NoSuit() then return end	--any code after this is just for when players are suited
+	
 	local charge = 0.25
 	if self:FlashlightIsOn() then
 		charge = charge - 0.75
 	end
-	
-	local suit = self:GetSuit()
 	
 	suit.power = math.Clamp(suit.power + charge,0,100)
 	

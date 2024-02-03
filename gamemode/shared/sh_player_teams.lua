@@ -1,4 +1,4 @@
-local hl2c_player = FindMetaTable("Player")
+--local hl2c_player = FindMetaTable("Player")
 
 TEAM_CONNECTED = 0
 team.SetUp(TEAM_CONNECTED,	"Connected", Color(255, 215, 140))

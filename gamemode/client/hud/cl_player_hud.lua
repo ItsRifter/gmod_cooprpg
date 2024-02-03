@@ -43,6 +43,8 @@ end
 function HL2C_Client:DrawFlashlight()
 	if not IsPlaying(LocalPlayer()) then return end
 
+	if HL2C_Global:NoSuit() then return end
+
 	local icon = LIGHT_IDLE
 	
 	if LocalPlayer():FlashlightIsOn() then 
@@ -80,7 +82,18 @@ net.Receive( "HL2C_Suit_Power", function( len )
 end )
 
 
+local Suit_Huds = {
+	["CHudSecondaryAmmo"] = true,
+	["CHudAmmo"] = true,
+	["CHudWeapon"] = true,
+	["CHudCrosshair"] = true,
+	["CHudWeaponSelection"] = true,
+	["CHudHealth"] = true,
+}
+
 hook.Add( "HUDShouldDraw", "HL2C_HideHUD", function( name )
+	if HL2C_Global:NoSuit() and Suit_Huds[name] then return false end
+
 	if ( name == "CHudCrosshair" and HL2C_Client.Config.NewCross ) then
 		return false
 	end

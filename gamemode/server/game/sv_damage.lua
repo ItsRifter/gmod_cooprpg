@@ -1,5 +1,5 @@
 local hl2c_npc = FindMetaTable( "Entity" )
-local hl2c_player = FindMetaTable("Player")
+--local hl2c_player = FindMetaTable("Player")
 
 hook.Add( "ScaleNPCDamage", "Npc_taghitgroup", function( npc, hitgroup, dmginfo )
 	npc.LastHitGroup = hitgroup

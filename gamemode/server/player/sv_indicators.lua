@@ -1,4 +1,4 @@
-local hl2c_player = FindMetaTable("Player")
+--local hl2c_player = FindMetaTable("Player")
 
 function HL2C_Server:SendNote(text,vector,colour,IType,players)
 	if not IsValid(players) then return end
