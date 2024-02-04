@@ -74,7 +74,7 @@ function hl2c_player:SuitTick()
 	if self:WaterLevel() == 3 then 
 		regen = regen - 0.3 
 	end
-	if self:IsSprinting() then 
+	if self:IsSprinting() and self:UsingMoveInput() and self:GetVelocity():Length() > self:GetWalkSpeed() then 
 		regen = regen - 0.5 
 	end
 	
@@ -104,6 +104,10 @@ function hl2c_player:SendStamina()
 	net.Send(self)
 	
 	suit.oldstamina = suit.stamina
+end
+
+function hl2c_player:UsingMoveInput()
+	return self:KeyDown(IN_FORWARD) or self:KeyDown(IN_BACK) or self:KeyDown(IN_MOVELEFT) or self:KeyDown(IN_MOVERIGHT)
 end
 
 --hook.Add( "PlayerSwitchFlashlight", "SuitFlashLight", function( ply, enabled )

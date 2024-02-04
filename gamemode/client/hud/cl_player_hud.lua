@@ -62,7 +62,7 @@ function HL2C_Client:DrawFlashlight()
 	
 	draw.RoundedBox(6, LIGHT_X, LIGHT_Y, LIGHT_WIDTH, LIGHT_HEIGHT, Color(0, 0, 0, 80))
 	
-	HL2C_Client:DrawBlips(LIGHT_X + LIGHT_WIDTH * 0.05,LIGHT_Y + LIGHT_HEIGHT * 0.6,LIGHT_WIDTH * 0.9,LIGHT_HEIGHT * 0.3, 10,HL2C_Client.suitpower, 100, LIGHT_ALPHA)
+	HL2C_Client:DrawBlips(LIGHT_X + LIGHT_WIDTH * 0.05,LIGHT_Y + LIGHT_HEIGHT * 0.6,LIGHT_WIDTH * 0.9,LIGHT_HEIGHT * 0.3, 16,HL2C_Client.suitpower, 100, LIGHT_ALPHA)
 	
 	draw.SimpleText(icon, "flashlight_font", LIGHT_X + LIGHT_WIDTH * 0.5, LIGHT_Y - LIGHT_HEIGHT * 0.5, Color(255, 238, 31, LIGHT_ALPHA), TEXT_ALIGN_CENTER)
 end
@@ -90,7 +90,7 @@ function HL2C_Client:DrawStamina()
 	
 		draw.SimpleText(translate.Get("Basic_Stamina"), "HudDefault", STAMINA_X + STAMINA_WIDTH * 0.05, STAMINA_Y + STAMINA_HEIGHT * 0.1, Color(255, 238, 31, STAMINA_ALPHA), TEXT_ALIGN_LEFT)
 	
-		HL2C_Client:DrawBlips(STAMINA_X + STAMINA_WIDTH * 0.05,STAMINA_Y + STAMINA_HEIGHT * 0.6,STAMINA_WIDTH * 0.9,STAMINA_HEIGHT * 0.3, 16,HL2C_Client.suitstamina, 100, STAMINA_ALPHA)
+		HL2C_Client:DrawBlips(STAMINA_X + STAMINA_WIDTH * 0.025,STAMINA_Y + STAMINA_HEIGHT * 0.6,STAMINA_WIDTH * 0.95,STAMINA_HEIGHT * 0.3, 10 , HL2C_Client.suitstamina, 100, STAMINA_ALPHA)
 	end
 	
 	--draw.SimpleText(icon, "flashlight_font", LIGHT_X + LIGHT_WIDTH * 0.5, LIGHT_Y - LIGHT_HEIGHT * 0.5, Color(255, 238, 31, LIGHT_ALPHA), TEXT_ALIGN_CENTER)
