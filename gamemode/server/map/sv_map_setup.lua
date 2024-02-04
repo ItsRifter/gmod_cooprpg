@@ -72,12 +72,16 @@ function HL2C_Map:RemoveNamedEnts(name)
     end
 end
 
-function HL2C_Map:RemoveNewGameEnts()
+function HL2C_Map:RemoveNewGameEnts()	--Valve, for fuck sake, cant you name the newgame items the same thing?
+	--can hope this works for all maps or give up and find the ents on each map individually.
 	local list = ents.FindByName("global_newgame_*" )
+	table.Add( list, ents.FindByName("player_spawn_*" ) )
+	table.Add( list, ents.FindByName("start_item_*" ) )
+	table.Add( list, ents.FindByName("spawnitems_*" ) )
     for _, v in ipairs(list) do
-		print(v)
         v:Remove()
     end
+	
 end
 
 function HL2C_Map:FireEnts(name,value)

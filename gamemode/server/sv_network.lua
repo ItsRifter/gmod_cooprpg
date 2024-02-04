@@ -16,7 +16,8 @@ util.AddNetworkString("HL2C_Lamp_Net")
 util.AddNetworkString("HL2C_GV_NOSUIT")
 
 --util.AddNetworkString("HL2C_Suit_FlashLight")	
-util.AddNetworkString("HL2C_Suit_Power")				
+util.AddNetworkString("HL2C_Suit_Power")
+util.AddNetworkString("HL2C_Suit_Stamina")		
 
 --Dev Commands
 util.AddNetworkString("HL2C_DEV_AddCP")	

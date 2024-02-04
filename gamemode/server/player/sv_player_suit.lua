@@ -8,10 +8,12 @@ function HL2C_Server:SuitTick()
 	for i, ply in ipairs( player.GetAll() ) do
 		if ply:IsTeam(TEAM_HUMAN) then
 			ply:SuitTick()
-			if delay <= 0 then ply:SendPower() end
+			if delay <= 0 then 
+				ply:SendPower() ply:SendStamina() 
+			end
 		end
 	end
-	if delay <= 0 then delay = 2 end
+	if delay <= 0 then delay = 4 end
 	delay = delay - 1
 end
 
@@ -42,7 +44,9 @@ function hl2c_player:SetupSuit()
 	self.suit.suited	= not HL2C_Global:NoSuit()	--Is this needed now with global no suit var?
 	
 	self:SendPower()
+	self:SendStamina()
 	self.suit.oldpower = self.suit.power
+	self.suit.oldstamina = self.suit.stamina
 end
 
 function hl2c_player:SuitTick()
@@ -64,6 +68,17 @@ function hl2c_player:SuitTick()
 	else
 		if suit.power > 5 then self:AllowFlashlight( true) end
 	end
+	
+	local regen = 0.2
+	
+	if self:WaterLevel() == 3 then 
+		regen = regen - 0.3 
+	end
+	if self:IsSprinting() then 
+		regen = regen - 0.5 
+	end
+	
+	suit.stamina = math.Clamp(suit.stamina + regen,0,100)
 end
 
 function hl2c_player:GetSuit()
@@ -79,6 +94,16 @@ function hl2c_player:SendPower()
 	net.Send(self)
 	
 	suit.oldpower = suit.power
+end
+
+function hl2c_player:SendStamina()
+	local suit = self:GetSuit()
+	if suit.stamina == suit.oldstamina then return end	--saves sending same values repeatedly
+	net.Start("HL2C_Suit_Stamina")
+		net.WriteFloat( suit.stamina )
+	net.Send(self)
+	
+	suit.oldstamina = suit.stamina
 end
 
 --hook.Add( "PlayerSwitchFlashlight", "SuitFlashLight", function( ply, enabled )

@@ -13,6 +13,8 @@ lang.Basic_Skills = "Skills"
 lang.Basic_Shop = "Shop"
 lang.Basic_Achievements = "Achievements"
 
+lang.Basic_Stamina = "STAMINA"
+
 ------Scoreboard------
 lang.SB_VERSION = "Version - "
 lang.SB_PLY_LVL = "Lvl: "
