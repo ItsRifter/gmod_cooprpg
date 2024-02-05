@@ -117,7 +117,7 @@ local function HL2C_ToolOpen()
 	local DButton = vgui.Create( "DButton", Frame )
 	DButton:SetText( "Create CP" )
 	DButton:SetPos( 10, 190 )
-	DButton:SetSize( 200, 30 )
+	DButton:SetSize( 160, 30 )
 	DButton.DoClick = function()	
 		local temptable = {}
 		temptable.min = Frame.CornerA
@@ -128,6 +128,14 @@ local function HL2C_ToolOpen()
 			net.WriteTable( temptable, false )
 		net.SendToServer()
 	end
+	
+	Frame.Label_dist = vgui.Create( "DLabel", Frame )
+	Frame.Label_dist:SetPos( 180, 192 )
+	Frame.Label_dist:SetText("DISTANCE")
+	Frame.Label_dist:SetSize( 120, 30 )
+
+	
+	
 	
 	local DButton = vgui.Create( "DButton", Frame )
 	DButton:SetText( "Remove All CPs" )
@@ -274,6 +282,15 @@ concommand.Add( "hl2c_debugtool", function( ply, cmd, args )
     print( "Opening debug tools" )
 	HL2C_ToolOpen()
 end ,nil,nil,1)
+
+hook.Add( "Think", "hl2c_debugtool_think", function()
+	-- Do something every frame/tick
+	if GAMEMODE.HL2C_ToolMenu and GAMEMODE.HL2C_ToolMenu.SpawnPos then
+		local text = string.format("DISTANCE %d",LocalPlayer():GetPos():Distance( GAMEMODE.HL2C_ToolMenu.SpawnPos ))
+		GAMEMODE.HL2C_ToolMenu.Label_dist:SetText(text)
+	end
+end )
+
 
 function GM:OnContextMenuOpen()
 	gui.EnableScreenClicker( true )
