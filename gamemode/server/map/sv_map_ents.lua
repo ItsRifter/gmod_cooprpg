@@ -34,7 +34,10 @@ end
 HL2C_Server.LvlExit = HL2C_Server.LvlExit or nil	--If exit needs to move for extended maps, saves reference to old on to remove it
 function HL2C_Server:SpawnExit(Min,Max,func)
 	if HL2C_Server.LvlExit then 
-		if IsValid(HL2C_Server.LvlExit) then HL2C_Server.LvlExit:Remove() end
+		if IsValid(HL2C_Server.LvlExit) then 
+			if IsValid(HL2C_Server.LvlExit.lambda) then HL2C_Server.LvlExit.lambda:Remove()  end
+			HL2C_Server.LvlExit:Remove() 
+		end
 	end
 	
 	local LvlExit = ents.Create("trigger_hl2c_endlvl")
@@ -80,7 +83,7 @@ function HL2C_Server:MoveSpawn(TPPoint,TPAngles, parent)
 	newspawn:Spawn()
 end
 
-function HL2C_Server:CreateTrigger(Min,Max,func)
+function HL2C_Server:CreateTrigger(Min,Max,func,once,delay)
 	local trig = ents.Create("trigger_hl2c_custom")
 	trig.Min = Min
 	trig.Max = Max
@@ -88,6 +91,9 @@ function HL2C_Server:CreateTrigger(Min,Max,func)
 
 	trig:SetPos(trig.Pos)
 	trig:Spawn()
+	
+	trig.Once = once or false
+	trig.Delay = delay or 0
 	
 	trig.Func = func or nil
 end
@@ -129,13 +135,17 @@ function HL2C_Server:SetupMap()
 	HL2C_Server:SetupWeapons()
 	HL2C_Server:RemoveChangeLevel()
 		
-	HL2C_Map:RemoveNewGameEnts() --WIP, not sure if would mess with some levels, spawns in items but also some props?
+	timer.Simple( 0.25, function()  
+		HL2C_Map:RemoveNewGameEnts() --WIP, I think this works decently now.
+	end)
 	
 	HL2C_Server:RemoveCPs()
 	
 	if HL2C_Map.Spawn then HL2C_Server:MoveSpawn(HL2C_Map.Spawn.spawn, HL2C_Map.Spawn.angle) end
 	
 	if HL2C_Map.Exit then HL2C_Server:SpawnExit(HL2C_Map.Exit.min, HL2C_Map.Exit.max, HL2C_Map.Exit.func or nil) end
+	
+	if HL2C_Map.MapStartup then HL2C_Map.MapStartup() end
 	
 	if HL2C_Map.Checkpoints then
 		for k, cpdata in pairs( HL2C_Map.Checkpoints ) do
@@ -158,7 +168,7 @@ function HL2C_Server:SetupMap()
 		end
 	end
 	
-	if HL2C_Map.MapStartup then HL2C_Map.MapStartup() end
+	
 end
 
 function HL2C_Server:RemoveChangeLevel()
@@ -178,6 +188,7 @@ function HL2C_Server:CreateProp(mdl,pos,ang,hidden)
 	if hidden then
 		prop:SetRenderMode( RENDERMODE_ENVIROMENTAL )	--makes invisible
 		prop:SetCollisionGroup(COLLISION_GROUP_PLAYER)
+		prop:DrawShadow( false )
 
 	end
 	

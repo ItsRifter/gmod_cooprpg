@@ -23,7 +23,8 @@ function ENT:StartTouch(ent)
 
 			HL2C_Server:EndTriggered(self, ent)
 			self.Triggered = true
-		elseif ent:GetClass() == "prop_physics" then
+		--elseif ent:GetClass() == "prop_physics" then
+		elseif ent:GetModel() then
 			HL2C_Server:EndProp(ent)
 		end
 	end

@@ -11,7 +11,7 @@ HL2C_Map.VortexChance = 15
 HL2C_Map.VortexList = {Vector(-5455.7,-3537.8,82.3)}
 
 HL2C_Map.ExitModel = function(ent)
-	if not ent:GetClass() == "models/props_c17/doll01.mdl" then return false end
+	if not (ent:GetModel() == "models/props_c17/doll01.mdl") then return false end
 	game.SetGlobalState("hl2c_bringitem", GLOBAL_ON)
 	return true
 end

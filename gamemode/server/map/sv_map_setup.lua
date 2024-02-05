@@ -72,14 +72,20 @@ function HL2C_Map:RemoveNamedEnts(name)
     end
 end
 
+--Im not really happy with this func but it seems to work decently now and thankfully only processes once, I could possibly custom do the seach to avoid recycling the ent list but think its minimal.
 function HL2C_Map:RemoveNewGameEnts()	--Valve, for fuck sake, cant you name the newgame items the same thing?
 	--can hope this works for all maps or give up and find the ents on each map individually.
 	local list = ents.FindByName("global_newgame_*" )
 	table.Add( list, ents.FindByName("player_spawn_*" ) )
 	table.Add( list, ents.FindByName("start_item_*" ) )
 	table.Add( list, ents.FindByName("spawnitems_*" ) )
+	table.Add( list, ents.FindByName("startobjects*" ) )
     for _, v in ipairs(list) do
-        v:Remove()
+		local cl = v:GetClass()
+		
+		if string.StartsWith( cl, "weapon_") or string.StartsWith( cl, "item_suit") then v:Remove() end
+		--if v:GetClass() then
+        --v:Remove()
     end
 	
 end

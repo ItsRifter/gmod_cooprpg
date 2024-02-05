@@ -35,3 +35,9 @@ HL2C_Map.MapStartup = function()
 	HL2C_Map:RemoveNamedEnts("trigger_RavenDoor_Drop")
 	
 end
+
+HL2C_Map.ExitModel = function(ent)
+	if not (ent:GetModel() == "models/roller.mdl") then return false end
+	game.SetGlobalState("hl2c_bringitem", GLOBAL_ON)
+	return true
+end

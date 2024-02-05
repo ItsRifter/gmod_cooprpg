@@ -1,3 +1,5 @@
+AddCSLuaFile()
+
 SWEP.Base = "weapon_base"
 
 SWEP.PrintName = "Entity Box Vector Marker"
@@ -39,7 +41,7 @@ function SWEP:DoTraceLine()
 
     if SERVER then
         owner = self:GetOwner()
-    elseif CLIENT then
+    else
         owner = LocalPlayer()
     end
     
@@ -133,7 +135,7 @@ function SWEP:SecondaryAttack()
     if CLIENT then 
         PlayUseSounds("weapons/airboat/airboat_gun_lastshot2.wav")
 		HL2C_DevTool:SetP2(p2)
-    end
+   end
 end
 
 function PlayUseSounds(snd)

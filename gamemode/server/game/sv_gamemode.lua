@@ -74,6 +74,17 @@ function HL2C_Server:BringItem()
 	return false
 end
 
+function HL2C_Server:IsExtended()
+	if game.GetGlobalState("hl2c_extended") == GLOBAL_ON then
+		return true
+	end
+	return false
+end
+
+function HL2C_Server:SetExtended(value)
+	game.SetGlobalState("hl2c_extended", value)
+end
+
 function HL2C_Server:SpawnItem(mdl,pos)
     local prop = ents.Create("prop_physics")
     prop:SetModel(mdl)
