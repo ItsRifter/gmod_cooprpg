@@ -14,6 +14,9 @@ util.AddNetworkString("HL2C_Lamp_Net")
 
 --Global vars
 util.AddNetworkString("HL2C_GV_NOSUIT")
+util.AddNetworkString("HL2C_GV_MAPFAILED")
+util.AddNetworkString("HL2C_GV_MAPWON")
+util.AddNetworkString("HL2C_GV_VORTEX")
 
 --util.AddNetworkString("HL2C_Suit_FlashLight")	
 util.AddNetworkString("HL2C_Suit_Power")

@@ -21,8 +21,15 @@ lang.SB_PLY_LVL = "Lvl: "
 lang.SB_PLY_EXP = "Exp: "
 lang.SB_PLY_PING = "Ping: "
 
-------Help Menu------
+------Info------
 lang.GM_PlyFinished = " has finished the map in "
+lang.GM_ChangingMap = "Changing map"
+lang.GM_RestartingMap = "Restarting map"
+
+lang.GM_Vortex = "A Vortex spawned"
+
+------Maps-----
+lang.MAP_MonkDied = "Father Grigori has died!"
 
 ------Help Menu------
 lang.HM_Title = "Half-Life 2 Synergized"

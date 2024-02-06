@@ -1,7 +1,7 @@
 HL2C_Map.Weapons = {"weapon_crowbar","weapon_pistol","weapon_smg1","weapon_357","weapon_frag","weapon_physcannon","weapon_shotgun","weapon_ar2"}
 HL2C_Map.Loadout = {armour = 40, Pistol = 30, SMG1 = 60, A357 = 6, Grenade = 2, Buckshot = 6, AR2 = 30}
 HL2C_Map.Flags = {}
-HL2C_Map.NextMap = "d2_coast_02"
+HL2C_Map.NextMap = "d2_coast_03"
 
 HL2C_Map.Spawn = { spawn=Vector(-7859.3,-10187.8,896.0),angle=Angle(0.4,88.1,0.0)}
 

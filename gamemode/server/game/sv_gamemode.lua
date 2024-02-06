@@ -2,6 +2,7 @@
 ------------------------------------------------------------------
 
 function HL2C_Server:CheckpointTriggered(cp, ply)
+	if HL2C_Global:MapFailed() then return true end
 	HL2C_Server:MoveSpawn(cp.TPPoint, cp.TPAngles, nil)
 		
 	HL2C_Server:SendMessageAll(HL2R_TEXT_ORANGE,ply:Nick(),HL2R_TEXT_NORMAL,"##Game_Checkpoint")
@@ -40,6 +41,7 @@ function HL2C_Server:CheckpointTriggered(cp, ply)
 end
 
 function HL2C_Server:EndTriggered(cp, ply)
+	if HL2C_Global:MapFailed() then return true end
 	ply:SetNWBool("HL2C_Player_MapFin", true)
 	ply:RemoveVehicle()
 	ply:ToggleSpectator(true)
@@ -95,6 +97,24 @@ end
 ------------------------------------------------------------------
 ------------------------------------------------------------------
 
+local T_END_NAME = "TIMER_LVLCHANGE"
+local T_END_TIME = 60	--We can afford to have more time now the fast end is working
+local T_END_FAST = 8
+local T_END_FAILED = 12
+
+HL2C_Server.EndTime = HL2C_Server.EndTime or 0
+
+function HL2C_Server:MapFailed()
+	if HL2C_Global:MapWon() or HL2C_Global:MapFailed() then return false end
+	HL2C_Global:SetMapFailed(true)
+
+	timer.Create(T_END_NAME, T_END_FAILED, 1, function() HL2C_Server:RestartLevel() end)
+	
+	HL2C_Server.EndTime = CurTime() + T_END_FAILED
+	HL2C_Server:SendCountdown()
+
+end
+
 function HL2C_Server:CheckFinished()
 	local total = 0
 	local finished = 0
@@ -106,6 +126,11 @@ function HL2C_Server:CheckFinished()
 			end
 		end
 	end
+	
+	if finished > 0 then
+		HL2C_Global:SetMapWon(true)
+	end
+	
 	print(finished.."/"..total.." players finished the level")
 	if total == 0 then
 		HL2C_Server:CountDown(false,true)
@@ -120,12 +145,6 @@ function HL2C_Server:CheckFinished()
 	end
 	
 end
-
-local T_END_NAME = "TIMER_LVLCHANGE"
-local T_END_TIME = 60	--We can afford to have more time now the fast end is working
-local T_END_FAST = 8
-
-HL2C_Server.EndTime = HL2C_Server.EndTime or 0
 
 function HL2C_Server:SendCountdown(ply)
 	net.Start( "HL2C_Countdown" )
@@ -185,6 +204,7 @@ function HL2C_Server:CountDown(active,force)
 end
 
 local LOBBY_MAP = "hl2cr_lobby_v2"
+
 function HL2C_Server:ChangeLevel()
 	if HL2C_Map.NextMap then
 		timer.Simple(1 , function()  RunConsoleCommand( "changelevel", HL2C_Map.NextMap )  end)
@@ -192,6 +212,10 @@ function HL2C_Server:ChangeLevel()
 		timer.Simple(1 , function()  RunConsoleCommand( "changelevel", LOBBY_MAP )  end)
 	end
 	
+end
+
+function HL2C_Server:RestartLevel()
+	timer.Simple(1 , function()  RunConsoleCommand( "changelevel", game.GetMap() )  end)
 end
 
 ------------------------------------------------------------------

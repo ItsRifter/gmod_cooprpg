@@ -165,6 +165,9 @@ function HL2C_Server:SetupMap()
 		if math.Rand( 0, 100 ) < chance then
 			local pos = HL2C_Map.VortexList[ math.random( #HL2C_Map.VortexList ) ]
 			HL2C_Server:CreateVortex(pos)
+			HL2C_Global:SetVortex(true)
+		else
+			HL2C_Global:SetVortex(false)
 		end
 	end
 	
@@ -189,7 +192,6 @@ function HL2C_Server:CreateProp(mdl,pos,ang,hidden)
 		prop:SetRenderMode( RENDERMODE_ENVIROMENTAL )	--makes invisible
 		prop:SetCollisionGroup(COLLISION_GROUP_PLAYER)
 		prop:DrawShadow( false )
-
 	end
 	
 	return prop
@@ -198,7 +200,6 @@ end
 function HL2C_Server:CreateLambdaIcon(pos,mat)
 	local lambda = ents.Create("hl2c_lambda")
 	lambda:SetPos( pos)
-	--lambda:SetAngles(Angle(0,0,0))
 	lambda:Spawn()
 
 	return lambda

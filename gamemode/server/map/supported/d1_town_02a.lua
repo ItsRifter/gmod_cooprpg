@@ -17,6 +17,14 @@ HL2C_Map.VortexChance = 25	--defaults if not set
 HL2C_Map.VortexList = {Vector(-6749.8,727.5,-3245.1)}
 
 HL2C_Map.MapStartup = function()
+	HL2C_Map:RemoveNamedEnts("g_dead_fade")
+	HL2C_Map:RemoveNamedEnts("g_dead_text")
+
+	hook.Add( "OnNPCKilled", "MapHook_Monk_Check", function( npc, attacker, inflictor )
+		if not (npc:GetName() == "monk") then return end
+		HL2C_Server:MapFailed()
+		HL2C_Server:SendMessageAll(HL2R_TEXT_RED,"##MAP_MonkDied")
+	end)
 
 	--local monk = ents.Create("npc_monk")	--Not needed anymore but might want to turn into a function
 	--monk:SetPos(Vector(-5236.1,2026.3,-3246.9))
