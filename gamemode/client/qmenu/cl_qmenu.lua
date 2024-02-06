@@ -13,36 +13,48 @@ function PANEL:Init()
 	local tall = self:GetTall()
 	
 	self.tabs = {}
-	self:AddTab(HL2C_Client:CreateInventory(self))
+	self:AddTab(HL2C_Client:CreateCharacter(self))
 	--self:AddTab(Create_QMenu_Skills(self))
 	--self:AddTab(Create_QMenu_Shop(self))
 	--self:AddTab(Create_QMenu_Achievements(self))
 	
-	local Btn = New_ThemeButton(self, tall * 0.01, tall * 0.01,wide* 0.13,tall* 0.06,translate.Get("Basic_Inventory"),"Font_Small")
+	local tabw = math.floor(wide*0.12)
+	local tabh = math.floor(tall*0.06)
+	
+	local taboff = math.floor(wide*0.008)
+	
+	local Btn = New_ThemeButton(self, taboff, tall * 0.01,tabw,tabh,translate.Get("Basic_Character"),"Font_Small")
 	Btn:SetFunc(
 		function()
 			self:SetTab(1)
 		end
 	)
 	
-	local Btn = New_ThemeButton(self, tall * 0.01 + wide* 0.14, tall * 0.01,wide* 0.13,tall* 0.06,translate.Get("Basic_Skills"),"Font_Small")
+	local Btn = New_ThemeButton(self, taboff * 2 + tabw , tall * 0.01,tabw,tabh,translate.Get("Basic_Inventory"),"Font_Small")
 	Btn:SetFunc(
 		function()
 			self:SetTab(2)
 		end
 	)
 	
-	local Btn = New_ThemeButton(self, tall * 0.01+ wide* 0.28, tall * 0.01,wide* 0.13,tall* 0.06,translate.Get("Basic_Shop"),"Font_Small")
+	local Btn = New_ThemeButton(self, taboff * 3 + tabw * 2, tall * 0.01,tabw,tabh,translate.Get("Basic_Skills"),"Font_Small")
 	Btn:SetFunc(
 		function()
 			self:SetTab(3)
 		end
 	)
 	
-	local Btn = New_ThemeButton(self, wide* 0.82 - tall * 0.01, tall * 0.01,wide* 0.18,tall* 0.06,translate.Get("Basic_Achievements"),"Font_Small")
+	local Btn = New_ThemeButton(self, taboff * 4 + tabw * 3, tall * 0.01,tabw,tabh,translate.Get("Basic_Shop"),"Font_Small")
 	Btn:SetFunc(
 		function()
 			self:SetTab(4)
+		end
+	)
+	
+	local Btn = New_ThemeButton(self, wide- taboff - tabw* 1.5, tall * 0.01,tabw * 1.5,tabh,translate.Get("Basic_Achievements"),"Font_Small")
+	Btn:SetFunc(
+		function()
+			self:SetTab(5)
 		end
 	)
 	

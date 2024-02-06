@@ -8,6 +8,7 @@ lang.Basic_Cmd = "Commands"
 lang.Basic_Pets = "Pets"
 lang.Basic_Options = "Options"
 
+lang.Basic_Character = "Character"
 lang.Basic_Inventory = "Inventory"
 lang.Basic_Skills = "Skills"
 lang.Basic_Shop = "Shop"
@@ -68,6 +69,9 @@ lang.Vehicle_NotOwner	= "You dont own this Vehicle"
 
 ------Qmenu------
 lang.INV_ChangeModel = "Change Model"
+
+lang.CHAR_Lvl = "Level"
+lang.CHAR_Exp = "Experience"
 
 
 translate.AddLanguage(name,lang)

@@ -107,6 +107,27 @@ function PANEL:Setup()
 		end
 	)
 
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+
+	local NameText = New_ThemeText(self,wide * 0.28, tall  * 0.03,LocalPlayer():Nick(),"Font_Normal",0,0.5)
+	local IDText = New_ThemeText(self,wide * 0.98 - tall * 0.23, tall  * 0.03,LocalPlayer():SteamID(),"Font_Normal",1,0.5)
+	
+	local avatar = vgui.Create( "AvatarImage", self )
+	avatar:SetSize(tall * 0.23, tall * 0.23)
+	avatar:SetPos(wide * 0.99 - tall * 0.23 + tall * 0.01, tall * 0.01)
+	avatar:SetPlayer(LocalPlayer(), 128)
+	
+	local text = translate.Get("CHAR_Lvl")
+	local LvlText = New_ThemeText(self,wide * 0.28, tall  * 0.1,text,"Font_Normal",0,0.5)
+	
+	local text = translate.Get("CHAR_Exp")
+	local ExpText = New_ThemeText(self,wide * 0.28, tall  * 0.18,text,"Font_Normal",0,0.5)
+
+
+
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
 
 	
 end
@@ -119,18 +140,22 @@ function PANEL:Paint()
 	
 	draw.RoundedBox( 8, 0, 0, math.floor(wide * 0.25), tall, Theme.backcol2)
 	
-	--draw.RoundedBox( 4, wide * 0.25,tall * 0.01,wide * 0.49,tall * 0.05, Theme.backcol)
-	--draw.RoundedBox( 4, wide * 0.75,tall * 0.01,wide * 0.24,tall * 0.05, Theme.backcol)
+	draw.RoundedBoxEx( 8, wide - math.floor(wide * 0.73), 0, math.floor(wide * 0.73), math.floor(tall * 0.06), Theme.backcol,true,true,false,false)
+	draw.RoundedBoxEx( 8, wide - math.floor(wide * 0.73), math.floor(tall * 0.06), math.floor(wide * 0.58), math.floor(tall * 0.19), Theme.backcol2,false,false,true,false)
+	draw.RoundedBoxEx( 8, wide - math.floor(wide * 0.73)+math.floor(wide * 0.58), math.floor(tall * 0.06), math.floor(wide * 0.73)-math.floor(wide * 0.58), math.floor(tall * 0.19), Theme.backcol,false,false,false,true)
 	
-	--draw.RoundedBox( 4, wide * 0.75,tall * 0.07,wide * 0.24,tall * 0.86, Theme.backcol2)
+	
+	DrawPercentBar(math.floor(wide * 0.4),math.floor(tall * 0.15),math.floor(wide * 0.43),math.floor(tall * 0.08), 50,100,Theme.backcol,Theme.backcol2)
+	
+	--draw.RoundedBox( 8, wide - math.floor(wide * 0.73), tall - math.floor(tall * 0.72), math.floor(wide * 0.73), math.floor(tall * 0.72), Theme.backcol2)
 	
 	return true
 end
 
-vgui.Register( "QMenu_Inventory", PANEL, "Panel" )
+vgui.Register( "QMenu_Character", PANEL, "Panel" )
 
-function HL2C_Client:CreateInventory(parent)
-	local element = vgui.Create("QMenu_Inventory",parent)
+function HL2C_Client:CreateCharacter(parent)
+	local element = vgui.Create("QMenu_Character",parent)
 	
 	local tall = parent:GetTall()
 	local height = math.floor(tall * 0.9)

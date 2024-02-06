@@ -780,3 +780,21 @@ function DrawThickLine(xx,yy,x2,y2, width)
 	surface.DrawPoly( quad )
 
 end
+
+function DrawPercentBar(xx,yy,ww,hh, value,total,col,col2)
+	local percent = math.floor(ww / total * value)
+
+	if percent > 0 then
+		surface.SetDrawColor(col:Unpack())
+		surface.DrawRect( xx, yy, percent, hh )
+		surface.SetDrawColor(col2:Unpack())
+		surface.DrawRect( xx+percent, yy, ww-percent, hh )
+	else
+		surface.SetDrawColor(col2:Unpack())
+		surface.DrawRect( xx, yy, ww, hh )
+	end
+	
+	
+	surface.SetDrawColor(Theme.fontblack:Unpack())
+	surface.DrawOutlinedRect( xx-1, yy-1, ww+2, hh+2, 1 )
+end

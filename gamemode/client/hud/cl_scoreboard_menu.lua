@@ -160,9 +160,9 @@ function PANEL:Init()
 	local Text = New_ThemeText(self,wide * 0.02, tall * 0.01,GAMEMODE.ServerName,"Font_Normal",0,0)
 
 	--local Text = New_ThemeText(self,wide * 0.02, tall * 0.09,translate.Get("Scoreboard_Version") .. GAMEMODE.Version,"Font_Small",0,0)
-	local Text = New_ThemeText(self,wide * 0.02, tall * 0.09,translate.Get("SB_VERSION") .. "Maow","Font_Small",0,0)
+	local Text = New_ThemeText(self,wide * 0.02, tall * 0.08,translate.Get("SB_VERSION") .. "Maow","Font_Small",0,0)
 
-	self.PlayerPanel = New_ThemeVertScroll(self,wide * 0.02,tall * 0.18,wide * 0.96,tall * 0.79)
+	self.PlayerPanel = New_ThemeVertScroll(self,math.floor(wide * 0.02),math.floor(tall * 0.07) * 2 + math.floor(tall * 0.03),math.floor(wide * 0.96),math.floor(tall * 0.79))
 	
 	local panW = wide * 0.30
 	local panH = tall * 0.22
@@ -183,12 +183,12 @@ function PANEL:Paint()
 	local wide = math.floor(self:GetWide())
 	local tall = math.floor(self:GetTall())
 
-	draw.RoundedBoxEx( 8, 0, 0, self:GetWide(), self:GetTall() * 0.08, Theme.backcol,true, true,false,false)
+	draw.RoundedBoxEx( 8, 0, 0, wide, math.floor(tall * 0.07), Theme.backcol,true, true,false,false)
 	
-	draw.RoundedBoxEx( 1, 0, self:GetTall() * 0.08, self:GetWide(), self:GetTall() * 0.07, Theme.backcol2,false, false,false,false)
-	draw.RoundedBoxEx( 1, 0, self:GetTall() * 0.15, self:GetWide(), self:GetTall() * 0.03, Theme.backcol,false, false,false,false)
+	draw.RoundedBoxEx( 1, 0, math.floor(tall * 0.07), wide, math.floor(tall * 0.07), Theme.backcol2,false, false,false,false)
+	draw.RoundedBoxEx( 1, 0, math.floor(tall * 0.07) * 2, wide, math.floor(tall * 0.03), Theme.backcol,false, false,false,false)
 	draw.RoundedBoxEx( 1, 0, self.PlayerPanel:GetY(), self.PlayerPanel:GetX(), self.PlayerPanel:GetTall(), Theme.backcol,false, false,false,false)
-	draw.RoundedBoxEx( 1, self.PlayerPanel:GetX() + self.PlayerPanel:GetWide(), self.PlayerPanel:GetY(), self.PlayerPanel:GetX()+1, self.PlayerPanel:GetTall(), Theme.backcol,false, false,false,false)
+	draw.RoundedBoxEx( 1, self.PlayerPanel:GetX() + self.PlayerPanel:GetWide(), self.PlayerPanel:GetY(), self.PlayerPanel:GetX()+2, self.PlayerPanel:GetTall(), Theme.backcol,false, false,false,false)
 	draw.RoundedBoxEx( 8, 0, self.PlayerPanel:GetTall() + self.PlayerPanel:GetY(), self:GetWide(), tall * 0.03, Theme.backcol,false,false,true,true)
 	
 	return true
