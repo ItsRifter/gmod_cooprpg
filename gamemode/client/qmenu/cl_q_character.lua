@@ -144,8 +144,11 @@ function PANEL:Paint()
 	draw.RoundedBoxEx( 8, wide - math.floor(wide * 0.73), math.floor(tall * 0.06), math.floor(wide * 0.58), math.floor(tall * 0.19), Theme.backcol2,false,false,true,false)
 	draw.RoundedBoxEx( 8, wide - math.floor(wide * 0.73)+math.floor(wide * 0.58), math.floor(tall * 0.06), math.floor(wide * 0.73)-math.floor(wide * 0.58), math.floor(tall * 0.19), Theme.backcol,false,false,false,true)
 	
+	--self.ply:GetNWInt("hl2c_stat_exp", -1) .. "/" .. self.ply:GetNWInt("hl2c_stat_expreq", 0)
+	local experience = LocalPlayer():GetNWInt("hl2c_stat_exp", -1) 
+	local total = LocalPlayer():GetNWInt("hl2c_stat_expreq", -1) 
 	
-	DrawPercentBar(math.floor(wide * 0.4),math.floor(tall * 0.15),math.floor(wide * 0.43),math.floor(tall * 0.08), 50,100,Theme.backcol,Theme.backcol2)
+	DrawPercentBar(math.floor(wide * 0.4),math.floor(tall * 0.15),math.floor(wide * 0.43),math.floor(tall * 0.08), experience,total,Theme.backcol,Theme.backcol4)
 	
 	--draw.RoundedBox( 8, wide - math.floor(wide * 0.73), tall - math.floor(tall * 0.72), math.floor(wide * 0.73), math.floor(tall * 0.72), Theme.backcol2)
 	

@@ -104,8 +104,8 @@ function hl2c_npc:PlayerAttack(dmgInfo,ply)
 		damagedone = math.Round(damagedone,1)
 		if damagedone > 0 then	--prevents erronious negatives
 			if colour == 1 then
-				--local sucess = attacker:AddDamageExp(tonumber(damagedone),target,dmgtype) 
-				local sucess = true
+				local sucess = ply:AddDamageExp(tonumber(damagedone),self,dmgtype) 
+				--local sucess = true
 				if self.LastHitGroup and self.LastHitGroup == HITGROUP_HEAD then colour = 9 end
 				if !sucess then colour = 8 end	--If damage is block hit turns dark grey
 			end

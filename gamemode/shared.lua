@@ -9,6 +9,7 @@ HL2C_Global = HL2C_Global or {}
 
 if SERVER then
     HL2C_Server = HL2C_Server or {}
+	HL2C_Data = HL2C_Data or {}
 	
 	function IncludeContent(path)
 		if HL2C_Debug then print("===Including content path=== "..path) end

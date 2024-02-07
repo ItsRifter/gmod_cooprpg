@@ -782,7 +782,9 @@ function DrawThickLine(xx,yy,x2,y2, width)
 end
 
 function DrawPercentBar(xx,yy,ww,hh, value,total,col,col2)
-	local percent = math.floor(ww / total * value)
+
+	local percent = 0 
+	if total !=0 then percent = math.floor(ww / total * value) end
 
 	if percent > 0 then
 		surface.SetDrawColor(col:Unpack())

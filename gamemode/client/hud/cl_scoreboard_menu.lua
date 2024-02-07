@@ -45,12 +45,12 @@ function PANEL:SetPlayer(ply)
 	
 		local Text = New_ThemeText(self,tall * 0.78, tall  * 0.4,"","Font2_Tiny",0,0.5)
 		Text.Think = function()
-				local text = translate.Get("SB_PLY_LVL") .. self.ply:GetNWInt("hl2cr_stat_level", -1)
+				local text = translate.Get("SB_PLY_LVL") .. self.ply:GetNWInt("hl2c_stat_level", -1)
 				Text:SetText(text,nil,0,0.5)
 			end
 		local Text = New_ThemeText(self,tall * 0.78, tall  * 0.60,"","Font2_Tiny",0,0.5)
 		Text.Think = function()
-				local text = translate.Get("SB_PLY_EXP") .. self.ply:GetNWInt("hl2cr_stat_exp", -1) .. "/" .. self.ply:GetNWInt("hl2cr_stat_expreq", 0)
+				local text = translate.Get("SB_PLY_EXP") .. self.ply:GetNWInt("hl2c_stat_exp", -1) .. "/" .. self.ply:GetNWInt("hl2c_stat_expreq", 0)
 				Text:SetText(text,nil,0,0.5)
 			end
 		local Text = New_ThemeText(self,tall * 0.05, tall  * 0.96,"","Font2_Small",0,1)

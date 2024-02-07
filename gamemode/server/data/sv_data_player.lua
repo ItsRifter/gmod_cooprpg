@@ -1,13 +1,6 @@
-HL2C_Server.DataSystem = HL2C_Server.DataSystem or {}
 
-function HL2C_Server.DataSystem:InitPlayerData(ply)
-	ply.hl2c_data = ply.hl2c_data or {}
-	ply.hl2c_data.Name = ply.hl2c_data.Name or ply:Nick()
-	ply.data_loaded = true
-end
-
-function HL2C_Server.DataSystem:SavePlayerData(ply)
-	if ply:IsBot() or not ply.loaded then return end
+function HL2C_Data:SavePlayerData(ply)
+	if ply:IsBot() or not ply.data_loaded then return end
 
 	local playerID = string.Replace(ply:SteamID(), ":", "!")
 
@@ -15,7 +8,7 @@ function HL2C_Server.DataSystem:SavePlayerData(ply)
 	file.Write("hl2c_data/" .. playerID .. ".txt", util.TableToJSON(ply.hl2c_data, true))
 end
 
-function HL2C_Server.DataSystem:LoadPlayerData(ply)
+function HL2C_Data:LoadPlayerData(ply)
 	if ply:IsBot() then return false end
 
 	local playerID = string.Replace(ply:SteamID(), ":", "!")
@@ -25,34 +18,33 @@ function HL2C_Server.DataSystem:LoadPlayerData(ply)
 	--Read players hl2c_data from JSON
 	ply.hl2c_data = util.JSONToTable(jsonContent)
 
-	ply:InitData()	--initialises any extra data not in save
+	HL2C_Data:InitPlayerData(ply)	--initialises any extra data not in save
 end
 
-function HL2C_Server.DataSystem:GetData(ply)
-	//if ply.data_loaded then return end
+function HL2C_Data:GetData(ply)
+	if ply.data_loaded then return end
 
-	-- if not ply:LoadData() then 
-	-- 	ply:InitData()
-	-- 	ply:SaveData()
-	-- end
+	if not HL2C_Data:LoadPlayerData(ply) then 
+		HL2C_Data:InitPlayerData(ply)
+		HL2C_Data:SavePlayerData(ply)
+	end
 end
 
 --------------------------------------------------------------
 
 hook.Add("PlayerInitialSpawn", "HL2C_Data_Check", function(ply)
-	//ply:GetPlayerData()
+	HL2C_Data:GetData(ply)
 end)
 
 hook.Add("PlayerDisconnected", "HL2C_Data_Save_Disconnect", function(ply)
-	//ply:SavePlayerData()
+	HL2C_Data:SavePlayerData(ply)
 end)
 
 hook.Add( "ShutDown", "HL2C_Data_Save_MapChange", function() 
-	//for _, ply in ipairs( player.GetAll() ) do
-		//if ply:IsBot() then continue end
-
-		//ply:SavePlayerData()
-	//end
+	for _, ply in ipairs( player.GetAll() ) do
+		if ply:IsBot() then continue end
+		HL2C_Data:SavePlayerData(ply)
+	end
 end)
 
 --------------------------------------------------------------
