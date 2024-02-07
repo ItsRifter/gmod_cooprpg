@@ -224,7 +224,12 @@ end
 local VortexList = VortexList or {}
 function HL2C_Server:VortexTouched(ply)
 	if not table.HasValue( VortexList, ply) then
-		if table.IsEmpty( VortexList ) then HL2C_Server:SendMessageAll(HL2R_TEXT_ORANGE,ply:Nick(),HL2R_TEXT_NORMAL,"##Game_Vortex") end
+		if table.IsEmpty( VortexList ) then 
+			HL2C_Server:SendMessageAll(HL2R_TEXT_ORANGE,ply:Nick(),HL2R_TEXT_NORMAL,"##Game_Vortex") 
+			ply:AddExp(120)
+		else
+			ply:AddExp(60)
+		end
 		table.insert( VortexList, ply)
 		ply:EmitSound("ambient/levels/prison/radio_random11.wav")
 	end

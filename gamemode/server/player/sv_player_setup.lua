@@ -120,7 +120,7 @@ function hl2c_player:AdjustSpeed()
 		self:SetWalkSpeed(200)
 		self:SetRunSpeed(200)
 	else
-		self:SetMaxSpeed(200)
+		self:SetMaxSpeed(350)
 		self:SetWalkSpeed(200)
 		self:SetRunSpeed(350)
 	end

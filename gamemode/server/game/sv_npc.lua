@@ -79,8 +79,8 @@ function hl2c_npc:PlayerAttack(dmgInfo,ply)
 	--if attacker:IsVehicle() and attacker:GetDriver() then
 	--	attacker = attacker:GetDriver()
 	--end
-	
     if ( self:IsProtected() )  then return true end
+
 	
 	if (IsHuman(ply) and self:IsHumanTeam()) then return true end
 	if (IsCombine(ply) and self:IsCombineTeam()) then return true end

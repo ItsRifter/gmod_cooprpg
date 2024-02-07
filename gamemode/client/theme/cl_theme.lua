@@ -781,7 +781,8 @@ function DrawThickLine(xx,yy,x2,y2, width)
 
 end
 
-function DrawPercentBar(xx,yy,ww,hh, value,total,col,col2)
+function DrawPercentBar(xx,yy,ww,hh, value,total,col,col2,colout)
+	colout = colout or Theme.fontblack
 
 	local percent = 0 
 	if total !=0 then percent = math.floor(ww / total * value) end
@@ -797,6 +798,6 @@ function DrawPercentBar(xx,yy,ww,hh, value,total,col,col2)
 	end
 	
 	
-	surface.SetDrawColor(Theme.fontblack:Unpack())
+	surface.SetDrawColor(colout:Unpack())
 	surface.DrawOutlinedRect( xx-1, yy-1, ww+2, hh+2, 1 )
 end

@@ -29,4 +29,11 @@ HL2C_Map.MapStartup = function()
 	HL2C_Map:FireEnts("portal_2apc_exit2","open")
 	HL2C_Map:FireEnts("canals_portal_08atunnel","open")
 
+	HL2C_Server:CreateProp("models/props_wasteland/cargo_container01b.mdl",Vector(1541.5,-4145.1,253.8),Angle(15.1,91.9,7.2))
+	HL2C_Server:CreateProp("models/props_wasteland/rockgranite03c.mdl",Vector(1424.0,-4103.2,177.5),Angle(4.6,174.4,-102.6))
+
+	HL2C_Server:CreateProp("models/props_wasteland/cargo_container01c.mdl",Vector(933.0,-4148.1,241.5),Angle(-19.9,-93.1,-177.4))
+	HL2C_Server:CreateProp("models/props_wasteland/rockcliff01k.mdl",Vector(1077.8,-4151.0,162.8),Angle(9.4,-96.1,109.8))
+	HL2C_Server:CreateProp("models/props_wasteland/rockcliff01c.mdl",Vector(834.1,-4108.3,132.2),Angle(12.7,80.3,74.1))
+
 end

@@ -43,8 +43,10 @@ function hl2c_player:SetupSuit()
 	self.suit.drowning	= 0		--damage taken from drowning to restore later
 	self.suit.suited	= not HL2C_Global:NoSuit()	--Is this needed now with global no suit var?
 	
+	
 	self:SendPower()
 	self:SendStamina()
+	
 	self.suit.oldpower = self.suit.power
 	self.suit.oldstamina = self.suit.stamina
 end
@@ -52,7 +54,6 @@ end
 function hl2c_player:SuitTick()
 	local suit = self:GetSuit()
 
-	
 	if HL2C_Global:NoSuit() then return end	--any code after this is just for when players are suited
 	
 	local charge = 0.25
@@ -72,13 +73,51 @@ function hl2c_player:SuitTick()
 	local regen = 0.2
 	
 	if self:WaterLevel() == 3 then 
-		regen = regen - 0.3 
-	end
-	if self:IsSprinting() and self:UsingMoveInput() and self:GetVelocity():Length() > self:GetWalkSpeed() then 
 		regen = regen - 0.5 
+		
+		if suit.stamina < 1 then
+			if not self.suit.drowntick or self.suit.drowntick < CurTime() then
+				suit.drowntick = CurTime() + 1
+				suit.drowning = self.suit.drowning + 5
+				
+				local dmginfo = DamageInfo()
+				dmginfo:SetDamage(5)
+				dmginfo:SetDamageType(DMG_DROWN)
+				dmginfo:SetAttacker(self)
+				dmginfo:SetInflictor(self)
+				dmginfo:SetDamageForce(Vector(0, 0, 0))
+			  
+				-- Take drowning damage
+				self:TakeDamageInfo(dmginfo)
+			end
+		end
+	else
+		if suit.stamina > 40 and suit.drowning > 0 then
+			if not self.suit.drowntick or self.suit.drowntick < CurTime() then
+				suit.drowntick = CurTime() + 1
+				self:SetHealth(math.Clamp(self:Health() + 5 , 0, self:GetMaxHealth()))
+				suit.drowning = suit.drowning - 5
+			end
+		end
+	end
+	
+	if self:IsSprinting() and self:UsingMoveInput() and self:GetVelocity():Length() > self:GetWalkSpeed() + 20 then 
+		regen = regen - 0.8 
 	end
 	
 	suit.stamina = math.Clamp(suit.stamina + regen,0,100)
+	
+	if suit.stamina > 95 and suit.exhausted then suit.exhausted = false 
+		self:SetMaxSpeed(350)
+		self:SetWalkSpeed(200)
+		self:SetRunSpeed(350)
+	end
+	
+	if suit.stamina < 1 and not suit.exhausted then suit.exhausted = true 
+		self:SetMaxSpeed(180)
+		self:SetWalkSpeed(180)
+		self:SetRunSpeed(180)
+	end
 end
 
 function hl2c_player:GetSuit()

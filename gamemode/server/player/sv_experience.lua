@@ -120,9 +120,9 @@ function hl2c_player:AddDamageExp(damage,npc,dmgtype)
 	return false
 end
 
---Constant timer every 5 seconds, calculates exp players earned from damage and gives exp periodically instead of on every damage hit which would spam them.
+--Constant timer every 6 seconds, calculates exp players earned from damage and gives exp periodically instead of on every damage hit which would spam them.
 if timer.Exists( "Exp_Tick" ) then timer.Remove( "Exp_Tick" ) end	
-timer.Create( "Exp_Tick", 5, 0, function() 
+timer.Create( "Exp_Tick", 6, 0, function() 
 	for _, p in pairs(player.GetAll()) do
 		if p:IsBot() then continue end
 		if !p.damagexp then continue end

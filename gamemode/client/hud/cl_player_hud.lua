@@ -44,6 +44,8 @@ function HL2C_Client:DrawBlips(x,y,w,h, amount,value, maximum,alpha)
 	end
 end
 
+-------------------------------------------------------------------------------------
+
 function HL2C_Client:DrawFlashlight()
 	if not IsPlaying(LocalPlayer()) then return end
 
@@ -107,9 +109,77 @@ function HL2C_Client:DrawSpectatorInfo()
 
 end
 
+local oldxp = oldxp or 0
+local newxp = newxp or 0
+local changed = changed or 0
+local xp_alpha = xp_alpha or 0
+
+function HL2C_Client:DrawExperience()
+	
+	if not IsPlaying(LocalPlayer()) then return end
+	
+	local xp = LocalPlayer():GetNWInt("hl2c_stat_exp", -1)
+	local reqXP = LocalPlayer():GetNWInt("hl2c_stat_expreq", -1)
+	
+	if reqXP <=0 then return end
+	
+	local barW = math.floor(ScrW()* 0.3) 
+	local barH = math.floor(ScrH()* 0.015) 
+
+	if xp > newxp then
+		oldxp = newxp
+		newxp = xp
+		changed = CurTime()
+	elseif xp < newxp then
+		oldxp = xp
+		newxp = xp
+		changed = CurTime()
+	end
+
+	local offset = CurTime() - changed
+
+	if offset > 0 then 
+		xp_alpha = math.floor(Lerp( offset - 4, 255 , 0))
+		
+		if !HL2C_Client.Config.HideXP and xp_alpha < 50 then
+			xp_alpha = 50
+		end
+		
+	end
+
+	if xp_alpha <= 0 then return end
+
+	local barOld = math.floor(barW / reqXP * oldxp)
+	local barNew = math.floor(barW / reqXP * newxp)
+
+	local xpos = math.floor((ScrW()-barW) * 0.5)
+	local ypos = math.floor(ScrH() * 0.98)
+
+	draw.RoundedBox( 4, xpos, ypos, barW, barH, Color(0, 0, 0, xp_alpha) )
+
+	
+
+	if offset > 2.5 then
+		draw.RoundedBox( 4, xpos, ypos, barNew, barH, Color(200, 140, 0, xp_alpha) )
+	elseif offset >  1.5 then
+		local lerpp = math.floor(Lerp( offset - 1.5, barOld , barNew))
+		draw.RoundedBoxEx( 4, xpos, 			ypos, lerpp, barH, Color(200, 140, 0, xp_alpha),true,false,true,false )
+		draw.RoundedBoxEx( 4, xpos+lerpp, 	ypos, barNew - lerpp, barH, Color(250, 174, 0, xp_alpha),false,true,false,true  )
+	else
+		draw.RoundedBoxEx( 4, xpos, 			ypos, barOld, barH, Color(200, 140, 0, xp_alpha),true,false,true,false  )
+		draw.RoundedBoxEx( 4, xpos+barOld, 	ypos, Lerp( offset, 0, barNew -barOld), barH, Color(250, 174, 0, xp_alpha),false,true,false,true )
+	end
+
+
+
+end
+
 hook.Add("HUDPaint", "auxpow_flashlight_hud", function() HL2C_Client:DrawFlashlight() end)
 hook.Add("HUDPaint", "auxpow_stamina_hud", function() HL2C_Client:DrawStamina() end)
 hook.Add("HUDPaint", "spectating_hud", function() HL2C_Client:DrawSpectatorInfo() end)
+hook.Add("HUDPaint", "exp_hud", function() HL2C_Client:DrawExperience() end)
+
+-------------------------------------------------------------------------------------
 
 net.Receive( "HL2C_Suit_Power", function( len )
 	HL2C_Client.suitpower = net.ReadFloat()
@@ -119,6 +189,7 @@ net.Receive( "HL2C_Suit_Stamina", function( len )
 	HL2C_Client.suitstamina = net.ReadFloat()
 end )
 
+-------------------------------------------------------------------------------------
 
 local Suit_Huds = {
 	["CHudSecondaryAmmo"] = true,

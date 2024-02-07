@@ -104,7 +104,7 @@ hook.Add( "OnEntityCreated", "Remove_NewGameStuff", function( ent )
 			if string.StartsWith( name, "global_newgame_") 
 			or string.StartsWith( name, "player_spawn_") 
 			or string.StartsWith( name, "start_item_") 
-			or string.StartsWith( name, "spawnitems_") 
+			or string.StartsWith( name, "spawnitems") 
 			or string.StartsWith( name, "startobjects") then
 				ent:Remove()
 			end
