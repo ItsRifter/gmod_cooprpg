@@ -33,3 +33,28 @@ hook.Add( "Think", "End_Countdown", function()
 	end
 end )
 
+local SPRINT_SOUND = "player/suit_sprint.wav"
+local EXHAUST_SOUND = "common/wpn_denyselect.wav"
+
+local exhaustPressed = exhaustPressed or false
+
+hook.Add("KeyPress", "suit_exhaust", function(player, key)
+	if LocalPlayer():Alive() and not LocalPlayer():InVehicle() and key == IN_SPEED and not exhaustPressed then
+		if LocalPlayer():GetRunSpeed() < 200 then 
+			surface.PlaySound(EXHAUST_SOUND)
+			exhaustPressed = true
+		else
+			if HL2C_Global:NoSuit() then return end
+			surface.PlaySound(SPRINT_SOUND)
+			exhaustPressed = true
+		end
+		
+	end
+		
+end)
+
+hook.Add("KeyRelease", "suit_exhaust_release", function(player, key)
+	if LocalPlayer():Alive() and not LocalPlayer():InVehicle() and key == IN_SPEED and exhaustPressed then
+		exhaustPressed = false
+	end
+end)

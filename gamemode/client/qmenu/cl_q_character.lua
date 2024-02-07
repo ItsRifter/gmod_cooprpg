@@ -121,11 +121,14 @@ function PANEL:Setup()
 	local text = translate.Get("CHAR_Lvl")
 	local LvlText = New_ThemeText(self,wide * 0.28, tall  * 0.1,text,"Font_Normal",0,0.5)
 	
-	local text = translate.Get("CHAR_Exp")
+	text = translate.Get("CHAR_Exp")
 	local ExpText = New_ThemeText(self,wide * 0.28, tall  * 0.185,text,"Font_Normal",0,0.5)
 	
 	local experience = LocalPlayer():GetNWInt("hl2c_stat_exp", -1) 
 	local total = LocalPlayer():GetNWInt("hl2c_stat_expreq", -1) 
+	
+	text = string.format("%i",LocalPlayer():GetNWInt("hl2c_stat_level", -1))
+	local LevelText = New_ThemeText(self,wide * 0.61, tall  * 0.1,text,"Font_Normal",0.5,0.5)
 	
 	if total > 0 then
 		text = string.format("%i / %i",experience,total)
