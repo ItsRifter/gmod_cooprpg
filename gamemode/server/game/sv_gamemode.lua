@@ -5,16 +5,15 @@ function HL2C_Server:CheckpointTriggered(cp, ply)
 	if HL2C_Global:MapFailed() then return true end
 	HL2C_Server:MoveSpawn(cp.TPPoint, cp.TPAngles, nil)
 		
-	HL2C_Server:SendMessageAll(HL2R_TEXT_ORANGE,ply:Nick(),HL2R_TEXT_NORMAL,"##Game_Checkpoint")
+	HL2C_Server:SendMessageAll(HL2R_TEXT_ORANGE, ply:Nick(), HL2R_TEXT_NORMAL, "##Game_Checkpoint")
 		
 	if cp.lambda and cp.lambda:IsValid() then cp.lambda:Remove() end
-
 	if cp.Func then cp:Func() end
 
 	for i, pl in ipairs( HL2C_Global:GetHumans() ) do
 		if pl == ply then continue end
 		--if IsHuman(pl) then
-			if pl:GetNWBool("HL2C_Player_MapFin")then continue end
+			if pl:GetNWBool("HL2C_Player_MapFin") then continue end
 			
 			if not pl:Alive() then
 				pl:Spawn()
@@ -23,6 +22,7 @@ function HL2C_Server:CheckpointTriggered(cp, ply)
 				pl:EmitSound("hl1/ambience/port_suckin1.wav", 100, 100)
 			else
 				local warp = true
+
 				if cp.Dist then
 					local range = cp.TPPoint:DistToSqr( pl:GetPos() )
 					if range < cp.Dist then warp = false end
@@ -34,7 +34,6 @@ function HL2C_Server:CheckpointTriggered(cp, ply)
 					pl:EmitSound("hl1/ambience/port_suckin1.wav", 100, 100)
 				end
 			end
-			
 		--end
 	end
 
@@ -42,13 +41,15 @@ end
 
 function HL2C_Server:EndTriggered(cp, ply)
 	if HL2C_Global:MapFailed() then return true end
+
 	ply:SetNWBool("HL2C_Player_MapFin", true)
 	ply:RemoveVehicle()
 	ply:ToggleSpectator(true)
 	ply:SpectateEntity(HL2C_Server.LvlExit.lambda)
 	ply:EmitSound("vo/k_lab/kl_excellent.wav", 100, 100)
 	
-	HL2C_Server:SendMessageAll(HL2R_TEXT_ORANGE,ply:Nick(),  HL2R_TEXT_NORMAL,"##GM_PlyFinished", HL2R_TEXT_ORANGE, string.FormattedTime(CurTime(), "%02i:%02i"))
+	HL2C_Server:SendMessageAll(HL2R_TEXT_ORANGE, ply:Nick(), HL2R_TEXT_NORMAL, 
+		"##GM_PlyFinished", HL2R_TEXT_ORANGE, string.FormattedTime(CurTime(), "%02i:%02i"))
 	
 	if cp.Func then cp:Func(ply) end
 	cp.Triggered = true
@@ -73,6 +74,7 @@ function HL2C_Server:BringItem()
 		game.SetGlobalState("hl2c_bringitem", GLOBAL_DEAD)
 		return true
 	end
+
 	return false
 end
 
@@ -80,6 +82,7 @@ function HL2C_Server:IsExtended()
 	if game.GetGlobalState("hl2c_extended") == GLOBAL_ON then
 		return true
 	end
+
 	return false
 end
 
@@ -106,23 +109,24 @@ HL2C_Server.EndTime = HL2C_Server.EndTime or 0
 
 function HL2C_Server:MapFailed()
 	if HL2C_Global:MapWon() or HL2C_Global:MapFailed() then return false end
+
 	HL2C_Global:SetMapFailed(true)
 
 	timer.Create(T_END_NAME, T_END_FAILED, 1, function() HL2C_Server:RestartLevel() end)
 	
 	HL2C_Server.EndTime = CurTime() + T_END_FAILED
 	HL2C_Server:SendCountdown()
-
 end
 
 function HL2C_Server:CheckFinished()
 	local total = 0
 	local finished = 0
+
 	for i, ply in ipairs( player.GetAll() ) do
 		if IsHuman(ply) then
 			total = total + 1
 			if ply:GetNWBool("HL2C_Player_MapFin") then
-				finished = finished+ 1
+				finished = finished + 1
 			end
 		end
 	end
@@ -131,19 +135,20 @@ function HL2C_Server:CheckFinished()
 		HL2C_Global:SetMapWon(true)
 	end
 	
-	print(finished.."/"..total.." players finished the level")
+	self:DebugMsg(string.format("%i / %i players finished the map", finished, total))
+
 	if total == 0 then
 		HL2C_Server:CountDown(false,true)
 		return
 	end
-	local ratio = 1/total*finished
-		
-	if ratio > 0.9 then
-		HL2C_Server:CountDown(true,true)
-	elseif ratio >0.4 then
-		HL2C_Server:CountDown(true,false)
-	end
+
+	local ratio = 1 / total * finished
 	
+	if ratio > 0.9 then
+		HL2C_Server:CountDown(true, true)
+	elseif ratio >0.4 then
+		HL2C_Server:CountDown(true, false)
+	end
 end
 
 function HL2C_Server:SendCountdown(ply)
@@ -182,6 +187,7 @@ function HL2C_Server:CountDown(active,force)
 		end
 	else
 		if not active then return end
+
 		if force then
 			timer.Create(T_END_NAME, T_END_FAST, 1, function() HL2C_Server:ChangeLevel() end)
 			
@@ -211,7 +217,6 @@ function HL2C_Server:ChangeLevel()
 	else
 		timer.Simple(1 , function()  RunConsoleCommand( "changelevel", LOBBY_MAP )  end)
 	end
-	
 end
 
 function HL2C_Server:RestartLevel()
@@ -230,6 +235,7 @@ function HL2C_Server:VortexTouched(ply)
 		else
 			ply:AddExp(60)
 		end
+		
 		table.insert( VortexList, ply)
 		ply:EmitSound("ambient/levels/prison/radio_random11.wav")
 	end

@@ -27,6 +27,6 @@ HL2C_Map.MapStartup = function()
 	
 	--HL2C_Server:CreateProp("models/props_wasteland/cargo_container01.mdl",Vector(170,-120,-708),Angle(0,0,0))
 
-	HL2C_Map:FireEnts("portal_basin","open")
-	HL2C_Map:RemoveMapEnts({2220,2221,1767,1768,2118,2119,1769,1770})	
+	HL2C_Map:FireEnts("portal_basin", "open")
+	HL2C_Map:RemoveMapEnts({2220, 2221, 1767, 1768, 2118, 2119, 1769, 1770})	
 end

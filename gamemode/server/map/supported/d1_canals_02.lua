@@ -25,7 +25,6 @@ HL2C_Map.MapStartup = function()
 	HL2C_Server:CreateProp("models/props_vehicles/car002b.mdl",Vector(138.8,-188.6,-696.4),Angle(79.3,-18.4,-2.5))
 	HL2C_Server:CreateProp("models/hunter/blocks/cube4x6x05.mdl",Vector(161.1,-146.4,-805.6),Angle(-13.4,-107.5,-93.3),true)
 
-
 	HL2C_Map:RemoveMapEnts({1554,1550})
 	HL2C_Map:FireEnts("underground_portal_slippery01","open")
 	HL2C_Map:FireEnts("underground_portal_slippery02","open")

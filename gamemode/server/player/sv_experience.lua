@@ -23,7 +23,7 @@ local NPC_XPMul = {
 	["npc_antlion_worker"] = 4,
 	["npc_hunter"] = 5,
 	
-	--["prop_vehicle_apc"]=0.75,
+	--["prop_vehicle_apc"] = 0.75,
 	
 	--["npc_combinegunship"] = 1.5,
     --["npc_strider"] = 0.5,
@@ -50,42 +50,43 @@ local function NPCWeapon_Mul(amount, npc)	--gives bonus exp depending on npcs we
 end
 
 --Special functions for certain npc's
-local NPC_XPFunc= {
-	["npc_strider"] = function(amount,npc,dmgtype)
-		if dmgtype !=64 and  dmgtype !=2112 then return 0 end	--only give exp for blast/ball damage dealt
+local NPC_XPFunc = {
+	["npc_strider"] = function(amount, npc, dmgtype)
+		if dmgtype != 64 and  dmgtype != 2112 then return 0 end	--only give exp for blast/ball damage dealt
 		return 180		--180=27/36/45/54/63
 	end,
 
-	["npc_combinedropship"] = function(amount,npc,dmgtype)
-		if dmgtype !=64 then return 0 end	--only give exp for blast damage dealt
+	["npc_combinedropship"] = function(amount, npc, dmgtype)
+		if dmgtype != 64 then return 0 end	--only give exp for blast damage dealt
 		return 80		--180=27/36/45/54/63
 	end,
 
-	["npc_combinegunship"] = function(amount,npc)
+	["npc_combinegunship"] = function(amount, npc)
 		return 220		--220=33/44/55/66/77
 	end,
 
-	["prop_vehicle_apc"] = function(amount,npc)
+	["prop_vehicle_apc"] = function(amount, npc)
 		if npc:GetDriver():IsValid() then
 			return amount * 0.75
 		end
+
 		return 0
 	end,
 	
-	["npc_metropolice"] = function(amount,npc)
+	["npc_metropolice"] = function(amount, npc)
 		return NPCWeapon_Mul(amount,npc)		
 	end,
 
-	["npc_combine_s"] = function(amount,npc)
+	["npc_combine_s"] = function(amount, npc)
 		return NPCWeapon_Mul(amount,npc)
 	end,
 
-	["npc_turret_floor"] = function(amount,npc)	--Normal turrets -- I dont want to give exp but do want to allow it to be hit
+	["npc_turret_floor"] = function(amount, npc)	--Normal turrets -- I dont want to give exp but do want to allow it to be hit
 		return 0
 	end,
 
-	["npc_turret_ground"] = function(amount,npc,dmgtype)  --Floor turrets in c17 assault
-		if dmgtype !=64 then return 0 end
+	["npc_turret_ground"] = function(amount, npc, dmgtype)  --Floor turrets in c17 assault
+		if dmgtype != 64 then return 0 end
 		return 120
 	end,
 }
@@ -102,6 +103,7 @@ local Diff_Mul = {
 function HL2C_Server:CanPlayerTarget(class)
 	if NPC_XPMul[class] then return true end
 	if NPC_XPFunc[class] then return true end
+
 	return false
 end
 
@@ -113,6 +115,7 @@ local exp_division = 10
 function hl2c_player:AddDamageExp(damage,npc,dmgtype)
 	local amount = damage
 	local class = npc:GetClass()
+
 	if NPC_XPMul[class] then amount = amount * NPC_XPMul[class] end			--Does exp mul based on enemy class
 	if NPC_XPFunc[class] then amount = NPC_XPFunc[class](amount,npc,dmgtype) end	--Does extra function for special enemies
 	
@@ -121,20 +124,22 @@ function hl2c_player:AddDamageExp(damage,npc,dmgtype)
 		self.damagexp = self.damagexp + amount
 		return true
 	end
+
 	return false
 end
 
---Constant timer every 6 seconds, calculates exp players earned from damage and gives exp periodically instead of on every damage hit which would spam them.
+--Constant timer every 6 seconds, calculates exp players earned from damage 
+--and gives exp periodically instead of on every damage hit which would spam them.
 if timer.Exists( "Exp_Tick" ) then timer.Remove( "Exp_Tick" ) end	
+
 timer.Create( "Exp_Tick", 6, 0, function() 
 	for _, p in pairs(player.GetAll()) do
 		if p:IsBot() then continue end
 		if !p.damagexp then continue end
 
 		if p.damagexp >= exp_division then
-			local exptogive  = math.floor(p.damagexp/exp_division)
-			--p.damagexptotal = p.damagexptotal + exptogive
-			p:AddExp(exptogive)
+			local giveExp = math.floor(p.damagexp / exp_division)
+			p:AddExp(giveExp)
 			
 			p.damagexp = math.fmod(p.damagexp, exp_division)	
 		end

@@ -27,15 +27,14 @@ HL2C_Map.MapStartup = function()
 
 	HL2C_Server:CreateTrigger(Vector(-2871,80,-1070),Vector(-2436,70,-1166), function(ent)	--Tired of people not able to climb out here at the end
 		if ent:GetClass() == "func_physbox" then
-			if ent:GetPhysicsObject():IsMotionEnabled()then 
+			if ent:GetPhysicsObject():IsMotionEnabled() then 
 				ent:GetPhysicsObject():EnableMotion( false )
 				return true 
 			end
-
 		end
 		return false
 	end,
-	0.5,false)
+	0.5, false)
 
 	--HL2C_Map:FireEnts("underground_portal_slippery02","open")
 end

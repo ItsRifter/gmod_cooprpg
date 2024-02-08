@@ -14,10 +14,10 @@ hook.Add("EntityTakeDamage", "HL2C_EntDamage", function(ent, dmgInfo)
 
     if attacker:IsPlayer() then
         if ent:IsPlayer() and attacker ~= ent then
-			if ent:PlayerAttack(dmgInfo,attacker) then return true end
+			if ent:PlayerAttack(dmgInfo, attacker) then return true end
         end
 		
-		if (ent:IsNPC() or ent:GetClass() == "prop_vehicle_apc")and ent:PlayerAttack(dmgInfo,attacker) then return true end
+		if (ent:IsNPC() or ent:GetClass() == "prop_vehicle_apc") and ent:PlayerAttack(dmgInfo, attacker) then return true end
     end
 
     return false

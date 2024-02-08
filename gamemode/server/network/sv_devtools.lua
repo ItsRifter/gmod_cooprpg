@@ -9,6 +9,7 @@ end )
 net.Receive( "HL2C_DEV_DestroyCPs", function( length, ply )
 	if ( IsValid( ply ) and ply:IsPlayer() ) then
 		if !ply:IsSuperAdmin() then return end
+
 		HL2C_Server:RemoveCPs()
 	end
 end )
@@ -17,14 +18,17 @@ end )
 --reports entity being looked at
 concommand.Add("hl2c_entinfo", function(ply)
 	if !ply:IsSuperAdmin() then return end
+
 	local Ent = ply:GetEyeTrace().Entity
 	if IsValid(Ent) then
+		--This could be condensed down -ItsRifter
 		print(Ent)
-		print("Name  "..Ent:GetName())
-		print("Model "..Ent:GetModel())
-		print("Pos "..string.format("Vector(%d,%d,%d)",Ent:GetPos():Unpack()))
-		print("Angle "..string.format("Angle(%d,%d,%d)",Ent:GetAngles():Unpack()))
-		if IsValid(Ent:GetParent()) then print("Parent "..Ent:GetParent():GetName()) end
+		print("Name  " .. Ent:GetName())
+		print("Model " .. Ent:GetModel())
+		print("Pos " .. string.format("Vector(%d,%d,%d)", Ent:GetPos():Unpack()))
+		print("Angle " .. string.format("Angle(%d,%d,%d)", Ent:GetAngles():Unpack()))
+		
+		if IsValid(Ent:GetParent()) then print("Parent " .. Ent:GetParent():GetName()) end
 		
 		print("HL2C_Server:CreateProp(\""..Ent:GetModel().."\","..string.format("Vector(%.1f,%.1f,%.1f)",Ent:GetPos():Unpack())..","..string.format("Angle(%.1f,%.1f,%.1f)",Ent:GetAngles():Unpack())..")")
 	end
@@ -36,7 +40,7 @@ concommand.Add("hl2c_scan", function(ply)
 	local scan = ents.FindAlongRay( ply:EyePos(), ply:EyePos() + ply:EyeAngles():Forward() * 256)
 	--PrintTable(scan)
 	
-	print("Index Class                          Name                           MapID")
+	print("Index Class Name MapID")
 	for i, ent in ipairs( scan ) do
 		print(string.format( "[%03i] %-30s %-30s %i", i, ent:GetClass(), ent:GetName(),ent:MapCreationID()))
 	end

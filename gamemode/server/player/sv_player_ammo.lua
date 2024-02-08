@@ -54,7 +54,6 @@ local AmmoData = {		--ClipSize is used for bonus clip, bonus is for bonus carry
 		ClipSize = 1,
 		BonusSize = 1
 	},
-
 }
 
 local AmmoBoxData = {
@@ -76,7 +75,7 @@ local AmmoBoxData = {
 }
 
 --0/Pistol 1/smg 2/Ar2Pulse 3/rpg 4/shotgun 5/grenades X-6/357magnum X-7/crossbow X-8/Ar2Balls 9/SmgNades
-local CrateToType = {
+local AmmoCrateToType = {
 	[0] = 3,
 	[1] = 4,
 	[2] = 1,
@@ -105,6 +104,7 @@ local Enum_To_Type = {
 --used to prevent ammocrates overfilling player
 function GM:PlayerAmmoChanged( ply, ammoID, oldCount, newCount )
 	if oldCount > newCount then return end
+
 	if AmmoData[ammoID] and ply:GetAmmoCount( ammoID ) > ply:GetAmmoMax( ammoID ) then
 		ply:SetAmmo(ply:GetAmmoMax( ammoID ), ammoID)
 	end
@@ -113,19 +113,23 @@ end
 function HL2C_Server:GetClipSize(ammotype)
 	if Enum_To_Type[ammotype] then ammotype = Enum_To_Type[ammotype] end
 	local ammo = AmmoData[ammotype]
+
 	return ammo.ClipSize
 end
 
 function hl2c_player:CanPickupAmmoBox(boxent)
 	local class = boxent:GetClass()
+
 	if AmmoBoxData[class] then	--Only checking known ammo boxes
 		local ammo = AmmoBoxData[class]
 		local currentamount = self:GetAmmoCount(ammo.AmmoType)
 		local maxammo = self:GetAmmoMax( ammo.AmmoType)
-		if currentamount >= maxammo   then return false end
+
+		if currentamount >= maxammo then return false end
 		
 		local boxamount = ammo.AmmoAmount
 		if boxent.spent then boxamount = boxamount - boxent.spent else boxent.spent = 0 end
+		
 		if currentamount + boxamount > maxammo then 
 			local taken = maxammo - currentamount
 			boxent.spent = boxent.spent + taken
@@ -138,6 +142,7 @@ function hl2c_player:CanPickupAmmoBox(boxent)
 			self:GiveAmmo( boxamount, ammo.AmmoType, false )
 			boxent:Remove()
 		end
+
 		return false 
 	end
 
@@ -146,7 +151,8 @@ end
 
 function hl2c_player:CanOpenAmmoCrate(boxent)
 	local boxtype = tonumber(boxent:GetInternalVariable( "ammotype" ))
-	local ammotype = CrateToType[boxtype]
+	local ammotype = AmmoCrateToType[boxtype]
+	
 	if ammotype then	
 		local currentamount = self:GetAmmoCount(ammotype)
 		if currentamount >= self:GetAmmoMax(ammotype) then return false end

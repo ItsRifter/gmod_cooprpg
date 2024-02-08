@@ -69,7 +69,7 @@ if CLIENT then
         cooldown = CurTime() + waitPeriod
 
         net.Start("HL2C_Data_DoWipe")
-            net.WriteString(args[1])
+            net.WriteString(args[1] or "")
         net.SendToServer()
     end, AutoComplete_Players)
 end

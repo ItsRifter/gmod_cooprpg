@@ -15,7 +15,7 @@ function HL2C_Server:CreateCP(Min, Max, TPos, TAngle, func, dist)
 	cp.Dist = nil
 	if dist then cp.Dist = dist * dist end
 	
-	cp.lambda = HL2C_Server:CreateLambdaIcon(cp.TPPoint+ Vector(0, 0, 75),"hl2c/x64")
+	cp.lambda = HL2C_Server:CreateLambdaIcon(cp.TPPoint+ Vector(0, 0, 75), "hl2c/x64")
 	--cp.lambda = HL2C_Server:CreateLambdaIcon(cp.TPPoint+ Vector(0, 0, 75),"models/props_combine/tprings_globe")
 	cp.lambda:SetColor4Part(255, 100, 0, 120)
 	cp.lambda:SetRenderFX( 3 )
@@ -58,8 +58,9 @@ end
 
 function HL2C_Server:MoveSpawn(TPPoint,TPAngles, parent)
 	HL2C_Server:DebugMsg("Moving spawnpoint", -1)
+
 	local NewPos = TPPoint
-	if parent then 
+	if parent then
 		if isstring( parent) then
 			parent = ents.FindByName(parent)[1]
 		end
@@ -118,7 +119,6 @@ function HL2C_Server:CreateInfoboard(Pos, Angle ,Width, Height,text)
 	local offset = Vector(Width*0.5,1,Height*0.5)
 	display.OBBMax = Pos + offset;
 	display.OBBMin = Pos - offset;
-	
 
 	display:SetNetworkedVector("OBB_Min", display.OBBMin)
 	display:SetNetworkedVector("OBB_Max", display.OBBMax)
@@ -127,9 +127,7 @@ function HL2C_Server:CreateInfoboard(Pos, Angle ,Width, Height,text)
 	display:SetAngles(Angle)
 	display:SetPos(Pos)
 	display:Spawn()
-	
 end
-
 
 function HL2C_Server:SetupMap()
 	HL2C_Server:SetupWeapons()
@@ -142,7 +140,6 @@ function HL2C_Server:SetupMap()
 	HL2C_Server:RemoveCPs()
 	
 	if HL2C_Map.Spawn then HL2C_Server:MoveSpawn(HL2C_Map.Spawn.spawn, HL2C_Map.Spawn.angle) end
-	
 	if HL2C_Map.Exit then HL2C_Server:SpawnExit(HL2C_Map.Exit.min, HL2C_Map.Exit.max, HL2C_Map.Exit.func or nil) end
 	
 	if HL2C_Map.MapStartup then HL2C_Map.MapStartup() end
@@ -170,8 +167,6 @@ function HL2C_Server:SetupMap()
 			HL2C_Global:SetVortex(false)
 		end
 	end
-	
-	
 end
 
 function HL2C_Server:RemoveChangeLevel()
@@ -189,7 +184,7 @@ function HL2C_Server:CreateProp(mdl,pos,ang,hidden)
 	prop:Spawn()
 	
 	if hidden then
-		prop:SetRenderMode( RENDERMODE_ENVIROMENTAL )	--makes invisible
+		prop:SetRenderMode( RENDERMODE_ENVIROMENTAL ) --makes invisible
 		prop:SetCollisionGroup(COLLISION_GROUP_PLAYER)
 		prop:DrawShadow( false )
 	end
@@ -207,8 +202,8 @@ end
 
 function HL2C_Server:CreateVortex(pos)
 	local vortex = ents.Create("hl2c_vortex")
-	vortex:SetPos( pos)
+	vortex:SetPos(pos)
 	vortex:Spawn()
-	
-	return
+
+	--return
 end

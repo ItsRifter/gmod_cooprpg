@@ -120,10 +120,11 @@ function HL2C_Server:SetVehicle(id)
 end
 
 function HL2C_Server:F3_Vehicle(ply)
-	if IsValid(ply.vehicle) then			--Remove current vehicle
-		if ply.LastVehicle and ply.LastVehicle > CurTime() then
-			return	--prevent players fast removing new vehicles
-		end
+	if IsValid(ply.vehicle) then --Remove current vehicle
+		
+		--prevent players fast removing new vehicles
+		if ply.LastVehicle and ply.LastVehicle > CurTime() then return end
+		
 		ply:RemoveVehicle()
 		ply.LastVehicle = CurTime() + 3
 		return
@@ -133,23 +134,22 @@ function HL2C_Server:F3_Vehicle(ply)
 
 	if HL2C_Server.Vehicle_Current == VEHC_NONE then
 	--	ply:BroadcastMessage(HL2CR_RedColour, translate.Get("Error_Player_Vehicle_Disabled"))
-		ply:SendWarning(HL2R_TEXT_RED,"##Vehicle_Deny")
+		ply:SendWarning(HL2R_TEXT_RED, "##Vehicle_Deny")
 		return
 	end
 	
 	if ply:InVehicle() then return end
 	
 	local vehc_info = HL2C_Global:GetVehicleInfo(HL2C_Server.Vehicle_Current)
-	
 	if not vehc_info then return end
+
 	if ply.nextVehicle and ply.nextVehicle > CurTime() then
 		--ply:BroadcastMessage(HL2CR_RedColour, translate.Get("Error_Player_Vehicle_TooFast"), tostring(math.Round(ply.nextSpawn - CurTime())))
-		ply:SendWarning(HL2R_TEXT_RED,"##Vehicle_TooFast")
-		return	--prevent players fast spawning new vehicles
+		ply:SendWarning(HL2R_TEXT_RED, "##Vehicle_TooFast")
+		return --prevent players fast spawning new vehicles
 	end
 	
 	ply:SpawnVehicle(vehc_info)
-
 end
 
 function GM:CanPlayerEnterVehicle( ply, vehicle, seat )
@@ -158,7 +158,8 @@ function GM:CanPlayerEnterVehicle( ply, vehicle, seat )
 	if vehicle.sideseat then 
 		if vehicle:GetParent() == ply.vehicle then return false end
 		ply:SetAllowWeaponsInVehicle( true ) 
-	else ply:SetAllowWeaponsInVehicle( false ) end
+	else
+		ply:SetAllowWeaponsInVehicle( false ) end
 	
 	if not id then return true end
 
@@ -166,7 +167,7 @@ function GM:CanPlayerEnterVehicle( ply, vehicle, seat )
 	
 	if IsValid(vehicle:GetOwner()) and vehicle:GetOwner() != ply then 
 		ply:SendWarning(HL2R_TEXT_RED,"##Vehicle_NotOwner")
-		return false 
+		return false
 	end
 	
 	return true

@@ -13,12 +13,14 @@ function HL2C_Server:SuitTick()
 			end
 		end
 	end
+
 	if delay <= 0 then delay = 4 end
 	delay = delay - 1
 end
 
 function HL2C_Server:SetupSuits()
-	print("Starting SuitTick Timer")
+	self:DebugMsg("Starting SuitTick Timer", HL2C_DEBUG_STANDARD)
+
 	if timer.Exists(TICK_NAME) then timer.Remove(TICK_NAME) end
 	timer.Create(TICK_NAME, TICK_RATE, 0, function() HL2C_Server:SuitTick() end)
 end
@@ -30,7 +32,7 @@ HL2C_Server:SetupSuits()
 function hl2c_player:SetupSuit()
 	if HL2C_Global:NoSuit() then
 		self:AllowFlashlight(false)
-		else
+	else
 		self:AllowFlashlight(true)
 	end
 	
@@ -42,7 +44,6 @@ function hl2c_player:SetupSuit()
 	self.suit.exhausted	= false	--exausted state
 	self.suit.drowning	= 0		--damage taken from drowning to restore later
 	self.suit.suited	= not HL2C_Global:NoSuit()	--Is this needed now with global no suit var?
-	
 	
 	self:SendPower()
 	self:SendStamina()
@@ -128,6 +129,7 @@ end
 function hl2c_player:SendPower()
 	local suit = self:GetSuit()
 	if suit.power == suit.oldpower then return end	--saves sending same values repeatedly
+	
 	net.Start("HL2C_Suit_Power")
 		net.WriteFloat( suit.power )
 	net.Send(self)
@@ -138,6 +140,7 @@ end
 function hl2c_player:SendStamina()
 	local suit = self:GetSuit()
 	if suit.stamina == suit.oldstamina then return end	--saves sending same values repeatedly
+	
 	net.Start("HL2C_Suit_Stamina")
 		net.WriteFloat( suit.stamina )
 	net.Send(self)

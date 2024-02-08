@@ -76,6 +76,5 @@ hook.Add("KeyPress", "SpecKey", function(ply, key)
 		else
 			ply:Spectate(OBS_MODE_CHASE)
 		end
-		
 	end
 end)

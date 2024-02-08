@@ -27,6 +27,7 @@ end
 function HL2C_Server:SendMessage(text,players)
 	local message = text
 	if not istable(text) then message = {text} end
+	
 	net.Start("HL2C_ChatMessage")
 		net.WriteTable(message)
 	net.Send(players)
