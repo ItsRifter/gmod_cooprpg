@@ -3,7 +3,6 @@ HL2C_Map.Loadout = {armour = 40, Pistol = 36, SMG1 = 45, A357 = 6, Grenade = 2}
 HL2C_Map.Flags = {}
 HL2C_Map.NextMap = "d1_eli_02"
 
-
 HL2C_Map.Checkpoints = {
 	{ min=Vector(30.1,2827.2,-1280.0),max=Vector(-161.2,2814.8,-1196.0),spawn=Vector(-113.3,2771.6,-1280.0),angle=Angle(-5.1,-38.7,0.0)},
 	{ min=Vector(531.4,1692.4,-1281.3),max=Vector(380.0,1671.7,-1170.3),spawn=Vector(427.4,1690.8,-1281.3),angle=Angle(1.8,-7.9,0.0)},
@@ -37,6 +36,4 @@ HL2C_Map.MapStartup = function()
 	
 	--HL2C_Map:RemoveMapEnts({1538,1539})	
 	--HL2C_Map:FireEnts("canals_portal_elitrans","open")
-
-	
 end

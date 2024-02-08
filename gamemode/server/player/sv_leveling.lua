@@ -1,11 +1,10 @@
-
-
 function hl2c_player:AddExp(amount)
 	if self:IsBot() or not self.data_loaded then return end
 	if amount <=0 then return end
 
 	local data = self.hl2c_data
-	data.Exp 	= data.Exp + amount
+	data.Exp = data.Exp + amount
+	
 	if data.Next <= 0 then data.Next = self:ExpRequired() self:SetNWInt("hl2c_stat_expreq", data.Next) end
 	
 	if data.Exp >= data.Next then

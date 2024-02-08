@@ -16,9 +16,9 @@ HL2C_DEBUG_CLIENT_CHATBOX = 2
 HL2C_DEBUG_CLIENT_CHAT_CONSOLE = 3
 
 local function GetDebugColor(intMsgType)
-    if intMsgType == 0 then return HL2C_COLOR_GREEN end
-    if intMsgType == 1 then return HL2C_COLOR_RED end
-    if intMsgType == 2 then return HL2C_COLOR_ORANGE end
+    if intMsgType == 1 then return HL2C_COLOR_GREEN end
+    if intMsgType == 2 then return HL2C_COLOR_RED end
+    if intMsgType == 3 then return HL2C_COLOR_ORANGE end
 
     return HL2C_COLOR_STANDARD
 end

@@ -24,4 +24,6 @@ util.AddNetworkString("HL2C_Suit_Stamina")
 
 --Dev Commands
 util.AddNetworkString("HL2C_DEV_AddCP")	
-util.AddNetworkString("HL2C_DEV_DestroyCPs")	
+util.AddNetworkString("HL2C_DEV_DestroyCPs")
+
+util.AddNetworkString("HL2C_Data_DoWipe")

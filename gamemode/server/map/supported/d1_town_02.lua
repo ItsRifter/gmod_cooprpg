@@ -41,9 +41,11 @@ HL2C_Map.MapStartup = function()
 
 		HL2C_Server:CreateTrigger(Vector(-2992.0,960.0,-3370.9),Vector(-2880.4,844.0,-3361.5), function(ent) 
 			if not ent:IsPlayer() or not ent:Alive() or not IsHuman(ent) then return false end
+
 			HL2C_Map.warpA:Remove()
 			return true
-		end,true)
+
+		end, true)
 	
 		if HL2C_Server:BringItem() then
 			HL2C_Server:SpawnItem("models/roller.mdl",Vector(-962.0,883.9,-3425.0))

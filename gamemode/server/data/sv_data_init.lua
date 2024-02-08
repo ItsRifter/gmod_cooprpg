@@ -6,8 +6,7 @@ function HL2C_Data:InitPlayerData(ply)
 	
 	data.Level 	= data.Level or 0
 	data.Exp 	= data.Exp or 0
-	data.Next 	= data.Next or 0
-	
+	data.Next 	= data.Next or 500
 	
 	ply:SetNWInt("hl2c_stat_exp", data.Exp)
 	ply:SetNWInt("hl2c_stat_level", data.Level)

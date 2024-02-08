@@ -30,6 +30,16 @@ function HL2C_Data:GetData(ply)
 	end
 end
 
+function HL2C_Data:WipeData(ply)
+	if not ply.data_loaded then return end
+
+	--table.Empty(ply.hl2c_data)
+	ply.hl2c_data = nil 
+
+	HL2C_Data:InitPlayerData(ply)
+	HL2C_Data:SavePlayerData(ply)
+end
+
 --------------------------------------------------------------
 
 hook.Add("PlayerInitialSpawn", "HL2C_Data_Check", function(ply)
@@ -50,7 +60,6 @@ end)
 --------------------------------------------------------------
 
 hook.Add("Initialize", "HL2C_Data_CheckFolder", function()
-	
 	if not file.IsDir( "hl2c_data", "DATA") then
 		HL2C_Server:DebugMsg("Creating new data folder", HL2C_COLOR_STANDARD)
 		file.CreateDir("hl2c_data", "DATA")

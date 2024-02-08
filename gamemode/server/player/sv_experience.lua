@@ -38,7 +38,6 @@ local NPC_WeaponXP ={
 	["weapon_smg1"] = 1.5,
 	["weapon_shotgun"] = 1.7,
 	["weapon_ar2"] = 1.8
-
 }
 
 local function NPCWeapon_Mul(amount, npc)	--gives bonus exp depending on npcs weapon
@@ -51,18 +50,21 @@ local function NPCWeapon_Mul(amount, npc)	--gives bonus exp depending on npcs we
 end
 
 --Special functions for certain npc's
-local NPC_XPFunc={
+local NPC_XPFunc= {
 	["npc_strider"] = function(amount,npc,dmgtype)
 		if dmgtype !=64 and  dmgtype !=2112 then return 0 end	--only give exp for blast/ball damage dealt
 		return 180		--180=27/36/45/54/63
 	end,
+
 	["npc_combinedropship"] = function(amount,npc,dmgtype)
 		if dmgtype !=64 then return 0 end	--only give exp for blast damage dealt
 		return 80		--180=27/36/45/54/63
 	end,
+
 	["npc_combinegunship"] = function(amount,npc)
 		return 220		--220=33/44/55/66/77
 	end,
+
 	["prop_vehicle_apc"] = function(amount,npc)
 		if npc:GetDriver():IsValid() then
 			return amount * 0.75
@@ -70,16 +72,18 @@ local NPC_XPFunc={
 		return 0
 	end,
 	
-	
 	["npc_metropolice"] = function(amount,npc)
 		return NPCWeapon_Mul(amount,npc)		
 	end,
+
 	["npc_combine_s"] = function(amount,npc)
 		return NPCWeapon_Mul(amount,npc)
 	end,
+
 	["npc_turret_floor"] = function(amount,npc)	--Normal turrets -- I dont want to give exp but do want to allow it to be hit
 		return 0
 	end,
+
 	["npc_turret_ground"] = function(amount,npc,dmgtype)  --Floor turrets in c17 assault
 		if dmgtype !=64 then return 0 end
 		return 120
@@ -126,12 +130,13 @@ timer.Create( "Exp_Tick", 6, 0, function()
 	for _, p in pairs(player.GetAll()) do
 		if p:IsBot() then continue end
 		if !p.damagexp then continue end
+
 		if p.damagexp >= exp_division then
 			local exptogive  = math.floor(p.damagexp/exp_division)
 			--p.damagexptotal = p.damagexptotal + exptogive
 			p:AddExp(exptogive)
 			
-			p.damagexp = math.fmod(p.damagexp,exp_division)	
+			p.damagexp = math.fmod(p.damagexp, exp_division)	
 		end
 	end
 end )
