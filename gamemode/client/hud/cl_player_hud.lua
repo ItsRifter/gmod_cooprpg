@@ -139,10 +139,10 @@ function HL2C_Client:DrawExperience()
 	local offset = CurTime() - changed
 
 	if offset > 0 then 
-		xp_alpha = math.floor(Lerp( offset - 4, 255 , 0))
+		xp_alpha = math.floor(Lerp( offset - 4, 180 , 0))
 		
-		if !HL2C_Client.Config.HideXP and xp_alpha < 50 then
-			xp_alpha = 50
+		if !HL2C_Client.Config.HideXP and xp_alpha < 60 then
+			xp_alpha = 60
 		end
 		
 	end
@@ -158,6 +158,7 @@ function HL2C_Client:DrawExperience()
 	draw.RoundedBox( 4, xpos, ypos, barW, barH, Color(0, 0, 0, xp_alpha) )
 
 	
+	
 
 	if offset > 2.5 then
 		draw.RoundedBox( 4, xpos, ypos, barNew, barH, Color(200, 140, 0, xp_alpha) )
@@ -170,6 +171,13 @@ function HL2C_Client:DrawExperience()
 		draw.RoundedBoxEx( 4, xpos+barOld, 	ypos, Lerp( offset, 0, barNew -barOld), barH, Color(250, 174, 0, xp_alpha),false,true,false,true )
 	end
 
+
+	surface.SetDrawColor( 0, 0, 0, xp_alpha )
+	for i=1,7 do 
+		local ix = xpos + math.floor(barW * 0.125 * i)
+		surface.DrawLine( ix, ypos-2, ix, ypos + barH+4)
+		surface.DrawLine( ix+1, ypos-2, ix+1, ypos + barH+4)
+	end
 
 
 end

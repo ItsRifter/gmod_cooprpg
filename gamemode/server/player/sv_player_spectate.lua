@@ -54,7 +54,7 @@ function hl2c_player:SpectateNext()
 		if ply == current then
 			found = true
 		else
-			if found then first = ply break end
+			if found and IsPlaying(ply) then first = ply break end
 		end
 	end
 	
