@@ -63,3 +63,5 @@ end
 
 IncludeSharedFiles("shared/")
 IncludeSharedFiles("shared/data/")
+IncludeSharedFiles("shared/progression/")
+IncludeSharedFiles("shared/progression/achievements/")

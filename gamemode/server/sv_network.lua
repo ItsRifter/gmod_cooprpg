@@ -26,4 +26,5 @@ util.AddNetworkString("HL2C_Suit_Stamina")
 util.AddNetworkString("HL2C_DEV_AddCP")	
 util.AddNetworkString("HL2C_DEV_DestroyCPs")
 
-util.AddNetworkString("HL2C_Data_DoWipe")
+util.AddNetworkString("HL2C_Admin_Data_DoWipe")
+util.AddNetworkString("HL2C_Admin_Achievement_Give")

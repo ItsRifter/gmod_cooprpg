@@ -36,7 +36,6 @@ function HL2C_Server:CheckpointTriggered(cp, ply)
 			end
 		--end
 	end
-
 end
 
 function HL2C_Server:EndTriggered(cp, ply)
