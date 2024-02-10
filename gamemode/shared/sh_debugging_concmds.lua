@@ -1,4 +1,6 @@
 local function AutoComplete_Players(cmd, strArgs)
+    if not LocalPlayer():IsAdmin() then return nil end
+    
     strArgs = string.Trim(strArgs:lower())
 
     local activePlys = {}
@@ -15,12 +17,37 @@ local function AutoComplete_Players(cmd, strArgs)
     return activePlys
 end
 
+local function AutoComplete_Achievements(cmd, strArgs)
+    if not LocalPlayer():IsAdmin() then return nil end
+    
+    strArgs = string.Trim(strArgs[1]:lower())
+
+    local possibleAchs = {}
+
+    for _, a in pairs(HL2C_Global.Achievements) do
+        local achName = a.Name
+        
+        if achName:lower():find(strArgs) then
+            achName = string.format("%s \"%s\"", cmd, achName)
+            table.insert(possibleAchs, achName)
+        end
+    end
+
+    local targets = {}
+
+    -- if strArgs[3] ~= nil then
+    --     targets = AutoComplete_Players(cmd, strArgs[2])
+    -- end
+
+    return possibleAchs, targets
+end
+
 local function FindPlayer(strName)
     strName = strName:lower()
     for _, p in pairs(player.GetAll()) do
-        local name = p:Nick()
+        local name = p:Nick():lower()
 
-        if name:lower():find(strName) then
+        if name:find(strName) then
             return p
         end
     end
@@ -39,10 +66,9 @@ function IsStringValid(str)
 end
 
 if SERVER then
-    function TryPlayerDataWipe(ply, targetArg)
+    local function TryPlayerDataWipe(ply, targetArg)
         if not IsPlayerPermitted(ply) then return end
 
-        local targetArg = targetArg
         --No target specified so use the calling player
         if not IsStringValid(targetArg) then
             HL2C_Data:WipeData(ply)
@@ -54,22 +80,54 @@ if SERVER then
         end
     end
 
-    net.Receive("HL2C_Data_DoWipe", function(len, ply)
+    local function TryGivingAchievement(ply, achArg, target)
+        if not IsPlayerPermitted(ply) then return end
+
+        if not IsStringValid(target) then
+            ply:GiveAchievement(achArg)
+        else
+            local target = FindPlayer(target)
+            if not IsValid(target) then HL2C_Server:DebugMsg("No target found", HL2C_DEBUG_FAILED) return end
+
+            target:GiveAchievement(achArg)
+        end
+    end
+
+    net.Receive("HL2C_Admin_Data_DoWipe", function(len, ply)
         TryPlayerDataWipe(ply, net.ReadString())
+    end)
+
+    net.Receive("HL2C_Admin_Achievement_Give", function(len, ply)
+        TryGivingAchievement(ply, net.ReadString(), net.ReadString())
     end)
 end
 
 if CLIENT then
     local waitPeriod = 0.2
     local cooldown = 0
-
     concommand.Add("hl2c_admin_data_wipe", function(ply, cmd, args)
-        if cooldown > CurTime() then return end
+        if not IsPlayerPermitted(LocalPlayer()) then return end
         
+        if cooldown > CurTime() then return end
         cooldown = CurTime() + waitPeriod
 
-        net.Start("HL2C_Data_DoWipe")
+        net.Start("HL2C_Admin_Data_DoWipe")
             net.WriteString(args[1] or "")
         net.SendToServer()
     end, AutoComplete_Players)
+
+    concommand.Add("hl2c_admin_achievement_give", function(ply, cmd, args)
+        if not IsPlayerPermitted(LocalPlayer()) then return end
+
+        if cooldown > CurTime() then return end
+        cooldown = CurTime() + waitPeriod
+
+        if not IsStringValid(args[1]) then return end
+
+        net.Start("HL2C_Admin_Achievement_Give")
+            net.WriteString(args[1])
+            net.WriteString(args[2] or "")
+        net.SendToServer()
+
+    end, AutoComplete_Achievements)
 end

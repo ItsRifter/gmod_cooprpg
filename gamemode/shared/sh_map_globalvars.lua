@@ -1,5 +1,3 @@
-//HL2C_SH_ = false
-
 //NOT NEEDED FOR NOW
 
 //Should pets be disabled?

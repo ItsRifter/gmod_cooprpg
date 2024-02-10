@@ -194,7 +194,7 @@ end
 
 function HL2C_Server:CreateLambdaIcon(pos,mat)
 	local lambda = ents.Create("hl2c_lambda")
-	lambda:SetPos( pos)
+	lambda:SetPos(pos)
 	lambda:Spawn()
 
 	return lambda

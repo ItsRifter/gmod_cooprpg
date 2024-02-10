@@ -1,7 +1,6 @@
 local TICK_NAME = "HL2C_SUITTICK"
 local TICK_RATE = 1 / 20
 
---local hl2c_player = FindMetaTable("Player")
 local delay = 0	--used to delay sending power to lower data sent as its not vital to be exact
 
 function HL2C_Server:SuitTick()
@@ -19,7 +18,7 @@ function HL2C_Server:SuitTick()
 end
 
 function HL2C_Server:SetupSuits()
-	self:DebugMsg("Starting SuitTick Timer", HL2C_DEBUG_STANDARD)
+	--self:DebugMsg("Starting SuitTick Timer", HL2C_DEBUG_STANDARD)
 
 	if timer.Exists(TICK_NAME) then timer.Remove(TICK_NAME) end
 	timer.Create(TICK_NAME, TICK_RATE, 0, function() HL2C_Server:SuitTick() end)
