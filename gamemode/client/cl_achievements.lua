@@ -21,7 +21,7 @@ net.Receive("HL2C_AchievementEarned", function()
 	local group = net.ReadString()
 	local id = net.ReadString()
 
-	local ach = HL2C_Ach:GetAchievement(group,id)
+	local ach = HL2C_Ach:GetAchievement(id,group)
 	--NewAchNotice(ach)
 	table.insert(HL2C_Ach.AchEarned,id)
 	if HL2C_Ach.AchProgress[id] then HL2C_Ach.AchProgress[id] = nil end
@@ -33,7 +33,7 @@ net.Receive("HL2C_AchievementUpdate", function()
 	local id = net.ReadString()
 	local count = net.ReadUInt(32)
 
-	local ach = HL2C_Ach:GetAchievement(group,id)
+	local ach = HL2C_Ach:GetAchievement(id,group)
 	--NewAchNotice(ach,count)
 	if !HL2C_Ach.AchProgress[id] then
 		HL2C_Ach.AchProgress[id] = 0

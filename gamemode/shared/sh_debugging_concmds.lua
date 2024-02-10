@@ -1,7 +1,12 @@
 local function AutoComplete_Players(cmd, strArgs)
+	print("Am I even running?")
     if not LocalPlayer():IsAdmin() then return nil end
     
+	print(strArgs)
+	
     strArgs = string.Trim(strArgs:lower())
+
+	
 
     local activePlys = {}
 
@@ -19,27 +24,45 @@ end
 
 local function AutoComplete_Achievements(cmd, strArgs)
     if not LocalPlayer():IsAdmin() then return nil end
-    
-    strArgs = string.Trim(strArgs[1]:lower())
+    local allargs = string.Split( strArgs, " ")
+	
+	--PrintTable(allargs)
+    local achArg = allargs[2]:lower()
 
     local possibleAchs = {}
 
-    for _, a in pairs(HL2C_Global.Achievements) do
-        local achName = a.Name
+    for k, v in pairs(HL2C_Ach:GetAllAchievements()) do
+        local achName = k
         
-        if achName:lower():find(strArgs) then
-            achName = string.format("%s \"%s\"", cmd, achName)
+        if achName:lower():find(achArg) then
+            achName = string.format("%s %s", cmd, achName)
             table.insert(possibleAchs, achName)
         end
     end
 
     local targets = {}
 
-    -- if strArgs[3] ~= nil then
-    --     targets = AutoComplete_Players(cmd, strArgs[2])
-    -- end
+	if table.Count( possibleAchs ) == 1 then
+		if allargs[3] then
+			local activePlys = {}
 
-    return possibleAchs, targets
+			for _, p in pairs(player.GetAll()) do
+				local name = p:Nick()
+
+				if name:lower():find(allargs[3]:lower()) then
+					name = string.format("\"%s\"",  name)
+					table.insert(activePlys, possibleAchs[1].." "..name)
+				end
+			end
+			
+			if table.Count( activePlys ) >0 then
+				return activePlys
+			end
+		end
+
+	end
+
+    return possibleAchs
 end
 
 local function FindPlayer(strName)

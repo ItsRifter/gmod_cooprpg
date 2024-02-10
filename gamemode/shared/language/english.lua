@@ -74,6 +74,8 @@ lang.CHAR_Exp = "Experience"
 
 ------Achievements------
 
+lang.Ach_Earned = " has earned "
+
 --to help with data and translation shorteded the tags
 lang.Ach_Group_HL2 = "Half-Life 2"
 
