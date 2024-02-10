@@ -12,6 +12,11 @@ util.AddNetworkString("HL2C_ChatMessage")
 util.AddNetworkString("HL2C_Vehicle")
 util.AddNetworkString("HL2C_Lamp_Net")
 
+util.AddNetworkString("HL2C_AchievementSend")	--Send achieved list
+util.AddNetworkString("HL2C_AchievementProg")	--Send progression list
+util.AddNetworkString("HL2C_AchievementEarned")	--Send new earned
+util.AddNetworkString("HL2C_AchievementUpdate")	--Send new update
+
 --Global vars
 util.AddNetworkString("HL2C_GV_NOSUIT")
 util.AddNetworkString("HL2C_GV_MAPFAILED")
