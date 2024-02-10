@@ -1,12 +1,8 @@
 local function AutoComplete_Players(cmd, strArgs)
-	print("Am I even running?")
+
     if not LocalPlayer():IsAdmin() then return nil end
-    
-	print(strArgs)
 	
     strArgs = string.Trim(strArgs:lower())
-
-	
 
     local activePlys = {}
 
