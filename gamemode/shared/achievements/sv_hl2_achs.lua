@@ -7,7 +7,7 @@ local achgroup = {
 			Mat = "vgui/achievements/hl2_put_canintrash.png", 
 			Desc = "Ach_HL2_Subm_D",
 			Rewards = {
-				XP = 120,
+				XP = 80,
 				AP = 5
 			},
 			Secret = true,
@@ -18,7 +18,7 @@ local achgroup = {
 			Mat = "vgui/achievements/hl2_hit_cancop_withcan.png", 
 			Desc = "Ach_HL2_Defi_D",
 			Rewards = {
-				XP = 120,
+				XP = 80,
 				AP = 5
 			},
 			Secret = true,
@@ -29,7 +29,7 @@ local achgroup = {
 			Mat = "vgui/achievements/hl2_escape_apartmentraid.png", 
 			Desc = "Ach_HL2_Malc_D",
 			Rewards = {
-				XP = 500,
+				XP = 300,
 				AP = 20
 			},
 			Interval = 99,
@@ -41,7 +41,7 @@ local achgroup = {
 			Mat = "vgui/achievements/hl2_break_miniteleporter.png", 
 			Desc = "Ach_HL2_WhatC_D",
 			Rewards = {
-				XP = 250,
+				XP = 150,
 				AP = 5
 			},
 			Secret = true,
@@ -52,7 +52,7 @@ local achgroup = {
 			Mat = "vgui/achievements/hl2_break_miniteleporter.png", 
 			Desc = "Ach_HL2_WhatB_D",
 			Rewards = {
-				XP = 450,
+				XP = 300,
 				Items = {"HAT_BABY"},
 				AP = 15
 			},
@@ -63,7 +63,7 @@ local achgroup = {
 			Mat = "vgui/achievements/hl2_get_crowbar.png", 
 			Desc = "Ach_HL2_Hardware_D",
 			Rewards = {
-				XP = 300,
+				XP = 250,
 				AP = 5
 			},
 			Index = 6
@@ -73,7 +73,7 @@ local achgroup = {
 			Mat = "vgui/achievements/hl2_kill_barnacleswithbarrel.png", 
 			Desc = "Ach_HL2_BBowling_D",
 			Rewards = {
-				XP = 500,
+				XP = 400,
 				AP = 5
 			},
 			Index = 7
@@ -83,7 +83,7 @@ local achgroup = {
 			Mat = "vgui/achievements/hl2_get_airboat.png", 
 			Desc = "Ach_HL2_Canals_D",
 			Rewards = {
-				XP = 3000,
+				XP = 2500,
 				AP = 65
 			},
 			Interval = 99,
@@ -127,7 +127,7 @@ local achgroup = {
 			Mat = "vgui/achievements/hl2_beat_ravenholm_noweapons.png", 
 			Desc = "Ach_HL2_ZombieChop_D",
 			Rewards = {
-				XP = 1000,
+				XP = 1200,
 				Items = {"MELEE_CROWSAW"},
 				AP = 30
 			},
@@ -138,7 +138,7 @@ local achgroup = {
 			Mat = "vgui/achievements/hl2_beat_cemetery.png", 
 			Desc = "Ach_HL2_HallowG_D",
 			Rewards = {
-				XP = 300,
+				XP = 350,
 				AP = 10
 			},
 			Index = 21
@@ -148,7 +148,7 @@ local achgroup = {
 			Mat = "vgui/achievements/hl2_get_gravitygun.png", 
 			Desc = "Ach_HL2_RavenB_D",
 			Rewards = {
-				XP = 900,
+				XP = 1200,
 				Items = {"HAT_BALL"},
 				AP = 30
 			},
@@ -173,7 +173,7 @@ local achgroup = {
 			Mat = "vgui/achievements/hl2_beat_donttouchsand.png", 
 			Desc = "Ach_HL2_OffSand_D",
 			Rewards = {
-				XP = 400,
+				XP = 500,
 				AP = 10
 			},
 			Index = 31
@@ -183,7 +183,7 @@ local achgroup = {
 			Mat = "materials/hl2cr/misc/placeholder.jpg", 
 			Desc = "Ach_HL2_Coast_D",
 			Rewards = {
-				XP = 4000,
+				XP = 3500,
 				AP = 60
 			},
 			Interval = 99,
@@ -196,7 +196,7 @@ local achgroup = {
 			Mat = "vgui/achievements/hl2_beat_turretstandoff2.jpg", 
 			Desc = "Ach_HL2_WardenF_D",
 			Rewards = {
-				XP = 1200,
+				XP = 800,
 				AP = 25
 			},
 			Index = 33
@@ -220,7 +220,7 @@ local achgroup = {
 			Mat = "vgui/achievements/hl2_followfreeman.jpg", 
 			Desc = "Ach_HL2_FollowF_D",
 			Rewards = {
-				XP = 4000,
+				XP = 5000,
 				AP = 80
 			},
 			Interval = 99,
@@ -245,7 +245,7 @@ local achgroup = {
 			Mat = "vgui/achievements/hl2_beat_game.jpg", 
 			Desc = "Ach_HL2_BeatGame_D",
 			Rewards = {
-				XP = 10000,
+				XP = 8000,
 				AP = 200
 			},
 			Interval = 99,
@@ -260,7 +260,7 @@ local achgroup = {
 			Mat = "vgui/achievements/hl2_find_alllambdas.png", 
 			Desc = "Ach_HL2_Lambda_D",
 			Rewards = {
-				XP = 15000,
+				XP = 12000,
 				AP = 100
 			},
 			Max = 45,
