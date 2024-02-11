@@ -4,7 +4,6 @@ HL2C_Map.Flags = {}
 HL2C_Map.NextMap = "d1_town_01"
 
 function GiveGravGun()
-	print("giving physcannon")
 	HL2C_Server:AddWeaponRespawns("weapon_physcannon",nil,true)
 	
 	HL2C_Server:CreateCP( Vector(-694.9,954.9,-2688.0),Vector(-509.3,1026.4,-2591.2),Vector(-603.3,1031.5,-2688.0),Angle(3.3,85.3,0.0))
@@ -26,10 +25,6 @@ HL2C_Map.VortexChance = 25	--defaults if not set
 HL2C_Map.VortexList = {Vector(-911.2,377.7,-2358.8),Vector(-2384.3,-390.9,-2668.5)}
 
 HL2C_Map.MapStartup = function()
-	local MapLua = ents.Create( "lua_run" )
-	MapLua:SetName( "hl2c_lua" )
-	MapLua:Spawn()
-	
 	ents.FindByName( "trigger_Get_physgun" )[1]:Fire("AddOutput", "OnTrigger hl2c_lua:RunPassedCode:GiveGravGun()" )
 
 	HL2C_Map:RemoveNamedEnts("trigger_RavenDoor_Drop")

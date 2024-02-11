@@ -10,7 +10,9 @@ HL2C_Map.Checkpoints = {
 
 HL2C_Map.Spawn = { spawn=Vector(718.2,3271.4,-96.0),angle=Angle(-0.2,88.7,0.0)}
 
-HL2C_Map.Exit = { min=Vector(-5586.5,9136.2,160.0),max=Vector(-5645.1,9296.0,-16.2) }
+HL2C_Map.Exit = { min=Vector(-5586.5,9136.2,160.0),max=Vector(-5645.1,9296.0,-16.2), func = function(cp,ply)
+	ply:UpdateAchievementProgress("HL2_Canals", 2)
+end }
 
 HL2C_Map.VortexChance = 20	--defaults if not set
 HL2C_Map.VortexList = {Vector(-2170.5,5990.1,34.0),Vector(528.6,3527.9,165.7),Vector(327.5,6192.5,-24.7)}

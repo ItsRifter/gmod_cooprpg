@@ -14,7 +14,9 @@ HL2C_Map.Warps = {
 
 HL2C_Map.Spawn = { spawn=Vector(7820.8,-11120.2,-419.5),angle=Angle(3.1,-23.6,0.0)}
 
-HL2C_Map.Exit = { min=Vector(-9201.8,8389.0,-579.3),max=Vector(-8816.0,8247.5,-357.8), func = nil }
+HL2C_Map.Exit = { min=Vector(-9201.8,8389.0,-579.3),max=Vector(-8816.0,8247.5,-357.8), func = function(cp,ply)
+	ply:UpdateAchievementProgress("HL2_Canals", 8)
+end }
 
 HL2C_Map.VortexChance = 35	--defaults if not set
 HL2C_Map.VortexList = {Vector(-1607.3,-1914.4,-256.8),Vector(-1123.8,-32.7,-365.7),Vector(-7061.0,2732.5,-576.6)}

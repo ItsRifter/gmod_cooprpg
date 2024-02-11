@@ -143,3 +143,17 @@ end
 function HL2C_Ach:SendAchievements(ply)
 	ply:SendAchievements()
 end
+
+function HL2C_Ach:GiveHumansAchievement(id)
+	local ach = HL2C_Ach:GetAchievement(id)
+	
+	if not ach then 
+		HL2C_Server:DebugMsg(id.." not a valid achievement",HL2C_DEBUG_FAILED)
+		return 
+	end
+
+	for i, pl in ipairs( HL2C_Global:GetHumans() ) do
+		pl:GiveAchievement(id)
+	end
+	
+end

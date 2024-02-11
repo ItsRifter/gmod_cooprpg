@@ -137,6 +137,10 @@ function HL2C_Server:SetupMap()
 		HL2C_Map:RemoveNewGameEnts() --WIP, I think this works decently now.
 	end)
 	
+	local MapLua = ents.Create( "lua_run" )
+	MapLua:SetName( "hl2c_lua" )
+	MapLua:Spawn()
+	
 	HL2C_Server:RemoveCPs()
 	
 	if HL2C_Map.Spawn then HL2C_Server:MoveSpawn(HL2C_Map.Spawn.spawn, HL2C_Map.Spawn.angle) end
@@ -167,6 +171,8 @@ function HL2C_Server:SetupMap()
 			HL2C_Global:SetVortex(false)
 		end
 	end
+	
+
 end
 
 function HL2C_Server:RemoveChangeLevel()

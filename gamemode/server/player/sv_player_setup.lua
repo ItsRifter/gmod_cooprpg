@@ -54,6 +54,10 @@ hook.Add( "CanPlayerSuicide", "BlockSuicide", function( ply )
 	end
 end )
 
+function GM:GravGunPunt( ply, ent )
+	if ent:GetClass() == "prop_physics" then ent.lastholder = ply end
+end
+
 hook.Add("PlayerCanPickupItem", "HL2C_ItemPickup", function(ply, item)
 	if item:GetClass() == "item_suit" and game.GetMap() == "d1_trainstation_05" then
 		HL2C_Global:SetNoSuit(false)
@@ -79,6 +83,8 @@ hook.Add( "PlayerUse", "HL2CR_PlayerUse", function( ply, ent )
 	if ent:GetClass() == "item_ammo_crate" then
 		if !ply:CanOpenAmmoCrate(ent) then return false end	--blocks people holding ammo crates open when they are full
 	end
+
+	if ent:GetClass() == "prop_physics" then ent.lastholder = ply end
 
 	return true
 end )
