@@ -49,20 +49,20 @@ function hl2c_player:GiveAchievement(id)
 	
 end
 
-function hl2c_player:UpdateAchievementProgress(id,value)
+function hl2c_player:UpdateAchievementProgress(id, value)
 	local ach = HL2C_Ach:GetAchievement(id)
 	
 	if self:IsBot() then return end
 	if self:HasAchievement(id) then return end
 	
 	if not ach then 
-		HL2C_Server:DebugMsg(id.." not a valid achievement",HL2C_DEBUG_FAILED)
+		HL2C_Server:DebugMsg(string.format("%s is not a valid achievement", id), HL2C_DEBUG_FAILED)
 		return 
 	end
 	
-	if !ach.Max then 
-		HL2C_Server:DebugMsg("Not a progression Achievement "..id,HL2C_DEBUG_FAILED )
-		return 
+	if !ach.Max then
+		HL2C_Server:DebugMsg(string.format("%s is not a progressive Achievement", id), HL2C_DEBUG_FAILED)
+		return
 	end
 
 	local newcount = 0
@@ -72,8 +72,10 @@ function hl2c_player:UpdateAchievementProgress(id,value)
 	if not ach.Count then	--Achievements that use a key table
 		if not data.AchProgress[id] then data.AchProgress[id] = {} end
 		if table.HasValue(data.AchProgress[id], value) then return end
+
 		table.insert(data.AchProgress[id], value)
 		newcount = table.Count(data.AchProgress[id])
+
 		if newcount >= ach.Max then
 			self:GiveAchievement(id)
 			table.Empty(data.AchProgress[id])
@@ -82,21 +84,22 @@ function hl2c_player:UpdateAchievementProgress(id,value)
 		end
 	else
 		if not data.AchProgress[id] then data.AchProgress[id] = 0 end
+
 		newcount = data.AchProgress[id] + value
 		data.AchProgress[id] = newcount
+
 		if newcount >= ach.Max then
 			self:GiveAchievement(id)
 			data.AchProgress[id] = nil  
 			return
 		end
 	end
-	
+
 	net.Start("HL2C_AchievementUpdate")
 		--net.WriteString(group)
 		net.WriteString(id)
-		net.WriteUInt(newcount,32)
-		net.Send(self)
-	
+		net.WriteUInt(newcount, 32)
+	net.Send(self)
 end
 
 ----------------Network----------------
@@ -135,7 +138,6 @@ function hl2c_player:SendAchievements()
 		net.WriteUInt( bytes, 16 )
 		net.WriteData( compressed, bytes )
 	net.Send( self )
-	
 end
 
 function HL2C_Ach:SendAchievements(ply)

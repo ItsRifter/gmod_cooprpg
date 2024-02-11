@@ -54,7 +54,7 @@ function HL2C_Client:DrawFlashlight()
 	local icon = LIGHT_IDLE
 	
 	if LocalPlayer():FlashlightIsOn() then 
-		icon = LIGHT_ACTIVE 
+		icon = LIGHT_ACTIVE
 		LIGHT_ALPHAMAX = 340
 		LIGHT_ALPHA = ALPHA_ACTIVE
 	else
@@ -64,9 +64,11 @@ function HL2C_Client:DrawFlashlight()
 	
 	draw.RoundedBox(6, LIGHT_X, LIGHT_Y, LIGHT_WIDTH, LIGHT_HEIGHT, Color(0, 0, 0, 80))
 	
-	HL2C_Client:DrawBlips(LIGHT_X + LIGHT_WIDTH * 0.05,LIGHT_Y + LIGHT_HEIGHT * 0.6,LIGHT_WIDTH * 0.9,LIGHT_HEIGHT * 0.3, 16,HL2C_Client.suitpower, 100, LIGHT_ALPHA)
+	HL2C_Client:DrawBlips(LIGHT_X + LIGHT_WIDTH * 0.05, LIGHT_Y + LIGHT_HEIGHT * 0.6, LIGHT_WIDTH * 0.9, LIGHT_HEIGHT * 0.3, 
+		16, HL2C_Client.suitpower, 100, LIGHT_ALPHA)
 	
-	draw.SimpleText(icon, "flashlight_font", LIGHT_X + LIGHT_WIDTH * 0.5, LIGHT_Y - LIGHT_HEIGHT * 0.5, Color(255, 238, 31, LIGHT_ALPHA), TEXT_ALIGN_CENTER)
+	draw.SimpleText(icon, "flashlight_font", LIGHT_X + LIGHT_WIDTH * 0.5, LIGHT_Y - LIGHT_HEIGHT * 0.5, 
+		Color(255, 238, 31, LIGHT_ALPHA), TEXT_ALIGN_CENTER)
 end
 
 function HL2C_Client:DrawStamina()
@@ -84,15 +86,15 @@ function HL2C_Client:DrawStamina()
 		if STAMINA_ALPHAMAX > 0 then STAMINA_ALPHAMAX = STAMINA_ALPHAMAX - FrameTime() * 60 end
 		STAMINA_ALPHA = math.Clamp(STAMINA_ALPHAMAX, ALPHA_IDLE,ALPHA_ACTIVE)
 	end
-
-
 	
 	if STAMINA_ALPHAMAX > 0 then
 		draw.RoundedBox(6, STAMINA_X, STAMINA_Y, STAMINA_WIDTH, STAMINA_HEIGHT, Color(0, 0, 0, 80))
 	
-		draw.SimpleText(translate.Get("Basic_Stamina"), "HudDefault", STAMINA_X + STAMINA_WIDTH * 0.05, STAMINA_Y + STAMINA_HEIGHT * 0.1, Color(255, 238, 31, STAMINA_ALPHA), TEXT_ALIGN_LEFT)
+		draw.SimpleText(translate.Get("Basic_Stamina"), "HudDefault", STAMINA_X + STAMINA_WIDTH * 0.05, STAMINA_Y + STAMINA_HEIGHT * 0.1, 
+			Color(255, 238, 31, STAMINA_ALPHA), TEXT_ALIGN_LEFT)
 	
-		HL2C_Client:DrawBlips(STAMINA_X + STAMINA_WIDTH * 0.025,STAMINA_Y + STAMINA_HEIGHT * 0.6,STAMINA_WIDTH * 0.95,STAMINA_HEIGHT * 0.3, 10 , HL2C_Client.suitstamina, 100, STAMINA_ALPHA)
+		HL2C_Client:DrawBlips(STAMINA_X + STAMINA_WIDTH * 0.025,STAMINA_Y + STAMINA_HEIGHT * 0.6, STAMINA_WIDTH * 0.95, STAMINA_HEIGHT * 0.3, 
+			10 , HL2C_Client.suitstamina, 100, STAMINA_ALPHA)
 	end
 	
 	--draw.SimpleText(icon, "flashlight_font", LIGHT_X + LIGHT_WIDTH * 0.5, LIGHT_Y - LIGHT_HEIGHT * 0.5, Color(255, 238, 31, LIGHT_ALPHA), TEXT_ALIGN_CENTER)
