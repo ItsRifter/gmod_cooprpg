@@ -25,6 +25,8 @@ util.AddNetworkString("HL2C_GV_MAPFAILED")
 util.AddNetworkString("HL2C_GV_MAPWON")
 util.AddNetworkString("HL2C_GV_VORTEX")
 
+util.AddNetworkString("HL2C_GV_VOTING")
+
 --util.AddNetworkString("HL2C_Suit_FlashLight")	
 util.AddNetworkString("HL2C_Suit_Power")
 util.AddNetworkString("HL2C_Suit_Stamina")		

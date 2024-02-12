@@ -3,13 +3,20 @@ function GM:ShowHelp(ply)		--F1 Default
 	--if HL2CR_Voting.State then 
 	--	HL2CR_Voting:PlayerVote(ply, true)
 	--else
+	if HL2C_Global:Voting() then
+		HL2C_Server:AddVote(ply,1)
+	else
 		net.Start("HL2C_HelpMenu")
 		net.Send(ply)
+	end
 	--end
 end
 
 function GM:ShowTeam(ply)		--F2 Default
 	--HL2CR_Voting:PlayerVote(ply, false)
+	if HL2C_Global:Voting() then
+		HL2C_Server:AddVote(ply,2)
+	end
 end
 
 function GM:ShowSpare1(ply)		--F3 Default

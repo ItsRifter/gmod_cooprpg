@@ -10,6 +10,8 @@ HL2C_Global.PLY_NO_SUIT = HL2C_Global.PLY_NO_SUIT or false
 HL2C_Global.MAP_FAILED = HL2C_Global.MAP_FAILED or false
 HL2C_Global.MAP_VORTEX = HL2C_Global.MAP_VORTEX or false
 
+HL2C_Global.VOTING = HL2C_Global.VOTING or false
+
 if SERVER then
     --Are vortigaunts hostile to players?
    HL2C_Global.NPC_VORTENEMY = HL2C_Global.NPC_VORTENEMY or false
@@ -85,6 +87,8 @@ if SERVER then
 		HL2C_Global:SendMapFailed(ply)
 		HL2C_Global:SendMapWon(ply)
 		HL2C_Global:SendVortex(ply)
+		
+		if HL2C_Server then HL2C_Server:SendVoting(ply) end
 	end
 	
 	hook.Add("PlayerInitialSpawn", "HL2C_Sync_gvs", function(ply)
@@ -107,6 +111,10 @@ end
 
 function HL2C_Global:MapVortex()
 	return HL2C_Global.MAP_VORTEX or false
+end
+
+function HL2C_Global:Voting()
+	return HL2C_Global.VOTING or false
 end
 
 if CLIENT then
