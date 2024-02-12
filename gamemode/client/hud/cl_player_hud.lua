@@ -114,6 +114,7 @@ end
 local oldxp = oldxp or 0
 local newxp = newxp or 0
 local changed = changed or 0
+local leveled = leveled or 0
 local xp_alpha = xp_alpha or 0
 
 function HL2C_Client:DrawExperience()
@@ -133,9 +134,10 @@ function HL2C_Client:DrawExperience()
 		newxp = xp
 		changed = CurTime()
 	elseif xp < newxp then
-		oldxp = xp
+		oldxp = 0
 		newxp = xp
 		changed = CurTime()
+		leveled = CurTime() + 2.5
 	end
 
 	local offset = CurTime() - changed
@@ -157,10 +159,13 @@ function HL2C_Client:DrawExperience()
 	local xpos = math.floor((ScrW()-barW) * 0.5)
 	local ypos = math.floor(ScrH() * 0.98)
 
-	draw.RoundedBox( 4, xpos, ypos, barW, barH, Color(0, 0, 0, xp_alpha) )
-
-	
-	
+	--local offset2 = CurTime() - leveled
+	if CurTime() < leveled then
+		local lerpp = math.floor(Lerp( leveled - CurTime(), 0 , 80))
+		draw.RoundedBox( 4, xpos, ypos, barW, barH, Color(lerpp*2, lerpp*3, lerpp, xp_alpha) )
+	else
+		draw.RoundedBox( 4, xpos, ypos, barW, barH, Color(0, 0, 0, xp_alpha) )
+	end
 
 	if offset > 2.5 then
 		draw.RoundedBox( 4, xpos, ypos, barNew, barH, Color(200, 140, 0, xp_alpha) )
@@ -173,14 +178,15 @@ function HL2C_Client:DrawExperience()
 		draw.RoundedBoxEx( 4, xpos+barOld, 	ypos, Lerp( offset, 0, barNew -barOld), barH, Color(250, 174, 0, xp_alpha),false,true,false,true )
 	end
 
-
-	surface.SetDrawColor( 0, 0, 0, xp_alpha )
+	surface.SetDrawColor( 20, 20, 20, xp_alpha + 40)
 	for i=1,7 do 
 		local ix = xpos + math.floor(barW * 0.125 * i)
 		surface.DrawLine( ix, ypos-2, ix, ypos + barH+4)
 		surface.DrawLine( ix+1, ypos-2, ix+1, ypos + barH+4)
 	end
 
+	local lvl = LocalPlayer():GetNWInt("hl2c_stat_level", -1)
+	draw.SimpleTextOutlined( lvl, "Font_Small", ScrW()*0.5, ypos, Color(255, 255, 255, xp_alpha),TEXT_ALIGN_CENTER,TEXT_ALIGN_CENTER, 1, Color(20, 20, 20, xp_alpha))
 
 end
 

@@ -9,7 +9,8 @@ function hl2c_player:DoSpawn()
     end
     
 	if IsHuman(self) then
-		local plyModel = string.format("models/player/Group01/male_0%s.mdl", tostring(math.random(1, 7)))
+		local plyModel = self.hl2c_data.PlyMdl or string.format("models/player/Group01/male_0%s.mdl", tostring(math.random(1, 7)))
+		--local plyModel = string.format("models/player/Group01/male_0%s.mdl", tostring(math.random(1, 7)))
 		self:SetModel(plyModel)
 
 		self:SetupSuit()
@@ -56,6 +57,7 @@ end )
 
 function GM:GravGunPunt( ply, ent )
 	if ent:GetClass() == "prop_physics" then ent.lastholder = ply end
+	return true
 end
 
 hook.Add("PlayerCanPickupItem", "HL2C_ItemPickup", function(ply, item)
@@ -151,3 +153,9 @@ function hl2c_player:UpdatePlayerRelations()
 	end
 end
 
+function hl2c_player:UpdateModelNetwork(mdl)
+	--self:BroadcastMessage(Color(240, 135, 0), translate.Get("QMenu_Model_Update"))
+	self:SendMessage(HL2R_TEXT_ORANGE,"##Model_Update")
+	--self.hl2cr.PMModel = newMdl
+	self.hl2c_data.PlyMdl = mdl
+end

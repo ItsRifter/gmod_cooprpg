@@ -98,11 +98,11 @@ function PANEL:Setup()
 		function()
 			if !self.modelchanged then return end
 			surface.PlaySound( "buttons/button14.wav" )
-			--net.Start("HL2CR_Model_Update")
-			--	net.WriteString(self.ModelGroup.Text.Text)
-			--	net.WriteString(self.ModelSelect.Text.Text)
-			--net.SendToServer()
-			HL2C_Client:AddChatMessage({HL2R_TEXT_RED, "Not implemented yet :3"})
+			net.Start("HL2C_Model_Update")
+				net.WriteString(self.ModelGroup.Text.Text)
+				net.WriteString(self.ModelSelect.Text.Text)
+			net.SendToServer()
+			--HL2C_Client:AddChatMessage({HL2R_TEXT_RED, "Not implemented yet :3"})
 			self.modelchanged = false
 		end
 	)

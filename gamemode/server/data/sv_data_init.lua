@@ -4,6 +4,8 @@ function HL2C_Data:InitPlayerData(ply)
 	
 	data.Name = data.Name or ply:Nick()
 	
+	data.PlyMdl = data.PlyMdl or string.format("models/player/Group01/male_0%s.mdl", tostring(math.random(1, 7)))
+	
 	data.Level 	= data.Level or 0
 	data.Exp 	= data.Exp or 0
 	data.Next 	= data.Next or HL2C_Server:ExpRequired(0)

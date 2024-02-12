@@ -85,18 +85,18 @@ HL2C_Global.PlayerModels = {
 --------------------------------------------------------------------------------------------------
 	["Half Life 2"] = {
 		group = {
-			["Kleiner"] = { mdl="models/player/kleiner.mdl", 	lvl=10,	index = 0},
-			["Barney"] = { mdl="models/player/barney.mdl", 		lvl=12,	index = 1},
-			["Mossman"] = { mdl="models/player/mossman.mdl", 	lvl=14,	index = 2},
-			["Eli"] = { mdl="models/player/eli.mdl", 			lvl=17,	index = 3},
-			["Alyx"] = { mdl="models/player/alyx.mdl", 			lvl=20,	index = 4},
+			["Kleiner"] = { mdl="models/player/kleiner.mdl", 	lvl=15,	index = 0},
+			["Barney"] = { mdl="models/player/barney.mdl", 		lvl=17,	index = 1},
+			["Mossman"] = { mdl="models/player/mossman.mdl", 	lvl=19,	index = 2},
+			["Eli"] = { mdl="models/player/eli.mdl", 			lvl=20,	index = 3},
+			["Alyx"] = { mdl="models/player/alyx.mdl", 			lvl=21,	index = 4},
 			["Magusson"] = { mdl="models/player/magnusson.mdl", lvl=23,	index = 5},
 			["Gregori"] = { mdl="models/player/monk.mdl", 		lvl=27,	index = 6},
 			["Breen"] = { mdl="models/player/breen.mdl", 		lvl=30,	index = 7},
 			["Gman"] = { mdl="models/player/gman_high.mdl", 	lvl=35,	index = 8},
 			["Mossman 2"] = { mdl="models/player/mossman_arctic.mdl", lvl=40,	index = 9},
 		},
-		lvl = 10,
+		lvl = 15,
 		index = 10
 	},
 	["Counter Strike"] = {
@@ -128,7 +128,7 @@ HL2C_Global.PlayerModels = {
 			["Detective B"] = { mdl="models/detective_badass.mdl", 	lvl=0,	index = 1},
 			["Detective F"] = { mdl="models/lady_detective.mdl", 	lvl=0,	index = 2},
 		},
-		lvl = 20,
+		lvl = 25,
 		index = 21
 	},
 
@@ -153,7 +153,7 @@ if CLIENT then
 
 		if LocalPlayer():IsSuperAdmin() then return 999 end
 		if LocalPlayer():IsAdmin() then return 500 end
-		local int = 0 --LocalPlayer():GetNWInt("hl2cr_stat_level",0)
+		local int = LocalPlayer():GetNWInt("hl2c_stat_level",0)
 		return int
 	end
 elseif SERVER then
@@ -162,7 +162,7 @@ elseif SERVER then
 	
 		if ply:IsSuperAdmin() then return 999 end
 		if ply:IsAdmin() then return 500 end
-		local int = 0 -- ply:GetNWInt("hl2cr_stat_level",0)
+		local int = ply:GetNWInt("hl2c_stat_level",0)
 		return int
 	end
 end

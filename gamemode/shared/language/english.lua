@@ -29,6 +29,8 @@ lang.GM_RestartingMap = "Restarting map"
 
 lang.GM_Vortex = "A Vortex spawned"
 
+lang.Model_Update = "Model will update on next spawn"
+
 ------Maps-----
 lang.MAP_MonkDied = "Father Grigori has died!"
 

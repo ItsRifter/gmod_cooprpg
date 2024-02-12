@@ -66,7 +66,7 @@ if SERVER then
 	-------------------------------------------------------------------
 	
 	function HL2C_Global:SetVortex(vortex)
-		if vortex == HL2C_Global:NoSuit() then return end
+		if vortex == HL2C_Global:MapVortex() then return end
 		HL2C_Global.MAP_VORTEX = vortex
 		HL2C_Global:SendVortex()
 	end

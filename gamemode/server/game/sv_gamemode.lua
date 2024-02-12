@@ -230,9 +230,9 @@ function HL2C_Server:VortexTouched(ply)
 	if not table.HasValue( VortexList, ply) then
 		if table.IsEmpty( VortexList ) then 
 			HL2C_Server:SendMessageAll(HL2R_TEXT_ORANGE,ply:Nick(),HL2R_TEXT_NORMAL,"##Game_Vortex") 
-			ply:AddExp(120)
+			ply:AddExp(100)
 		else
-			ply:AddExp(60)
+			ply:AddExp(50)
 		end
 		
 		table.insert( VortexList, ply)

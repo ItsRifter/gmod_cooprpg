@@ -79,7 +79,7 @@ function HL2C_Map:RemoveNewGameEnts()	--Valve, for fuck sake, cant you name the 
 	--can hope this works for all maps or give up and find the ents on each map individually.
 	local list = ents.FindByName("global_newgame_*" )
 	table.Add( list, ents.FindByName("player_spawn_*" ) )
-	table.Add( list, ents.FindByName("start_item_*" ) )
+	table.Add( list, ents.FindByName("start_item*" ) )
 	table.Add( list, ents.FindByName("spawnitems_*" ) )
 	table.Add( list, ents.FindByName("startobjects*" ) )
     for _, v in ipairs(list) do
@@ -103,7 +103,7 @@ hook.Add( "OnEntityCreated", "Remove_NewGameStuff", function( ent )
 		if string.StartsWith( cl, "weapon_") or string.StartsWith( cl, "item_suit") then
 			if string.StartsWith( name, "global_newgame_") 
 			or string.StartsWith( name, "player_spawn_") 
-			or string.StartsWith( name, "start_item_") 
+			or string.StartsWith( name, "start_item") 
 			or string.StartsWith( name, "spawnitems") 
 			or string.StartsWith( name, "startobjects") then
 				ent:Remove()
