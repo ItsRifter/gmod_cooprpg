@@ -1,6 +1,11 @@
 
 if SERVER then
-	resource.AddWorkshop( "493076395" )		--Gabumon player model
+	--resource.AddWorkshop( "493076395" )		--Gabumon player model
+	resource.AddWorkshop( "3026330292" )	--Better Gabumon player model
+	
+	resource.AddWorkshop( "2310499509" )	--majima
+	resource.AddWorkshop( "2335230290" )	--kiryu
+	
 	resource.AddWorkshop( "1546376500" )	--3 detective player models
 end
 
@@ -137,13 +142,19 @@ HL2C_Global.PlayerModels = {
 	
 	["Super Admin"] = {
 		group = {
-			["skeleton"] = { mdl="models/player/skeleton.mdl", 			lvl=999,	index = 0},
+			["Skeleton"] = { mdl="models/player/skeleton.mdl", 			lvl=999,	index = 0},
+			["Kiryu"] = { mdl="models/player/10ension/kiryukiwamipm/kiryu_kiwami_pm.mdl", 			lvl=999,	index = 20},
+			["Majima"] = { mdl="models/player/10ension/majimagoropm/goro_majima_pm.mdl", 	lvl=999,	index = 21},
+
 			["Gabumon"] = { mdl="models/player/gabumon/gabumon.mdl", 	lvl=999,	index = 99},
 		},
 		lvl = 999,
 		index = 99
 	},
 }
+
+
+
 
 --I have no clue if anyone else will ever run a server of this but yes, this does let me set my model to max rank value, leave it alone.
 --It gives no access other that what models a player can select, DO NOT USE THIS VALUE FOR ANYTHING ELSE, ITS IS NOT DESIGNED TO BE A TRUSTED VALUE!
