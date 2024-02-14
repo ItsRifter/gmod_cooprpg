@@ -54,6 +54,7 @@ function HL2C_Server:EndTriggered(cp, ply)
 	cp.Triggered = true
 	
 	HL2C_Server:CheckFinished()
+	HL2C_Server:StopVote()
 end
 
 ------------------------------------------------------------------
@@ -108,7 +109,8 @@ HL2C_Server.EndTime = HL2C_Server.EndTime or 0
 
 function HL2C_Server:MapFailed()
 	if HL2C_Global:MapWon() or HL2C_Global:MapFailed() then return false end
-
+	HL2C_Server:StopVote()
+	
 	HL2C_Global:SetMapFailed(true)
 
 	timer.Create(T_END_NAME, T_END_FAILED, 1, function() HL2C_Server:RestartLevel() end)
@@ -208,18 +210,22 @@ function HL2C_Server:CountDown(active,force)
 	end
 end
 
-local LOBBY_MAP = "hl2cr_lobby_v2"
+HL2C_Server.LOBBY_MAP = "hl2cr_lobby_v2"
 
 function HL2C_Server:ChangeLevel()
 	if HL2C_Map.NextMap then
 		timer.Simple(1 , function()  RunConsoleCommand( "changelevel", HL2C_Map.NextMap )  end)
 	else
-		timer.Simple(1 , function()  RunConsoleCommand( "changelevel", LOBBY_MAP )  end)
+		HL2C_Server:ChangeToLobby()
 	end
 end
 
 function HL2C_Server:RestartLevel()
 	timer.Simple(1 , function()  RunConsoleCommand( "changelevel", game.GetMap() )  end)
+end
+
+function HL2C_Server:ChangeToLobby()
+	timer.Simple(1 , function()  RunConsoleCommand( "changelevel", HL2C_Server.LOBBY_MAP )  end)
 end
 
 ------------------------------------------------------------------

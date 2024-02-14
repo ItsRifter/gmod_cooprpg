@@ -2,6 +2,8 @@ local VoteType = VoteType or 0
 local VoteData = VoteData or nil
 local VoteTime = VoteTime or nil
 
+local timeleft = timeleft or 0
+
 local Votes = Votes or {}
 local YourVote = YourVote or 0
 
@@ -22,7 +24,7 @@ VTypes[VOTE_CAMPAIGN]	= "Vote_4"
 function PANEL:Init()
 	local varH = ScrH() * 0.75 
 	local varW = ScrW() * 0.15 * HL2C_Client:Get_UIScale()
-	self:SetPos( 0, math.floor(ScrH()*0.25))
+	self:SetPos( 0, math.floor(ScrH()*0.1))
 	self:SetSize( math.floor(varW), math.floor(varH) )
 	
 	--self:MakePopup()
@@ -32,7 +34,7 @@ function PANEL:Init()
 	self:SetVisible( true )
 	
 	New_ThemeText(self,self.wide * 0.5, self.tall* 0.005,translate.Get(VTypes[VoteType]),"Font_Small",0.5,0)
-	New_ThemeText(self,self.wide * 0.5, self.tall* 0.055,tostring(VoteData),"Font_Small",0.5,0)
+	if VoteType > VOTE_NEXT then New_ThemeText(self,self.wide * 0.5, self.tall* 0.055,tostring(VoteData),"Font_Small",0.5,0) end
 	
 	local yes_img = vgui.Create("DImage", self)	-- Add image to Frame
 	yes_img:SetPos(self.wide * 0.2, self.tall* 0.11)	-- Move it into frame
@@ -46,6 +48,12 @@ function PANEL:Init()
 	
 	New_ThemeText(self,self.wide * 0.125, self.tall* 0.105,"F1","Font_Small",0.5,0)
 	New_ThemeText(self,self.wide * 0.875, self.tall* 0.105,"F2","Font_Small",0.5,0)
+	
+	self.timenum = New_ThemeText(self,self.wide * 0.5, self.tall* 0.105,0,"Font_Small",0.5,0)
+	
+	self.yesnum = New_ThemeText(self,self.wide * 0.125, self.tall* 0.145,0,"Font_Small",1,0)
+	self.nonum = New_ThemeText(self,self.wide * 0.875, self.tall* 0.145,0,"Font_Small",0,0)
+	
 	
 	--VoteType
 end
@@ -78,7 +86,12 @@ function PANEL:Paint()
 		draw.RoundedBox( 8, math.floor(self.wide * 0.65), math.floor(self.tall * 0.105), math.floor(self.wide * 0.3), math.floor(self.wide * 0.12), col_voteopti)
 	end
 
-
+	local newtimeleft = math.floor(VoteTime - CurTime()) + 1
+	
+	if timeleft != newtimeleft and newtimeleft >= 0 then
+		timeleft = newtimeleft
+		self.timenum:SetText(tostring(timeleft),nil, 0.5,0 )
+	end
 
 	return true
 end
@@ -110,16 +123,16 @@ function PANEL:UpdateVotes()
 
 		table.insert( self.Icons, Icon )
 	end
+	
+	self.yesnum:SetText(tostring(vote_yes),nil, 1,0 )
+	self.nonum:SetText(tostring(vote_no),nil, 0,0 )
 end
 
 vgui.Register( "Vote_Panel", PANEL, "Panel" )
 
 function HL2C_Client:UpdateVotePanel()
 	if not IsValid(HL2C_Client.VotePanel) then return end
-	PrintTable(Votes)
 	HL2C_Client.VotePanel:UpdateVotes()
-
-	--HL2C_Client.VotePanel.VoteList
 end
 
 function HL2C_Client:CreateVotePanel()
@@ -139,6 +152,7 @@ net.Receive("HL2C_GV_VOTING", function()
 		VoteData = net.ReadString()
 		VoteTime = net.ReadFloat()
 		HL2C_Client:CreateVotePanel()
+		YourVote = 0
 	else
 		HL2C_Client:RemoveVotePanel()
 	end

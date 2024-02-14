@@ -15,6 +15,13 @@ function HL2C_Client:PlaySound(soundPath,setPitch)
 	end
 end
 
+net.Receive("HL2C_PlaySnd", function()
+	local snd = net.ReadString()
+	local pitch = net.ReadUInt(8)
+	HL2C_Client:PlaySound(snd,pitch)
+end)
+
+
 --I dont know if a timer would be better but this makes client do the work instead of server sending the blips
 --plus it can handle the timer being interupted or reset
 hook.Add( "Think", "End_Countdown", function()

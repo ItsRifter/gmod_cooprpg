@@ -37,6 +37,14 @@ lang.Vote_2 = "Skip map ?"
 lang.Vote_3 = "Change Difficulty ?"
 lang.Vote_4 = "Start campaign ?"
 
+lang.Vote_Start 	= "A vote has started"
+lang.Vote_Closed 	= "The vote is now closed"
+lang.Vote_Ended 	= "The vote is over"
+lang.Vote_Stopped 	= "The vote was stopped"
+
+lang.Vote_Deny 	 = "You cant start a vote right now"
+lang.Vote_Passed = "You cant start a vote right now"
+
 ------Maps-----
 lang.MAP_MonkDied = "Father Grigori has died!"
 
