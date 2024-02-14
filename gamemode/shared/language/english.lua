@@ -31,6 +31,12 @@ lang.GM_Vortex = "A Vortex spawned"
 
 lang.Model_Update = "Model will update on next spawn"
 
+lang.Vote_0 = "Return to Lobby ?"
+lang.Vote_1 = "Restart map ?"
+lang.Vote_2 = "Skip map ?"
+lang.Vote_3 = "Change Difficulty ?"
+lang.Vote_4 = "Start campaign ?"
+
 ------Maps-----
 lang.MAP_MonkDied = "Father Grigori has died!"
 

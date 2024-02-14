@@ -19,6 +19,8 @@ util.AddNetworkString("HL2C_AchievementProg")	--Send progression list
 util.AddNetworkString("HL2C_AchievementEarned")	--Send new earned
 util.AddNetworkString("HL2C_AchievementUpdate")	--Send new update
 
+util.AddNetworkString("HL2C_VOTEDATA")
+
 --Global vars
 util.AddNetworkString("HL2C_GV_NOSUIT")
 util.AddNetworkString("HL2C_GV_MAPFAILED")

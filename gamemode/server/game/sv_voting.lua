@@ -10,7 +10,7 @@ local VoteTime = VoteTime or nil
 --  4 | Start campaign		| string = campaign_ID
 
 local T_VOTE_NAME = "TIMER_VOTING"
-local T_VOTE_TIME = 35
+local T_VOTE_TIME = 30
 local T_VOTE_POST = 10
 
 local Votes = Votes or {}
@@ -39,6 +39,10 @@ function HL2C_Server:StartVote(vote_type,vote_data)
 	
 	Votes = {}
 	
+	net.Start( "HL2C_VOTEDATA" )
+		net.WriteTable( Votes, false )
+	net.Broadcast()
+	
 	HL2C_Server:SetVoting(true)
 	HL2C_Server:SendMessageAll(HL2R_TEXT_ORANGE, "A vote started")
 end
@@ -55,7 +59,15 @@ end
 
 function HL2C_Server:AddVote(ply,vote)
 	if not HL2C_Global:Voting() then return end
+	if VoteTime < CurTime() then return end	--Too late
+	if IsMiscTeam(ply) then return end --No voting for you afks
+	if ply.lastvote and ply.lastvote > CurTime() then return end
+	ply.lastvote = CurTime() + 2 --Prevent vote switching too quickly
 	Votes[ply] = vote
+	
+	net.Start( "HL2C_VOTEDATA" )
+		net.WriteTable( Votes, false )
+	net.Broadcast()
 end
 
 ---------------------------------------------------------------------------------------
