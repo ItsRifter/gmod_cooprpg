@@ -22,7 +22,12 @@ local chat_cmds = {
 		
 	end,
 	["!campaign"] = function(ply, command)
-		ply:CallVote(VOTE_CAMPAIGN, nil)
+		local votenum = HL2C_Global:GetVoteNum(command[2])
+		if votenum then
+			ply:CallVote(VOTE_CAMPAIGN, votenum)
+		else	--campaign not valid
+		
+		end
 	end,
 
 	["!endvote"] = function(ply, command)

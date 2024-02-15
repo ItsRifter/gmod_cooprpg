@@ -1,5 +1,5 @@
 function HL2C_Client:PlaySound(soundPath,setPitch)
-	if setPitch then
+	if setPitch and setPitch !=100 then
 			sound.Add( {
 			name = "hl2c_custom_sound",
 			channel = CHAN_STATIC,

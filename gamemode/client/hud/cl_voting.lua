@@ -34,7 +34,11 @@ function PANEL:Init()
 	self:SetVisible( true )
 	
 	New_ThemeText(self,self.wide * 0.5, self.tall* 0.005,translate.Get(VTypes[VoteType]),"Font_Small",0.5,0)
-	if VoteType > VOTE_NEXT then New_ThemeText(self,self.wide * 0.5, self.tall* 0.055,tostring(VoteData),"Font_Small",0.5,0) end
+	if VoteType == VOTE_DIFF then New_ThemeText(self,self.wide * 0.5, self.tall* 0.055,tostring(VoteData),"Font_Small",0.5,0) end
+	if VoteType == VOTE_CAMPAIGN then 
+		local data = HL2C_Global:GetVoteData(tonumber(VoteData))
+		if data then New_ThemeText(self,self.wide * 0.5, self.tall* 0.055,translate.Get(data.desc),"Font_Small",0.5,0) end
+	end
 	
 	local yes_img = vgui.Create("DImage", self)	-- Add image to Frame
 	yes_img:SetPos(self.wide * 0.2, self.tall* 0.11)	-- Move it into frame

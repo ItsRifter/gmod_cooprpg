@@ -1,6 +1,8 @@
 local VoteType = VoteType or 0
 local VoteData = VoteData or nil
 local VoteTime = VoteTime or nil
+local VoteCooldown = VoteCooldown or nil
+
 
 --type|	                    | Data
 --  0 | Return to lobby		| nil
@@ -16,11 +18,11 @@ local T_VOTE_POST = 10
 local Votes = Votes or {}
 
 local VTypes = {
-	[VOTE_LOBBY] 	= {topass = 0.55, total = 0.7, minimum = 1},
-	[VOTE_RESTART] 	= {topass = 0.55, total = 0.7, minimum = 1},
-	[VOTE_NEXT] 	= {topass = 0.75, total = 0.7, minimum = 3},
-	[VOTE_DIFF]		= {topass = 0.55, total = 0.6, minimum = 1},
-	[VOTE_CAMPAIGN] = {topass = 0.55, total = 0.4, minimum = 1},
+	[VOTE_LOBBY] 	= {topass = 0.55, total = 0.7, minimum = 1, func = function(data) HL2C_Server:ChangeToLobby() end},
+	[VOTE_RESTART] 	= {topass = 0.55, total = 0.7, minimum = 1, func = function(data) HL2C_Server:RestartLevel() end},
+	[VOTE_NEXT] 	= {topass = 0.75, total = 0.7, minimum = 3, func = function(data) HL2C_Server:NextLevel() end},
+	[VOTE_DIFF]		= {topass = 0.55, total = 0.6, minimum = 1, func = function(data) end},
+	[VOTE_CAMPAIGN] = {topass = 0.55, total = 0.4, minimum = 1, func = function(data) HL2C_Server:ChangeCampaign(data) end},
 }
 
 ---------------------------------------------------------------------------------------
@@ -74,6 +76,10 @@ function HL2C_Server:CalculateVote()
 	end	
 	
 	HL2C_Server:SendMessageAll(HL2R_TEXT_GREEN, "VOTE PASSED")
+	
+	timer.Simple( T_VOTE_POST - 3 , function() 
+		if HL2C_Global:Voting() and VTypes[VoteType] and VTypes[VoteType].func then VTypes[VoteType].func(VoteData) end
+	end)
 end
 
 ---------------------------------------------------------------------------------------
@@ -93,6 +99,8 @@ function HL2C_Server:StartVote(vote_type,vote_data)
 	net.Start( "HL2C_VOTEDATA" )
 		net.WriteTable( Votes, false )
 	net.Broadcast()
+	
+	VoteCooldown = CurTime() + 60
 	
 	HL2C_Server:SetVoting(true)
 	HL2C_Server:SendMessageAll(HL2R_TEXT_ORANGE, "##Vote_Start")
@@ -116,18 +124,22 @@ function HL2C_Server:StopVote()
 	HL2C_Server:SendMessageAll(HL2R_TEXT_ORANGE, "##Vote_Stopped")
 end
 
+function hl2c_player:DenyVote()
+	self:SendMessage(HL2R_TEXT_RED, "##Vote_Deny")
+end
+
 function hl2c_player:CallVote(vote_type,vote_data)
-	if HL2C_Global:Voting() then self:SendMessage(HL2R_TEXT_RED, "##Vote_Deny") return end
-	if HL2C_Global:MapWon() or HL2C_Global:MapFailed() then self:SendMessage(HL2R_TEXT_RED, "##Vote_Deny") return end
-	if vote_type == VOTE_CAMPAIGN and HL2C_Server.LOBBY_MAP == game.GetMap() and not self:IsAdmin() then
-		return
-	end
-	if not self:IsAdmin() and self.lastcalledcote and self.lastcalledcote > CurTime() then
-		self:SendMessage(HL2R_TEXT_RED, "##Vote_Deny")
-		return
-	end
+	if HL2C_Global:Voting() then self:DenyVote() return end
+	if CurTime() < 60 and not self:IsAdmin()then self:DenyVote() return end
+	if VoteCooldown and VoteCooldown > CurTime() and not self:IsAdmin()then self:DenyVote() return end
+	if HL2C_Global:MapWon() or HL2C_Global:MapFailed() then self:DenyVote() return end
 	
-	self.lastcalledcote = CurTime() + 60
+	if vote_type == VOTE_CAMPAIGN and not HL2C_Global:GetVoteData(vote_data) then self:DenyVote() return end	--Not a valid campaign vote
+	if vote_type == VOTE_CAMPAIGN and HL2C_Server.LOBBY_MAP == game.GetMap() and not self:IsAdmin() then self:DenyVote() return end	--Only admins can change campaign from non lobby maps
+
+	if not self:IsAdmin() and self.lastcalledcote and self.lastcalledcote > CurTime() then self:DenyVote() end
+	
+	self.lastcalledcote = CurTime() + 90
 	HL2C_Server:StartVote(vote_type,vote_data)
 end
 

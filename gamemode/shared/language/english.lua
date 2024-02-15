@@ -45,6 +45,8 @@ lang.Vote_Stopped 	= "The vote was stopped"
 lang.Vote_Deny 	 = "You cant start a vote right now"
 lang.Vote_Passed = "You cant start a vote right now"
 
+lang.Vote_HL2	= "Half-Life 2"
+
 ------Maps-----
 lang.MAP_MonkDied = "Father Grigori has died!"
 

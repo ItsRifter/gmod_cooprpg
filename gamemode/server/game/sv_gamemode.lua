@@ -168,7 +168,7 @@ function HL2C_Server:CountDown(active,force)
 			if active then
 				if timer.TimeLeft( T_END_NAME ) > T_END_FAST then
 					timer.Remove(T_END_NAME)
-					timer.Create(T_END_NAME, T_END_FAST, 1, function() HL2C_Server:ChangeLevel() end)
+					timer.Create(T_END_NAME, T_END_FAST, 1, function() HL2C_Server:NextLevel() end)
 					
 					HL2C_Server.EndTime = CurTime() + T_END_FAST
 					HL2C_Server:SendCountdown()
@@ -190,7 +190,7 @@ function HL2C_Server:CountDown(active,force)
 		if not active then return end
 
 		if force then
-			timer.Create(T_END_NAME, T_END_FAST, 1, function() HL2C_Server:ChangeLevel() end)
+			timer.Create(T_END_NAME, T_END_FAST, 1, function() HL2C_Server:NextLevel() end)
 			
 			HL2C_Server.EndTime = CurTime() + T_END_FAST
 			HL2C_Server:SendCountdown()
@@ -199,7 +199,7 @@ function HL2C_Server:CountDown(active,force)
 			--	net.WriteFloat( CurTime() + T_END_FAST)
 			--net.Broadcast()
 		else
-			timer.Create(T_END_NAME, T_END_TIME, 1, function() HL2C_Server:ChangeLevel() end)
+			timer.Create(T_END_NAME, T_END_TIME, 1, function() HL2C_Server:NextLevel() end)
 			
 			HL2C_Server.EndTime = CurTime() + T_END_TIME
 			HL2C_Server:SendCountdown()
@@ -212,7 +212,7 @@ end
 
 HL2C_Server.LOBBY_MAP = "hl2cr_lobby_v2"
 
-function HL2C_Server:ChangeLevel()
+function HL2C_Server:NextLevel()
 	if HL2C_Map.NextMap then
 		timer.Simple(1 , function()  RunConsoleCommand( "changelevel", HL2C_Map.NextMap )  end)
 	else
@@ -226,6 +226,13 @@ end
 
 function HL2C_Server:ChangeToLobby()
 	timer.Simple(1 , function()  RunConsoleCommand( "changelevel", HL2C_Server.LOBBY_MAP )  end)
+end
+
+function HL2C_Server:ChangeCampaign(num)
+	local data = HL2C_Global:GetVoteData(num)
+	if data then
+		timer.Simple(1 , function()  RunConsoleCommand( "changelevel", data.map )  end)
+	end
 end
 
 ------------------------------------------------------------------
