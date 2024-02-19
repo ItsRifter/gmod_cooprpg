@@ -10,6 +10,8 @@ function HL2C_Data:InitPlayerData(ply)
 	data.Exp 	= data.Exp or 0
 	data.Next 	= data.Next or HL2C_Server:ExpRequired(0)
 	
+	data.Skills = data.Skills or {}
+	
 	data.Achievements = data.Achievements or {}
 	data.AchProgress = data.AchProgress or {}
 	

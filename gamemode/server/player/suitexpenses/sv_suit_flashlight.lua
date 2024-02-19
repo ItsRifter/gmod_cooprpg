@@ -29,10 +29,13 @@ function SUIT_FLASHLIGHT:IsExpenseActive()
 end
 
 function SUIT_FLASHLIGHT:DoExpense(ply)
-    ply.suit.power = math.Clamp(ply.suit.power - flashlight_expense, 0, 100)
+	local flashdrain = flashlight_expense
+	if ply.suit.flashdrain then flashdrain = flashdrain * ply.suit.flashdrain end
 
-    if ply.suit.power < flashlight_expense then
-        ply.suit.power = 0
+    ply.suit.power = math.Clamp(ply.suit.power - flashdrain, 0, 100)
+
+    if ply.suit.power < flashdrain then
+        ply.suit.power = 0	--Is this needed if it was just clamped?
         ply:Flashlight(false)
         ply:AllowFlashlight(false)
     end

@@ -15,6 +15,8 @@ function hl2c_player:DoSpawn()
 
 		self:SetupSuit()
 		
+		self:SkillsOnSpawn()
+		
 		self:SetNoCollideWithTeammates(true)
 		self:GiveWeapons()
 		self:GiveLoadout()
