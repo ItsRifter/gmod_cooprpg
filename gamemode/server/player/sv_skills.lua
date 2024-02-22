@@ -38,13 +38,13 @@ function hl2c_player:HasSkill(skill)
 end
 
 function hl2c_player:GiveSkill(skill)
-	print("Trying to give skill "..skill)
+	--print("Trying to give skill "..skill)
 	local skilldata = HL2C_Skills:GetSkill(skill)
 	if not skilldata then return end
 	if self:HasSkill(skill) then return end
 	if not self:SkillUnlocked(skill) then return end
 
-	print("Giving skill "..skill)
+	--print("Giving skill "..skill)
 	table.insert(self.hl2c_data.Skills,skill)
 
 end

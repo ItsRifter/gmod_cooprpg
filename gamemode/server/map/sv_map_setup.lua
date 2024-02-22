@@ -97,16 +97,21 @@ end
 hook.Add( "OnEntityCreated", "Remove_NewGameStuff", function( ent )
 	timer.Simple( 0.1, function()
 		if not IsValid(ent) then return end
+		
 		local cl = ent:GetClass()
 		
 		local name = ent:GetName()
 		if string.StartsWith( cl, "weapon_") or string.StartsWith( cl, "item_suit") then
+			print("---")
+			print(cl)
+			print(name)
 			if string.StartsWith( name, "global_newgame_") 
 			or string.StartsWith( name, "player_spawn_") 
 			or string.StartsWith( name, "start_item") 
 			or string.StartsWith( name, "spawnitems") 
 			or string.StartsWith( name, "startobjects") then
 				ent:Remove()
+				print("REMOVED")
 			end
 		end
 		if name == "global_newgame_template_ammo" then ent:Remove() end

@@ -16,7 +16,7 @@ function PANEL:Init()
 	self:AddTab(HL2C_Client:CreateCharacter(self))
 	--self:AddTab(Create_QMenu_Skills(self))
 	--self:AddTab(Create_QMenu_Shop(self))
-	--self:AddTab(Create_QMenu_Achievements(self))
+	self:AddTab(HL2C_Client:CreateAchievement(self))
 	
 	local tabw = math.floor(wide*0.12)
 	local tabh = math.floor(tall*0.06)

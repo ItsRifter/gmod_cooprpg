@@ -10,7 +10,6 @@ function HL2C_Ach:AddAchievementSet(name,data)
 	HL2C_Ach.achievements[name] = data
 end
 
-
 function HL2C_Ach:GetGroups()
 	return SortedPairsByMemberValue(HL2C_Ach.achievements, "Index", false)
 end
