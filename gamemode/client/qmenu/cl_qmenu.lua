@@ -14,6 +14,7 @@ function PANEL:Init()
 	
 	self.tabs = {}
 	self:AddTab(HL2C_Client:CreateCharacter(self))
+	self:AddTab(HL2C_Client:CreateSkills(self))
 	--self:AddTab(Create_QMenu_Skills(self))
 	--self:AddTab(Create_QMenu_Shop(self))
 	self:AddTab(HL2C_Client:CreateAchievement(self))
